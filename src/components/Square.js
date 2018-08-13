@@ -8,7 +8,7 @@ class Square extends Component {
   render() {
     return (
       <div className="Square">
-        [{this.props.row}, {this.props.square}]
+        [{this.props.square > 0 ? this.props.square : ""}]
       </div>
     )
   }

@@ -6,7 +6,7 @@ class Board extends Component {
   constructor() {
     super()
     this.state = {
-      rows: [0, 0, 0, 0, 0]
+      rows: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
   }
 
