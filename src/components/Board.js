@@ -1,21 +1,26 @@
-import React, { Component } from 'react'
-import './css/Board.css'
-import Row from './Row'
+import React, { Component } from "react"
+import "./css/Board.css"
+import { connect } from "react-redux"
+import Row from "./Row"
 
 class Board extends Component {
   constructor() {
     super()
-    this.state = {
-      rows: [0, 0, 0, 0, 0]
-    }
   }
 
   render() {
     return (
       <div className="Board">
-        {this.state.rows.map((row, idx) => <Row key={idx} row={idx} />)}
+        {this.props.board.map((row, idx) => (
+          <Row key={idx} row={idx} squares={row} />
+        ))}
       </div>
     )
   }
 }
-export default Board
+
+const mapState = ({ board }) => ({ board })
+export default connect(
+  mapState,
+  null
+)(Board)
