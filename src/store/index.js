@@ -1,13 +1,16 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from "redux"
+import { createLogger } from "redux-logger"
+import thunkMiddleware from "redux-thunk"
+import { composeWithDevTools } from "redux-devtools-extension"
+import board from "./board"
+import selectedSquare from "./selectedSquare"
 
-const todos = (state = [], action) => {
-    switch (action.type) {
-            case 'ADD_TODO':
-              return state.concat([action.text])
-            default:
-              return state
-          }
-}
-const store = createStore(todos, ['Use Redux'])
+const reducer = combineReducers({ board, selectedSquare })
+
+const middleware = composeWithDevTools(
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+)
+
+const store = createStore(reducer, middleware)
 
 export default store

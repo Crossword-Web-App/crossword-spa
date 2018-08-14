@@ -1,0 +1,18 @@
+{
+  "window.zoomLevel": 3,
+  "editor.fontLigatures": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "editor.renderIndentGuides": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.renderControlCharacters": false,
+  "editor.rulers": [80, 100],
+  "editor.tabSize": 2,
+  "editor.trimAutoWhitespace": false,
+  "editor.wordWrap": "on",
+  "prettier.eslintIntegration": true,
+  "prettier.semi": false
+}
