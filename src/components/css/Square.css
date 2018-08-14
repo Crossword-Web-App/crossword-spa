@@ -1,7 +1,32 @@
 .Square {
-  height: 4em;
-  width: 4em;
+  height: 2em;
+  width: 2em;
   background-color: white;
   border: 1px solid black;
   text-align: left;
+  display: block;
+}
+
+.Square-Number {
+  font-size: 0.5em;
+  margin-bottom: -0.75em;
+}
+
+.Square-Selected {
+  background-color: powderblue;
+}
+
+.Square-Entry {
+  background-color: transparent;
+  border: 0px solid;
+  height: 1.5em;
+  width: 1em;
+  font-size: 1.3em;
+  font-weight: bold;
+  outline: none;
+  cursor: default;
+}
+
+.Square-Black {
+  background-color: black;
 }
