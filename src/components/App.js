@@ -1,8 +1,9 @@
-import React, { Component } from "react"
-import Board from "./Board"
-import "./css/App.css"
-import { connect } from "react-redux"
-import { loadBoard } from "../store/board"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Board from './Board'
+import CluesPanel from './CluesPanel'
+import { loadBoard } from '../store/board'
+import './css/App.css'
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends Component {
     return (
       <div className="App">
         <Board />
+        <CluesPanel />
       </div>
     )
   }
