@@ -54,7 +54,7 @@ class Square extends Component {
     } else if (row === selectedSquare.row && column === selectedSquare.column) {
       className += ' Square-Selected'
     }
-
+    
     if (square.isChecked) {
       className += ' Square-Checked'
     }
@@ -62,7 +62,7 @@ class Square extends Component {
     if (square.displayWrong) {
       inputClassName += ' Square-Checked-Incorrect'
     }
-
+    
     return !square.blackSquare ? (
       <div className={className} onClick={this.handleClick}>
         <div className="Square-Number">
