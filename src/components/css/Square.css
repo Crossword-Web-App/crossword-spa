@@ -27,6 +27,7 @@
   padding-left: 0.25em;
   font-size: 0.5em;
   text-align: left;
+  height: 1em;
 }
 
 .Square-Entry {
@@ -88,6 +89,6 @@
 }
 
 .Square-Checked-Incorrect {
-  color: red
+  text-shadow: 0 0 red
 /* red mark */
 }

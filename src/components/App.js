@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Board from './Board'
 import CluesPanel from './CluesPanel'
+import Timer from './Timer'
 import { loadBoard } from '../store/board'
 import './css/App.css'
 
@@ -20,6 +21,7 @@ class App extends Component {
       <div className="App">
         <Board />
         <CluesPanel />
+        <Timer />
       </div>
     )
   }
