@@ -4,6 +4,5 @@
   width: 100vw;
   background-color: whitesmoke;
   display: flex;
-  flex-basis: 30em;
   justify-content: center;
 }
