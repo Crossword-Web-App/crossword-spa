@@ -26,96 +26,88 @@ const reducer = (state = tempClues, action) => {
 
 export default reducer
 
-const tempClues = [
-  {
-    id: 0,
-    clue:
-      'In my younger and more vulnerable years my father gave me some advice that I’ve been turning over in my mind ever since. “Whenever you feel like criticizing any one'
-  },
-  { id: 1, clue: '” he told me' },
-  {
-    id: 2,
-    clue:
-      ' “just remember that all the people in this world haven’t had the advantages that you’ve had.” He didn’t say any more'
-  },
-  {
-    id: 3,
-    clue: ' but we’ve always been unusually communicative in a reserved way'
-  },
-  {
-    id: 4,
-    clue:
-      ' and I understood that he meant a great deal more than that. In consequence'
-  },
-  { id: 5, clue: ' I’m inclined to reserve all judgments' },
-  {
-    id: 6,
-    clue:
-      ' a habit that has opened up many curious natures to me and also made me the victim of not a few veteran bores. The abnormal mind is quick to detect and attach itself to this quality when it appears in a normal person'
-  },
-  {
-    id: 7,
-    clue:
-      ' and so it came about that in college I was unjustly accused of being a politician'
-  },
-  { id: 8, clue: ' because I was privy to the secret griefs of wild' },
-  {
-    id: 9,
-    clue:
-      ' unknown men. Most of the confidences were unsought — frequently I have feigned sleep'
-  },
-  { id: 10, clue: ' preoccupation' },
-  {
-    id: 11,
-    clue:
-      ' or a hostile levity when I realized by some unmistakable sign that an intimate revelation was quivering on the horizon; for the intimate revelations of young men'
-  },
-  { id: 12, clue: ' or at least the terms in which they express them' },
-  {
-    id: 13,
-    clue:
-      ' are usually plagiaristic and marred by obvious suppressions. Reserving judgments is a matter of infinite hope. I am still a little afraid of missing something if I forget that'
-  },
-  { id: 14, clue: ' as my father snobbishly suggested' },
-  { id: 15, clue: ' and I snobbishly repeat' },
-  {
-    id: 16,
-    clue:
-      ' a sense of the fundamental decencies is parcelled out unequally at birth. And'
-  },
-  { id: 17, clue: ' after boasting this way of my tolerance' },
-  {
-    id: 18,
-    clue:
-      ' I come to the admission that it has a limit. Conduct may be founded on the hard rock or the wet marshes'
-  },
-  {
-    id: 19,
-    clue:
-      ' but after a certain point I don’t care what it’s founded on. When I came back from the East last autumn I felt that I wanted the world to be in uniform and at a sort of moral attention forever; I wanted no more riotous excursions with privileged glimpses into the human heart. Only Gatsby'
-  },
-  { id: 20, clue: ' the man who gives his name to this book' },
-  { id: 21, clue: ' was exempt from my reaction — Gatsby' },
-  {
-    id: 22,
-    clue:
-      ' who represented everything for which I have an unaffected scorn. If personality is an unbroken series of successful gestures'
-  },
-  { id: 23, clue: ' then there was something gorgeous about him' },
-  { id: 24, clue: ' some heightened sensitivity to the promises of life' },
-  {
-    id: 25,
-    clue:
-      ' as if he were related to one of those intricate machines that register earthquakes ten thousand miles away. This responsiveness had nothing to do with that flabby impressionability which is dignified under the name of the “creative temperament.”— it was an extraordinary gift for hope'
-  },
-  {
-    id: 26,
-    clue:
-      ' a romantic readiness such as I have never found in any other person and which it is not likely I shall ever find again. No — Gatsby turned out all right at the end; it is what preyed on Gatsby'
-  },
-  {
-    id: 27,
-    clue:
-      ' what foul dust floated in the wake of his dreams that temporarily closed out my interest in the abortive sorrows and short-winded elations of men'
-  }
-]
+const tempClues = {
+  across: [
+    { clueId: '1', clue: ' Midday' },
+    { clueId: '7', clue: ' The Emerald Isle' },
+    { clueId: '11', clue: ' Bring home' },
+    { clueId: '14', clue: ' Superficial appearance' },
+    { clueId: '15', clue: ' Not occurring naturally' },
+    { clueId: '16', clue: ' Tulsa sch.' },
+    { clueId: '17', clue: ' DAM' },
+    { clueId: '19', clue: ' Car coat' },
+    { clueId: '20', clue: ' Most-wanted group' },
+    { clueId: '21', clue: ' Tony winner Neuwirth' },
+    { clueId: '22', clue: ' Zap, in a way' },
+    { clueId: '23', clue: ' Prefix with -phyte' },
+    { clueId: '24', clue: ' FIRED' },
+    { clueId: '26', clue: ' Reds, blacks, evens or odds, in roulette' },
+    { clueId: '29', clue: ' Perform better than' },
+    { clueId: '30', clue: ' Bird that can hardly get off the ground' },
+    { clueId: '31', clue: ' Encomium' },
+    { clueId: '36', clue: ' PARBOIL' },
+    { clueId: '42', clue: ' Place for taps' },
+    { clueId: '43', clue: ' Praise-filled poem' },
+    { clueId: '44', clue: ' Result of tears on makeup' },
+    { clueId: '47', clue: ' Device for spraying paint' },
+    { clueId: '50', clue: ' STREAM' },
+    { clueId: '55', clue: ' Ryan who co-starred in 1995\'s "French Kiss"' },
+    { clueId: '56', clue: ' Machu Picchu builder' },
+    { clueId: '57', clue: ' Headlight?' },
+    { clueId: '58', clue: ' One putting money on the table' },
+    { clueId: '61', clue: ' Something thrown to see who goes first' },
+    { clueId: '62', clue: ' LYDIA' },
+    { clueId: '64', clue: ' Red state grp.' },
+    { clueId: '65', clue: ' Upscale hotel chain' },
+    { clueId: '66', clue: ' Opposite of keyed up' },
+    { clueId: '67', clue: ' Suffix with differ' },
+    { clueId: '68', clue: ' Spritzes, e.g.' },
+    { clueId: '69', clue: ' Tightly fixed' }
+  ],
+  down: [
+    { clueId: '1', clue: ' "Orange Is the New Black" rating' },
+    { clueId: '2', clue: ' Prosperity' },
+    { clueId: '3', clue: ' Turning out' },
+    { clueId: '4', clue: ' Tenant' },
+    { clueId: '5', clue: ' Airplane course' },
+    { clueId: '6', clue: ' Bungle' },
+    { clueId: '7', clue: ' ___ Brickowski, protagonist of "The Lego Movie"' },
+    { clueId: '8', clue: ' One of three people walking into a bar, in a joke' },
+    { clueId: '9', clue: ' Do-nothing' },
+    { clueId: '10', clue: ' Laura Bush ___ Welch' },
+    { clueId: '11', clue: ' "Hold on, don\'t go yet!"' },
+    { clueId: '12', clue: ' Removed from memory' },
+    { clueId: '13', clue: ' Dressy rental' },
+    { clueId: '18', clue: ' Muscles used in a Russian twist, for short' },
+    { clueId: '22', clue: ' "___ words have never been spoken"' },
+    { clueId: '25', clue: ' Pic' },
+    { clueId: '26', clue: ' Kind of developer' },
+    { clueId: '27', clue: ' "Where ___?"' },
+    { clueId: '28', clue: ' Luminary' },
+    { clueId: '32', clue: ' Basics of school learning, in brief' },
+    { clueId: '33', clue: ' When sung five times, an Abba hit' },
+    { clueId: '34', clue: ' High school science class, informally' },
+    {
+      clueId: '35',
+      clue: ' Institute signed into existence by Thos. Jefferson'
+    },
+    { clueId: '37', clue: ' 2009 Peace Nobelist' },
+    { clueId: '38', clue: " Doctor Zhivago's love" },
+    { clueId: '39', clue: ' Request at the end of a meal, maybe' },
+    { clueId: '40', clue: ' URL ender for 35-Down' },
+    { clueId: '41', clue: " Stimpy's TV pal" },
+    { clueId: '44', clue: ' Iota' },
+    { clueId: '45', clue: ' Underling' },
+    { clueId: '46', clue: ' Apart from' },
+    { clueId: '48', clue: ' Attribute' },
+    { clueId: '49', clue: " Didn't just criticize" },
+    { clueId: '51', clue: ' Guilty feeling' },
+    { clueId: '52', clue: ' Corrupt' },
+    { clueId: '53', clue: " New York Bay's ___ Island" },
+    { clueId: '54', clue: ' Mr. Rogers' },
+    { clueId: '59', clue: ' "What ___ is there?"' },
+    { clueId: '60', clue: ' Bassoon part' },
+    { clueId: '62', clue: ' Chemical company that merged with DuPont' },
+    { clueId: '63', clue: ' Giant part of a T. rex skeleton' }
+  ]
+}

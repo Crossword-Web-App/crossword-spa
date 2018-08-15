@@ -11,8 +11,8 @@ class CluesPanel extends Component {
   render() {
     return (
       <div className="CluesPanel">
-        <CluesColumn dir="ACROSS" />
-        <CluesColumn dir="DOWN" />
+        <CluesColumn dir="across" />
+        <CluesColumn dir="down" />
       </div>
     )
   }

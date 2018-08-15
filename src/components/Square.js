@@ -66,7 +66,7 @@ class Square extends Component {
     return !square.blackSquare ? (
       <div className={className} onClick={this.handleClick}>
         <div className="Square-Number">
-          {square.number}, {square.letter}
+          {square.number}
         </div>
         {!square.isRevealed ? (
           <input
