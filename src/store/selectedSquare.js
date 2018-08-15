@@ -1,5 +1,5 @@
 // Action Type
-const SELECT_SQUARE = "SELECT_SQUARE"
+const SELECT_SQUARE = 'SELECT_SQUARE'
 
 export const selectSquare = square => ({ type: SELECT_SQUARE, square })
 

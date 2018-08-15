@@ -6,9 +6,9 @@ import { Provider } from 'react-redux'
 import store from './store'
 
 ReactDOM.render(
-    <Provider store={store}>
-      <App history={history} />
-    </Provider>,
-    document.getElementById('root')
-  )
-  registerServiceWorker();
+  <Provider store={store}>
+    <App history={history} />
+  </Provider>,
+  document.getElementById('root')
+)
+registerServiceWorker()

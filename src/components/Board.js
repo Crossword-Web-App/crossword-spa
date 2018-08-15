@@ -1,11 +1,16 @@
-import React, { Component } from "react"
-import "./css/Board.css"
-import { connect } from "react-redux"
-import Row from "./Row"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Row from './Row'
+import { revealSquare } from '../store/board'
+import './css/Board.css'
 
 class Board extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+  }
+
+  handleRevealClick = () => {
+    this.props.revealSquare(this.props.selectedSquare)
   }
 
   render() {
@@ -14,13 +19,19 @@ class Board extends Component {
         {this.props.board.map((row, idx) => (
           <Row key={idx} row={idx} squares={row} />
         ))}
+        <button>Check</button>
+        <button onClick={this.handleRevealClick}>Reveal</button>
+        <div>x More to go</div>
       </div>
     )
   }
 }
 
-const mapState = ({ board }) => ({ board })
+const mapState = ({ board, selectedSquare }) => ({ board, selectedSquare })
+
+const mapDispatch = { revealSquare }
+
 export default connect(
   mapState,
-  null
+  mapDispatch
 )(Board)

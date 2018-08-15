@@ -1,3 +1,4 @@
 .Board {
   align-self: center;
+  flex-grow: 0;
 }

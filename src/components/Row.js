@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import Square from "./Square"
-import "./css/Row.css"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Square from './Square'
+import './css/Row.css'
 
 class Row extends Component {
   constructor(props) {

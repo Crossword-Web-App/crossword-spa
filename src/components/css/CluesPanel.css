@@ -1,0 +1,27 @@
+.CluesPanel {
+  align-self: center;
+  height: 65vh;
+  width: 35vw;
+  display: flex;
+
+}
+
+.CluesPanel-Column-Container {
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.CluesPanel-Header-Text {
+  margin-bottom: 2em;
+  margin-right: 2em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid black;
+  text-align: left;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.CluesPanel-Clues-Body {
+  text-align: left;
+  margin-left: 1em;
+}

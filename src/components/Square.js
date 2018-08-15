@@ -1,8 +1,8 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import "./css/Square.css"
-import { addEntry } from "../store/board"
-import { selectSquare } from "../store/selectedSquare"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import './css/Square.css'
+import { addEntry } from '../store/board'
+import { selectSquare } from '../store/selectedSquare'
 
 class Square extends Component {
   constructor(props) {
@@ -10,16 +10,17 @@ class Square extends Component {
   }
 
   handleChange = event => {
-    this.props.addEntry({
-      row: this.props.row,
-      column: this.props.column,
+    const { row, column, addEntry } = this.props
+    addEntry({
+      row,
+      column,
       entry: event.target.value.toUpperCase()
     })
   }
 
   handleClick = () => {
-    console.log("yo yo yo")
-    this.props.selectSquare({ row: this.props.row, column: this.props.column })
+    const { row, column, selectSquare } = this.props
+    selectSquare({ row, column })
   }
 
   render() {
@@ -27,23 +28,31 @@ class Square extends Component {
     return !square.blackSquare ? (
       <div
         className={
-          row === selectedSquare.row && column === selectedSquare.column
-            ? "Square Square-Selected"
-            : "Square"
+          square.isRevealed
+            ? 'Square Square-Revealed'
+            : row === selectedSquare.row && column === selectedSquare.column
+              ? 'Square Square-Selected'
+              : 'Square'
         }
       >
         <div className="Square-Number">
-          {this.props.square.number}, {this.props.square.letter}
+          {square.number}, {square.letter}
         </div>
-        <input
-          className="Square-Entry"
-          maxLength="1"
-          type="text"
-          tabIndex="-1"
-          onChange={this.handleChange}
-          onClick={this.handleClick}
-          style={{ textTransform: "uppercase" }}
-        />
+        {!square.isRevealed ? (
+          <input
+            className="Square-Entry"
+            maxLength="1"
+            type="text"
+            tabIndex="-1"
+            onChange={this.handleChange}
+            onClick={this.handleClick}
+            style={{ textTransform: 'uppercase' }}
+          />
+        ) : (
+          <div className="Square-Revealed-Text">
+            {square.letter.toUpperCase()}
+          </div>
+        )}
       </div>
     ) : (
       <div className="Square Square-Black" />
@@ -51,7 +60,7 @@ class Square extends Component {
   }
 }
 
-const mapState = ({ selectedSquare }) => ({ selectedSquare })
+const mapState = ({ board, selectedSquare }) => ({ board, selectedSquare })
 const mapDispatch = { addEntry, selectSquare }
 
 export default connect(

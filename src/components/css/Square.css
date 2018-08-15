@@ -12,10 +12,6 @@
   margin-bottom: -0.75em;
 }
 
-.Square-Selected {
-  background-color: powderblue;
-}
-
 .Square-Entry {
   background-color: transparent;
   border: 0px solid;
@@ -25,6 +21,21 @@
   font-weight: bold;
   outline: none;
   cursor: default;
+}
+
+.Square-Revealed {
+  background-color: salmon;
+}
+
+.Square-Revealed-Text {
+  margin-top: 0.25em;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: mediumblue;
+}
+
+.Square-Selected {
+  background-color: powderblue;
 }
 
 .Square-Black {
