@@ -21,20 +21,41 @@ class Square extends Component {
   handleClick = () => {
     const { row, column, selectSquare } = this.props
     selectSquare({ row, column })
+    this.selectedInput.focus()
   }
 
   render() {
-    const { row, column, selectedSquare, square } = this.props
+    const { row, column, selectedSquare, square, board } = this.props
+    let className = 'Square'
+
+    if (row === 0) {
+      className += ' Square-Top'
+    }
+
+    if (row === board[0].length - 1) {
+      className += ' Square-Bottom'
+    }
+
+    if (column === 0) {
+      className += ' Square-Left'
+    }
+
+    if (column === board[0].length - 1) {
+      className += ' Square-Right'
+    }
+
+    if (square.isRevealed) {
+      className += ' Square-Revealed'
+    } else if (row === selectedSquare.row && column === selectedSquare.column) {
+      className += ' Square-Selected'
+    }
+
+    if (square.blackSquare) {
+      className += ' Square-Black'
+    }
+
     return !square.blackSquare ? (
-      <div
-        className={
-          square.isRevealed
-            ? 'Square Square-Revealed'
-            : row === selectedSquare.row && column === selectedSquare.column
-              ? 'Square Square-Selected'
-              : 'Square'
-        }
-      >
+      <div className={className} onClick={this.handleClick}>
         <div className="Square-Number">
           {square.number}, {square.letter}
         </div>
@@ -44,18 +65,17 @@ class Square extends Component {
             maxLength="1"
             type="text"
             tabIndex="-1"
+            ref={input => {
+              this.selectedInput = input
+            }}
             onChange={this.handleChange}
-            onClick={this.handleClick}
-            style={{ textTransform: 'uppercase' }}
           />
         ) : (
-          <div className="Square-Revealed-Text">
-            {square.letter.toUpperCase()}
-          </div>
+          <div className={'Square-Revealed-Text Square-No-Select'}>{square.letter.toUpperCase()}</div>
         )}
       </div>
     ) : (
-      <div className="Square Square-Black" />
+      <div className={className} />
     )
   }
 }

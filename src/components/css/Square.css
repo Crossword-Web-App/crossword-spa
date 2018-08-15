@@ -1,26 +1,52 @@
 .Square {
-  height: 2em;
-  width: 2em;
+  height: 2.25em;
+  width: 2.25em;
   background-color: white;
-  border: 1px solid black;
-  text-align: left;
-  display: block;
+  border-top: 1px solid #7b7b7b;
+  border-left: 1px solid #7b7b7b;
+}
+
+.Square-Left {
+  border-left: 3px solid black;
+}
+
+.Square-Right {
+  border-right: 3px solid black;
+}
+
+.Square-Top {
+  border-top: 3px solid black;
+}
+
+.Square-Bottom {
+  border-bottom: 3px solid black;
 }
 
 .Square-Number {
+  margin-bottom: -0.5em;
+  padding-left: 0.25em;
   font-size: 0.5em;
-  margin-bottom: -0.75em;
+  text-align: left;
 }
 
 .Square-Entry {
-  background-color: transparent;
+  padding: 0;
+  height: 1.2em;
+  width: 100%;
   border: 0px solid;
-  height: 1.5em;
-  width: 1em;
-  font-size: 1.3em;
-  font-weight: bold;
+  font-size: 1.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: transparent;
+  text-shadow: 0 0 0 black;
+  background-color: transparent;
+  text-align: center;
   outline: none;
   cursor: default;
+}
+
+.Square-Selected {
+  background-color: powderblue;
 }
 
 .Square-Revealed {
@@ -28,14 +54,23 @@
 }
 
 .Square-Revealed-Text {
-  margin-top: 0.25em;
-  font-size: 1.3em;
-  font-weight: bold;
+  height: 1.2em;
+  width: 100%;
+  border: 0px solid;
+  font-size: 1.75em;
+  font-weight: 600;
   color: mediumblue;
+  text-align: center;
 }
 
-.Square-Selected {
-  background-color: powderblue;
+.Square-No-Select {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 
 .Square-Black {
