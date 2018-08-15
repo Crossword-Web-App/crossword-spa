@@ -76,3 +76,18 @@
 .Square-Black {
   background-color: black;
 }
+
+.Square-Correct {
+  color: green
+/* bold, green, something like that */
+}
+
+.Square-Checked {
+  background-color: yellow
+/* flag */
+}
+
+.Square-Checked-Incorrect {
+  color: red
+/* red mark */
+}

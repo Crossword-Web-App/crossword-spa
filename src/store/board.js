@@ -2,11 +2,13 @@
 const GET_BOARD = 'GET_BOARD'
 const ADD_ENTRY = 'ADD_ENTRY'
 const REVEAL_SQUARE = 'REVEAL_SQUARE'
+const CHECK_SQUARE = 'CHECK_SQUARE'
 
 // Action Creators
 const getBoard = board => ({ type: GET_BOARD, board })
 export const addEntry = square => ({ type: ADD_ENTRY, square })
 export const revealSquare = square => ({ type: REVEAL_SQUARE, square })
+export const checkSquare = square => ({ type: CHECK_SQUARE, square })
 
 // Thunks
 export const loadBoard = boardId => dispatch => {
@@ -21,12 +23,27 @@ export const loadBoard = boardId => dispatch => {
 const updateNestedArrayEntry = (square, state) => {
   state = [...state.map(row => [...row])]
   state[square.row][square.column]['entry'] = square.entry
+  state[square.row][square.column]['displayWrong'] = false
   return state
 }
 
 const updateNestedArrayIsRevealed = (square, state) => {
   state = [...state.map(row => [...row])]
   state[square.row][square.column]['isRevealed'] = true
+  return state
+}
+
+const updateNestedArrayIsChecked = (square, state) => {
+  state = [...state.map(row => [...row])]
+  state[square.row][square.column]['isChecked'] = true
+  if (
+    state[square.row][square.column]['entry'] ===
+    state[square.row][square.column]['letter'].toUpperCase()
+  ) {
+    state[square.row][square.column]['isRevealed'] = true
+  } else {
+    state[square.row][square.column]['displayWrong'] = true
+  }
   return state
 }
 
@@ -39,6 +56,8 @@ const reducer = (state = tempBoard, action) => {
       return updateNestedArrayEntry(action.square, state)
     case REVEAL_SQUARE:
       return updateNestedArrayIsRevealed(action.square, state)
+    case CHECK_SQUARE:
+      return updateNestedArrayIsChecked(action.square, state)
     default:
       return state
   }

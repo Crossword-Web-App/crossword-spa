@@ -21,12 +21,17 @@ class Square extends Component {
   handleClick = () => {
     const { row, column, selectSquare } = this.props
     selectSquare({ row, column })
-    this.selectedInput.focus()
+    if (this.selectedInput) this.selectedInput.focus()
   }
 
   render() {
     const { row, column, selectedSquare, square, board } = this.props
     let className = 'Square'
+    let inputClassName = 'Square-Entry'
+
+    if (square.blackSquare) {
+      className += ' Square-Black'
+    }
 
     if (row === 0) {
       className += ' Square-Top'
@@ -49,11 +54,15 @@ class Square extends Component {
     } else if (row === selectedSquare.row && column === selectedSquare.column) {
       className += ' Square-Selected'
     }
-
-    if (square.blackSquare) {
-      className += ' Square-Black'
+    
+    if (square.isChecked) {
+      className += ' Square-Checked'
     }
 
+    if (square.displayWrong) {
+      inputClassName += ' Square-Checked-Incorrect'
+    }
+    
     return !square.blackSquare ? (
       <div className={className} onClick={this.handleClick}>
         <div className="Square-Number">
@@ -61,7 +70,7 @@ class Square extends Component {
         </div>
         {!square.isRevealed ? (
           <input
-            className="Square-Entry"
+            className={inputClassName}
             maxLength="1"
             type="text"
             tabIndex="-1"
@@ -71,7 +80,15 @@ class Square extends Component {
             onChange={this.handleChange}
           />
         ) : (
-          <div className={'Square-Revealed-Text Square-No-Select'}>{square.letter.toUpperCase()}</div>
+          <div
+            className={
+              square.isChecked
+                ? 'Square-Revealed-Text Square-No-Select Square-Correct'
+                : 'Square-Revealed-Text Square-No-Select'
+            }
+          >
+            {square.letter.toUpperCase()}
+          </div>
         )}
       </div>
     ) : (
