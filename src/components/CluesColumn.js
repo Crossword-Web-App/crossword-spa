@@ -10,20 +10,20 @@ class CluesColumn extends Component {
     const className = 'CluesPanel-Clue'
     return (
       <div className="CluesPanel-Column-Container">
-        <div className="CluesPanel-Header-Text">{this.props.dir}</div>
+        <div className="CluesPanel-Header-Text">{this.props.dir.toUpperCase()}</div>
         <div className="CluesPanel-Clues-Body">
-          {this.props.clues.map(clue => (
+          {this.props.clues[this.props.dir].map(clue => (
             <div
-              key={clue.id}
+              key={clue.clueId}
               className={
-                clue.id === 0 ? className + ' CluesPanel-Selected-Clue' : className
+                clue.clueId === 0 ? className + ' CluesPanel-Selected-Clue' : className
               }
             >
               <div
                 className={
-                  clue.id === 0
+                  clue.clueId === 0
                     ? 'CluesPanel-Selected-Clue-Alt'
-                    : clue.id === 1
+                    : clue.clueId === 1
                       ? 'CluesPanel-Selected-Clue-Alt'
                       : 'CluesPanel-Deselected-Clue-Alt'
                 }
@@ -31,7 +31,7 @@ class CluesColumn extends Component {
               <div
                 style={{ paddingLeft: '0.25em', flexBasis: '18em', flexGrow: '0' }}
               >
-                {clue.id + 1}. {clue.clue}
+                {clue.clueId}. {clue.clue}
               </div>
             </div>
           ))}

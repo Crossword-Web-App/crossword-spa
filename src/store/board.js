@@ -95,7 +95,7 @@ export default reducer
 const tempBoard = [
   [
     {
-      letter: 'e',
+      letter: 'T',
       entry: '',
       number: 1,
       blackSquare: false,
@@ -104,7 +104,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'r',
+      letter: 'W',
       entry: '',
       number: 2,
       blackSquare: false,
@@ -113,16 +113,16 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'b',
+      letter: 'E',
       entry: '',
       number: 3,
-      blackSquare: true,
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'h',
+      letter: 'L',
       entry: '',
       number: 4,
       blackSquare: false,
@@ -131,7 +131,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'd',
+      letter: 'V',
       entry: '',
       number: 5,
       blackSquare: false,
@@ -140,7 +140,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'v',
+      letter: 'E',
       entry: '',
       number: 6,
       blackSquare: false,
@@ -149,7 +149,16 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'z',
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
       entry: '',
       number: 7,
       blackSquare: false,
@@ -158,25 +167,25 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'q',
+      letter: 'R',
       entry: '',
       number: 8,
-      blackSquare: true,
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'i',
+      letter: 'I',
       entry: '',
       number: 9,
-      blackSquare: true,
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'u',
+      letter: 'N',
       entry: '',
       number: 10,
       blackSquare: false,
@@ -185,7 +194,16 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'p',
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'N',
       entry: '',
       number: 11,
       blackSquare: false,
@@ -194,7 +212,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'j',
+      letter: 'E',
       entry: '',
       number: 12,
       blackSquare: false,
@@ -203,27 +221,9 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'x',
+      letter: 'T',
       entry: '',
       number: 13,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 14,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'f',
-      entry: '',
-      number: 15,
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
@@ -232,106 +232,7 @@ const tempBoard = [
   ],
   [
     {
-      letter: 's',
-      entry: '',
-      number: 3,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'm',
-      entry: '',
-      number: 4,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'u',
-      entry: '',
-      number: 5,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 't',
-      entry: '',
-      number: 6,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'c',
-      entry: '',
-      number: 7,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'o',
-      entry: '',
-      number: 8,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'h',
-      entry: '',
-      number: 9,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'e',
-      entry: '',
-      number: 10,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 11,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'h',
-      entry: '',
-      number: 12,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'a',
-      entry: '',
-      number: 13,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'a',
+      letter: 'V',
       entry: '',
       number: 14,
       blackSquare: false,
@@ -340,7 +241,61 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'z',
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'N',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'M',
       entry: '',
       number: 15,
       blackSquare: false,
@@ -349,7 +304,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'b',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'D',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
       entry: '',
       number: 16,
       blackSquare: false,
@@ -358,9 +349,18 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'c',
+      letter: 'R',
       entry: '',
-      number: 17,
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'U',
+      entry: '',
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
@@ -369,97 +369,7 @@ const tempBoard = [
   ],
   [
     {
-      letter: 'b',
-      entry: '',
-      number: 7,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'u',
-      entry: '',
-      number: 8,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'j',
-      entry: '',
-      number: 9,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'p',
-      entry: '',
-      number: 10,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'a',
-      entry: '',
-      number: 11,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'f',
-      entry: '',
-      number: 12,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 's',
-      entry: '',
-      number: 13,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'h',
-      entry: '',
-      number: 14,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'a',
-      entry: '',
-      number: 15,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'k',
-      entry: '',
-      number: 16,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'z',
+      letter: 'M',
       entry: '',
       number: 17,
       blackSquare: false,
@@ -468,7 +378,52 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'f',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'D',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'C',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'A',
       entry: '',
       number: 18,
       blackSquare: false,
@@ -477,7 +432,52 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'b',
+      letter: 'M',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'B',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'L',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'W',
       entry: '',
       number: 19,
       blackSquare: false,
@@ -486,18 +486,18 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'j',
+      letter: 'A',
       entry: '',
-      number: 20,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'b',
+      letter: 'X',
       entry: '',
-      number: 21,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
@@ -506,70 +506,7 @@ const tempBoard = [
   ],
   [
     {
-      letter: 'q',
-      entry: '',
-      number: 13,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 14,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'n',
-      entry: '',
-      number: 15,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'v',
-      entry: '',
-      number: 16,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 17,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'h',
-      entry: '',
-      number: 18,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'a',
-      entry: '',
-      number: 19,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'o',
+      letter: 'A',
       entry: '',
       number: 20,
       blackSquare: false,
@@ -578,7 +515,52 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'w',
+      letter: 'L',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'T',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'B',
       entry: '',
       number: 21,
       blackSquare: false,
@@ -587,7 +569,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'b',
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'B',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'T',
       entry: '',
       number: 22,
       blackSquare: false,
@@ -596,45 +614,27 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'q',
+      letter: 'A',
       entry: '',
-      number: 23,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'q',
+      letter: 'S',
       entry: '',
-      number: 24,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'r',
+      letter: 'E',
       entry: '',
-      number: 25,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'e',
-      entry: '',
-      number: 26,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'p',
-      entry: '',
-      number: 27,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
@@ -643,25 +643,25 @@ const tempBoard = [
   ],
   [
     {
-      letter: 'q',
+      letter: '.',
       entry: '',
-      number: 21,
-      blackSquare: false,
+      number: '',
+      blackSquare: true,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'z',
+      letter: '.',
       entry: '',
-      number: 22,
-      blackSquare: false,
+      number: '',
+      blackSquare: true,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'g',
+      letter: 'N',
       entry: '',
       number: 23,
       blackSquare: false,
@@ -670,7 +670,34 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'k',
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
       entry: '',
       number: 24,
       blackSquare: false,
@@ -679,7 +706,34 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'd',
+      letter: 'T',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'F',
       entry: '',
       number: 25,
       blackSquare: false,
@@ -688,7 +742,45 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'z',
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'D',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    }
+  ],
+  [
+    {
+      letter: 'W',
       entry: '',
       number: 26,
       blackSquare: false,
@@ -697,7 +789,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'p',
+      letter: 'A',
       entry: '',
       number: 27,
       blackSquare: false,
@@ -706,7 +798,34 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'e',
+      letter: 'G',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
       entry: '',
       number: 28,
       blackSquare: false,
@@ -715,7 +834,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'b',
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
       entry: '',
       number: 29,
       blackSquare: false,
@@ -724,7 +879,45 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'v',
+      letter: 'U',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'T',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'D',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    }
+  ],
+  [
+    {
+      letter: 'E',
       entry: '',
       number: 30,
       blackSquare: false,
@@ -733,7 +926,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'f',
+      letter: 'M',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'U',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'T',
       entry: '',
       number: 31,
       blackSquare: false,
@@ -742,7 +971,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'q',
+      letter: 'R',
       entry: '',
       number: 32,
       blackSquare: false,
@@ -751,7 +980,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'g',
+      letter: 'I',
       entry: '',
       number: 33,
       blackSquare: false,
@@ -760,7 +989,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'w',
+      letter: 'B',
       entry: '',
       number: 34,
       blackSquare: false,
@@ -769,10 +998,55 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'c',
+      letter: 'U',
       entry: '',
       number: 35,
       blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'T',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
@@ -780,52 +1054,7 @@ const tempBoard = [
   ],
   [
     {
-      letter: 'p',
-      entry: '',
-      number: 31,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'k',
-      entry: '',
-      number: 32,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'j',
-      entry: '',
-      number: 33,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'k',
-      entry: '',
-      number: 34,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 35,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'u',
+      letter: 'B',
       entry: '',
       number: 36,
       blackSquare: false,
@@ -834,7 +1063,25 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'w',
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'P',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
       entry: '',
       number: 37,
       blackSquare: false,
@@ -843,7 +1090,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'q',
+      letter: 'L',
       entry: '',
       number: 38,
       blackSquare: false,
@@ -852,7 +1099,70 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'i',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'D',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'D',
       entry: '',
       number: 39,
       blackSquare: false,
@@ -861,7 +1171,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'j',
+      letter: 'E',
       entry: '',
       number: 40,
       blackSquare: false,
@@ -870,16 +1180,45 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'o',
+      letter: 'R',
       entry: '',
       number: 41,
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
+    }
+  ],
+  [
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
     },
     {
-      letter: 'y',
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'B',
       entry: '',
       number: 42,
       blackSquare: false,
@@ -888,7 +1227,79 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'o',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'M',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
       entry: '',
       number: 43,
       blackSquare: false,
@@ -897,18 +1308,18 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'n',
+      letter: 'D',
       entry: '',
-      number: 44,
-      blackSquare: true,
+      number: '',
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'y',
+      letter: 'E',
       entry: '',
-      number: 45,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
@@ -917,25 +1328,16 @@ const tempBoard = [
   ],
   [
     {
-      letter: 'm',
+      letter: 'S',
       entry: '',
-      number: 43,
+      number: 44,
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'a',
-      entry: '',
-      number: 44,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'y',
+      letter: 'M',
       entry: '',
       number: 45,
       blackSquare: false,
@@ -944,7 +1346,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'k',
+      letter: 'E',
       entry: '',
       number: 46,
       blackSquare: false,
@@ -953,7 +1355,61 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'l',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'R',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'A',
       entry: '',
       number: 47,
       blackSquare: false,
@@ -962,7 +1418,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'x',
+      letter: 'I',
       entry: '',
       number: 48,
       blackSquare: false,
@@ -971,7 +1427,7 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'u',
+      letter: 'R',
       entry: '',
       number: 49,
       blackSquare: false,
@@ -980,43 +1436,108 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'o',
+      letter: 'G',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'U',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'N',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    }
+  ],
+  [
+    {
+      letter: 'M',
       entry: '',
       number: 50,
-      blackSquare: true,
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'o',
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'X',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'M',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
       entry: '',
       number: 51,
-      blackSquare: true,
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'u',
+      letter: 'T',
       entry: '',
       number: 52,
-      blackSquare: true,
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'y',
+      letter: 'E',
       entry: '',
       number: 53,
-      blackSquare: true,
+      blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'x',
+      letter: 'R',
       entry: '',
       number: 54,
       blackSquare: false,
@@ -1025,7 +1546,16 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'h',
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'M',
       entry: '',
       number: 55,
       blackSquare: false,
@@ -1034,7 +1564,45 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'u',
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'G',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    }
+  ],
+  [
+    {
+      letter: 'I',
       entry: '',
       number: 56,
       blackSquare: false,
@@ -1043,18 +1611,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'w',
+      letter: 'N',
       entry: '',
-      number: 57,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
-    }
-  ],
-  [
+    },
     {
-      letter: 'y',
+      letter: 'C',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'H',
       entry: '',
       number: 57,
       blackSquare: false,
@@ -1063,7 +1656,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'a',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'L',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'P',
       entry: '',
       number: 58,
       blackSquare: false,
@@ -1072,7 +1701,25 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'z',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'Y',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
       entry: '',
       number: 59,
       blackSquare: false,
@@ -1081,16 +1728,18 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'm',
+      letter: 'R',
       entry: '',
       number: 60,
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
-    },
+    }
+  ],
+  [
     {
-      letter: 'h',
+      letter: 'D',
       entry: '',
       number: 61,
       blackSquare: false,
@@ -1099,7 +1748,34 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'v',
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'D',
       entry: '',
       number: 62,
       blackSquare: false,
@@ -1108,7 +1784,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'i',
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'L',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'Y',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'J',
       entry: '',
       number: 63,
       blackSquare: false,
@@ -1117,7 +1829,54 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'f',
+      letter: 'U',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'M',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'B',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'L',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    }
+  ],
+  [
+    {
+      letter: 'G',
       entry: '',
       number: 64,
       blackSquare: false,
@@ -1126,7 +1885,34 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'q',
+      letter: 'O',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'P',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'O',
       entry: '',
       number: 65,
       blackSquare: false,
@@ -1135,7 +1921,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'a',
+      letter: 'M',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'N',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'I',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'A',
       entry: '',
       number: 66,
       blackSquare: false,
@@ -1144,7 +1966,54 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'e',
+      letter: 'T',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'A',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    }
+  ],
+  [
+    {
+      letter: 'E',
       entry: '',
       number: 67,
       blackSquare: false,
@@ -1153,7 +2022,34 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'p',
+      letter: 'N',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'T',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'W',
       entry: '',
       number: 68,
       blackSquare: false,
@@ -1162,7 +2058,43 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'x',
+      letter: 'E',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'T',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'S',
+      entry: '',
+      number: '',
+      blackSquare: false,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: '.',
+      entry: '',
+      number: '',
+      blackSquare: true,
+      isChecked: false,
+      displayWrong: false,
+      isRevealed: false
+    },
+    {
+      letter: 'W',
       entry: '',
       number: 69,
       blackSquare: false,
@@ -1171,977 +2103,45 @@ const tempBoard = [
       isRevealed: false
     },
     {
-      letter: 'x',
+      letter: 'E',
       entry: '',
-      number: 70,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'n',
+      letter: 'D',
       entry: '',
-      number: 71,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
-    }
-  ],
-  [
-    {
-      letter: 'x',
-      entry: '',
-      number: 73,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 74,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'u',
-      entry: '',
-      number: 75,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 76,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'n',
-      entry: '',
-      number: 77,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'y',
-      entry: '',
-      number: 78,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'e',
-      entry: '',
-      number: 79,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 80,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'n',
-      entry: '',
-      number: 81,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'e',
-      entry: '',
-      number: 82,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'm',
-      entry: '',
-      number: 83,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'n',
-      entry: '',
-      number: 84,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 85,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 86,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'n',
-      entry: '',
-      number: 87,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    }
-  ],
-  [
-    {
-      letter: 'z',
-      entry: '',
-      number: 91,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'a',
-      entry: '',
-      number: 92,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'r',
-      entry: '',
-      number: 93,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 94,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'j',
-      entry: '',
-      number: 95,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'j',
-      entry: '',
-      number: 96,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'x',
-      entry: '',
-      number: 97,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'k',
-      entry: '',
-      number: 98,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'f',
-      entry: '',
-      number: 99,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'c',
-      entry: '',
-      number: 100,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 101,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'z',
-      entry: '',
-      number: 102,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 103,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 104,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 105,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    }
-  ],
-  [
-    {
-      letter: 'f',
-      entry: '',
-      number: 111,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'y',
-      entry: '',
-      number: 112,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 113,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'z',
-      entry: '',
-      number: 114,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'j',
-      entry: '',
-      number: 115,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'v',
-      entry: '',
-      number: 116,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 117,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'r',
-      entry: '',
-      number: 118,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'm',
-      entry: '',
-      number: 119,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'p',
-      entry: '',
-      number: 120,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'w',
-      entry: '',
-      number: 121,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'f',
-      entry: '',
-      number: 122,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 123,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'v',
-      entry: '',
-      number: 124,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'c',
-      entry: '',
-      number: 125,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    }
-  ],
-  [
-    {
-      letter: 'v',
-      entry: '',
-      number: 133,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'f',
-      entry: '',
-      number: 134,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'g',
-      entry: '',
-      number: 135,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 136,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'g',
-      entry: '',
-      number: 137,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 138,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'd',
-      entry: '',
-      number: 139,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'v',
-      entry: '',
-      number: 140,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'e',
-      entry: '',
-      number: 141,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 't',
-      entry: '',
-      number: 142,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'q',
-      entry: '',
-      number: 143,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'c',
-      entry: '',
-      number: 144,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 145,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'v',
-      entry: '',
-      number: 146,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'q',
-      entry: '',
-      number: 147,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    }
-  ],
-  [
-    {
-      letter: 'n',
-      entry: '',
-      number: 157,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'y',
-      entry: '',
-      number: 158,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'o',
-      entry: '',
-      number: 159,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'a',
-      entry: '',
-      number: 160,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'x',
-      entry: '',
-      number: 161,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'z',
-      entry: '',
-      number: 162,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 163,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'd',
-      entry: '',
-      number: 164,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'f',
-      entry: '',
-      number: 165,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'x',
-      entry: '',
-      number: 166,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'u',
-      entry: '',
-      number: 167,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'g',
-      entry: '',
-      number: 168,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'q',
-      entry: '',
-      number: 169,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'x',
-      entry: '',
-      number: 170,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'n',
-      entry: '',
-      number: 171,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    }
-  ],
-  [
-    {
-      letter: 'g',
-      entry: '',
-      number: 183,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 184,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 185,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 't',
-      entry: '',
-      number: 186,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'w',
-      entry: '',
-      number: 187,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'c',
-      entry: '',
-      number: 188,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'r',
-      entry: '',
-      number: 189,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'l',
-      entry: '',
-      number: 190,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 191,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'z',
-      entry: '',
-      number: 192,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'j',
-      entry: '',
-      number: 193,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 194,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'f',
-      entry: '',
-      number: 195,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'u',
-      entry: '',
-      number: 196,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'c',
-      entry: '',
-      number: 197,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    }
-  ],
-  [
-    {
-      letter: 'b',
-      entry: '',
-      number: 211,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 's',
-      entry: '',
-      number: 212,
-      blackSquare: true,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 213,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'r',
-      entry: '',
-      number: 214,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'y',
-      entry: '',
-      number: 215,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 216,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'i',
-      entry: '',
-      number: 217,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 's',
-      entry: '',
-      number: 218,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'b',
-      entry: '',
-      number: 219,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'v',
-      entry: '',
-      number: 220,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'y',
-      entry: '',
-      number: 221,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
-    },
-    {
-      letter: 'u',
-      entry: '',
-      number: 222,
-      blackSquare: false,
-      isChecked: false,
-      displayWrong: false,
-      isRevealed: false
     },
     {
-      letter: 'w',
+      letter: 'G',
       entry: '',
-      number: 223,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'a',
+      letter: 'E',
       entry: '',
-      number: 224,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
       isRevealed: false
     },
     {
-      letter: 'i',
+      letter: 'D',
       entry: '',
-      number: 225,
+      number: '',
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
