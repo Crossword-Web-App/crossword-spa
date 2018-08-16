@@ -1,6 +1,6 @@
 .CluesPanel {
   align-self: center;
-  height: 70vh;
+  height: 75.75vh;
   flex-basis: 40em;
   display: flex;
   justify-content: center;
@@ -8,8 +8,9 @@
 
 .CluesPanel-Column-Container {
   flex-direction: column;
-  flex-grow: 1;
+  flex-basis: 15em;
   margin-right: 2em;
+  flex-shrink: 2;
 }
 
 .CluesPanel-Header-Text {
@@ -19,6 +20,7 @@
   font-size: 0.8em;
   font-weight: bold;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .CluesPanel-Clues-Body {
@@ -26,6 +28,7 @@
   text-align: left;
   overflow: scroll;
   color: #7b7b7b;
+  cursor: default;
 }
 
 .CluesPanel-Clue {
@@ -33,18 +36,29 @@
   padding: 0.5em 0;
 }
 
+.CluesPanel-Deselected-Clue-Alt {
+  flex-basis: 0.5em;
+  flex-grow: 0;
+}
+
 .CluesPanel-Selected-Clue {
-  background-color: powderblue;
+  background-color: rgb(255, 231, 97);;
 }
 
 .CluesPanel-Selected-Clue-Alt {
   flex-basis: 1em;
   margin-left: -0.5em;
   flex-grow: 0;
-  background-color: powderblue;
+  background-color: rgba(110, 230, 250, 0.6);
 }
 
-.CluesPanel-Deselected-Clue-Alt {
-  flex-basis: 0.5em;
-  flex-grow: 0;
+@media screen and (max-width: 1160px) {
+  .CluesPanel {
+    /* height: 20vh; */
+    flex-basis: 30em;
+  }
+
+  .CluesPanel-Column-Container {
+    flex-basis: 20em;
+  }
 }

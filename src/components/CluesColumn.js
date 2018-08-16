@@ -1,47 +1,52 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
-class CluesColumn extends Component {
-  constructor(props) {
-    super(props)
-  }
+const CluesColumn = props => {
+  const { clues, dir, direction, selectedClue, selectedAltClue } = props
+  let className = 'CluesPanel-Clue'
 
-  render() {
-    const className = 'CluesPanel-Clue'
-    return (
-      <div className="CluesPanel-Column-Container">
-        <div className="CluesPanel-Header-Text">{this.props.dir.toUpperCase()}</div>
-        <div className="CluesPanel-Clues-Body">
-          {this.props.clues[this.props.dir].map(clue => (
+  return (
+    <div className="CluesPanel-Column-Container">
+      <div className="CluesPanel-Header-Text">{dir}</div>
+      <div className="CluesPanel-Clues-Body">
+        {clues[dir].map(clue => (
+          <div
+            key={clue.clueId}
+            className={
+              clue.clueId === selectedClue && direction === dir
+                ? className + ' CluesPanel-Selected-Clue'
+                : className
+            }
+          >
             <div
-              key={clue.clueId}
               className={
-                clue.clueId === 0 ? className + ' CluesPanel-Selected-Clue' : className
+                clue.clueId === selectedAltClue && direction !== dir
+                  ? 'CluesPanel-Selected-Clue-Alt'
+                  : 'CluesPanel-Deselected-Clue-Alt'
               }
+            />
+            <div
+              style={{
+                paddingLeft: '0.25em',
+                flexBasis: '18em',
+                flexGrow: '0'
+              }}
             >
-              <div
-                className={
-                  clue.clueId === 0
-                    ? 'CluesPanel-Selected-Clue-Alt'
-                    : clue.clueId === 1
-                      ? 'CluesPanel-Selected-Clue-Alt'
-                      : 'CluesPanel-Deselected-Clue-Alt'
-                }
-              />
-              <div
-                style={{ paddingLeft: '0.25em', flexBasis: '18em', flexGrow: '0' }}
-              >
-                {clue.clueId}. {clue.clue}
-              </div>
+              {clue.clueId}. {clue.clue}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-const mapState = ({ clues }) => ({ clues })
+const mapState = ({ clues, selectedClue, selectedAltClue, direction }) => ({
+  clues,
+  selectedClue,
+  selectedAltClue,
+  direction
+})
 
 export default connect(
   mapState,

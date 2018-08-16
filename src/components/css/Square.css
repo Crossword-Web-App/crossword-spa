@@ -1,25 +1,25 @@
 .Square {
-  height: 2.25em;
-  width: 2.25em;
+  max-height: 2.25em;
+  flex-basis: 2.25em;
   background-color: white;
   border-top: 1px solid #7b7b7b;
   border-left: 1px solid #7b7b7b;
 }
 
 .Square-Left {
-  border-left: 3px solid black;
+  border-left: 3px solid rgba(0, 0, 0, 0.9);
 }
 
 .Square-Right {
-  border-right: 3px solid black;
+  border-right: 3px solid rgba(0, 0, 0, 0.9);
 }
 
 .Square-Top {
-  border-top: 3px solid black;
+  border-top: 3px solid rgba(0, 0, 0, 0.9);
 }
 
 .Square-Bottom {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.9);
 }
 
 .Square-Number {
@@ -39,15 +39,32 @@
   font-weight: 600;
   text-transform: uppercase;
   color: transparent;
-  text-shadow: 0 0 0 black;
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
   background-color: transparent;
   text-align: center;
   outline: none;
   cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+::-moz-selection {
+  background: transparent;
+}
+::selection {
+  background: transparent;
+}
+
+
+.Square-SemiSelected {
+  background-color: rgba(110, 230, 250, 0.6);
 }
 
 .Square-Selected {
-  background-color: powderblue;
+  background-color:rgb(255, 231, 97);
 }
 
 .Square-Revealed {
@@ -75,7 +92,7 @@
 }
 
 .Square-Black {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .Square-Correct {
@@ -91,4 +108,19 @@
 .Square-Checked-Incorrect {
   text-shadow: 0 0 red
 /* red mark */
+}
+
+@media screen and (max-width: 1160px) {
+  .Square {
+    flex-basis: 1.75em;
+    height: 1.75em;
+  }
+
+  .Square-Number {
+    margin-bottom: -0.4em;
+  }
+
+  .Square-Entry {
+    font-size: 1.25em;
+  }
 }

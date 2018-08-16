@@ -21,7 +21,7 @@ class App extends Component {
       <div className="App">
         <Board />
         <CluesPanel />
-        <Timer />
+        {/* <Timer /> */}
       </div>
     )
   }

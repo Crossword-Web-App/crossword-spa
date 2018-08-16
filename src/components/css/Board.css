@@ -1,3 +1,19 @@
 .Board {
   align-self: center;
+  height: 70vh;
+  flex-basis: 40em;
+  display: flex;
+  flex-direction: column;
+}
+
+.Row {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0
+}
+
+@media screen and (max-width: 1160px) {
+  .Board {
+    margin-top: 2.5em;
+  }
 }

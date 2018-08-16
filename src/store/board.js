@@ -1,6 +1,8 @@
 // Action Type
 const GET_BOARD = 'GET_BOARD'
-const ADD_ENTRY = 'ADD_ENTRY'
+const SET_BORDERS = 'SET_BORDERS'
+const UPDATE_ENTRY = 'UPDATE_ENTRY'
+const UPDATE_SELECTED = 'UPDATE_SELECTED'
 const CHECK_SQUARE = 'CHECK_SQUARE'
 const CHECK_BOARD = 'CHECK_BOARD'
 const REVEAL_SQUARE = 'REVEAL_SQUARE'
@@ -8,7 +10,9 @@ const REVEAL_BOARD = 'REVEAL_BOARD'
 
 // Action Creators
 const getBoard = board => ({ type: GET_BOARD, board })
-export const addEntry = square => ({ type: ADD_ENTRY, square })
+export const setBorders = board => ({ type: SET_BORDERS, board })
+export const updateEntry = square => ({ type: UPDATE_ENTRY, square })
+export const updateSelected = squares => ({ type: UPDATE_SELECTED, squares })
 export const checkSquare = square => ({ type: CHECK_SQUARE, square })
 export const checkBoard = () => ({ type: CHECK_BOARD })
 export const revealSquare = square => ({ type: REVEAL_SQUARE, square })
@@ -28,6 +32,51 @@ const updateLetterEntry = (square, state) => {
   state = [...state.map(row => [...row])]
   state[square.row][square.column]['entry'] = square.entry
   state[square.row][square.column]['displayWrong'] = false
+  return state
+}
+
+const updateSelectedSquares = (
+  { selectedSquare, nextSquare, selectedLine, nextLine },
+  state
+) => {
+  state = [...state.map(row => [...row])]
+
+  // remove 'Square-Selected' from className of previous square
+  if (Object.keys(selectedSquare).length > 0) {
+    state[selectedSquare.row][selectedSquare.column]['className'] = state[
+      selectedSquare.row
+    ][selectedSquare.column]['className'].replace(' Square-Selected', '')
+  }
+
+  // add 'Square-Selected' to className for newly selected square
+  state[nextSquare.row][nextSquare.column]['className'] += ' Square-Selected'
+
+  // remove 'Square-SemiSelected' from className of previous line
+  selectedLine.forEach(({ row, column }) => {
+    state[row][column]['className'] = state[row][column]['className'].replace(
+      ' Square-SemiSelected',
+      ''
+    )
+  })
+  // add 'Square-SemiSelected' to className of newly selected line
+  nextLine.forEach(({ row, column }) => {
+    state[row][column]['className'] += ' Square-SemiSelected'
+  })
+
+  return state
+}
+
+const setBordersOnSquares = state => {
+  state = state.map((row, rowIdx) => {
+    row.map((square, columnIdx) => {
+      if (rowIdx === 0) square.className += ' Square-Top'
+      if (rowIdx === row.length - 1) square.className += ' Square-Bottom'
+      if (columnIdx === 0) square.className += ' Square-Left'
+      if (columnIdx === row.length - 1) square.className += ' Square-Right'
+      return square
+    })
+    return row
+  })
   return state
 }
 
@@ -75,8 +124,12 @@ const reducer = (state = tempBoard, action) => {
   switch (action.type) {
     case GET_BOARD:
       return action.board
-    case ADD_ENTRY:
+    case SET_BORDERS:
+      return setBordersOnSquares(state)
+    case UPDATE_ENTRY:
       return updateLetterEntry(action.square, state)
+    case UPDATE_SELECTED:
+      return updateSelectedSquares(action.squares, state)
     case CHECK_SQUARE:
       return updateLetterIsChecked(action.square, state)
     case CHECK_BOARD:
@@ -101,7 +154,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'W',
@@ -110,7 +167,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -119,7 +180,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'L',
@@ -128,7 +193,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'V',
@@ -137,7 +206,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -146,7 +219,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -155,7 +232,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -164,7 +245,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -173,7 +258,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -182,7 +271,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -191,7 +284,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -200,7 +297,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -209,7 +310,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -218,7 +323,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -227,7 +336,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -238,7 +351,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -247,7 +364,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -256,7 +377,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -265,7 +390,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -274,7 +403,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -283,7 +416,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -292,7 +429,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -301,7 +442,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -310,7 +455,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -319,7 +468,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -328,7 +481,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -337,7 +494,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -346,7 +507,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -355,7 +520,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'U',
@@ -364,7 +533,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -375,7 +548,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -384,7 +561,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -393,7 +574,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -402,7 +587,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'C',
@@ -411,7 +600,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -420,7 +613,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -429,7 +626,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -438,7 +639,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'B',
@@ -447,7 +652,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'L',
@@ -456,7 +665,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -465,7 +678,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -474,7 +691,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'W',
@@ -483,7 +704,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -492,7 +717,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'X',
@@ -501,7 +730,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -512,7 +745,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'L',
@@ -521,7 +758,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -530,7 +771,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -539,7 +784,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -548,7 +797,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -557,7 +810,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'B',
@@ -566,7 +823,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -575,7 +836,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'B',
@@ -584,7 +849,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -593,7 +862,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -602,7 +875,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -611,7 +888,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -620,7 +901,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -629,7 +914,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -638,7 +927,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -649,7 +942,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -658,7 +955,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -667,7 +968,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -676,7 +981,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -685,7 +994,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -694,7 +1007,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -703,7 +1020,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -712,7 +1033,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -721,7 +1046,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -730,7 +1059,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'F',
@@ -739,7 +1072,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -748,7 +1085,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -757,7 +1098,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -766,7 +1111,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -775,7 +1124,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -786,7 +1139,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -795,7 +1152,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'G',
@@ -804,7 +1165,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -813,7 +1178,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -822,7 +1191,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -831,7 +1204,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -840,7 +1217,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -849,7 +1230,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -858,7 +1243,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -867,7 +1256,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -876,7 +1269,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'U',
@@ -885,7 +1282,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -894,7 +1295,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -903,7 +1308,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -912,7 +1321,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -923,7 +1336,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -932,7 +1349,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'U',
@@ -941,7 +1362,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -950,7 +1375,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -959,7 +1388,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -968,7 +1401,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -977,7 +1414,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -986,7 +1427,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'B',
@@ -995,7 +1440,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'U',
@@ -1004,7 +1453,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -1013,7 +1466,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1022,7 +1479,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1031,7 +1492,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1040,7 +1505,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1049,7 +1518,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -1060,7 +1533,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -1069,7 +1546,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'P',
@@ -1078,7 +1559,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1087,7 +1572,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'L',
@@ -1096,7 +1585,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1105,7 +1598,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1114,7 +1611,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -1123,7 +1624,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -1132,7 +1637,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -1141,7 +1650,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1150,7 +1663,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1159,7 +1676,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -1168,7 +1689,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1177,7 +1702,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1186,7 +1715,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -1197,7 +1730,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1206,7 +1743,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1215,7 +1756,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'B',
@@ -1224,7 +1769,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1233,7 +1782,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1242,7 +1795,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1251,7 +1808,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1260,7 +1821,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1269,7 +1834,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -1278,7 +1847,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1287,7 +1860,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1296,7 +1873,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1305,7 +1886,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -1314,7 +1899,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1323,7 +1912,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -1334,7 +1927,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -1343,7 +1940,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1352,7 +1953,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1361,7 +1966,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1370,7 +1979,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1379,7 +1992,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1388,7 +2005,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1397,7 +2018,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1406,7 +2031,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1415,7 +2044,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -1424,7 +2057,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1433,7 +2070,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'G',
@@ -1442,7 +2083,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'U',
@@ -1451,7 +2096,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -1460,7 +2109,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -1471,7 +2124,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -1480,7 +2137,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'X',
@@ -1489,7 +2150,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -1498,7 +2163,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1507,7 +2176,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -1516,7 +2189,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -1525,7 +2202,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1534,7 +2215,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1543,7 +2228,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1552,7 +2241,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -1561,7 +2254,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1570,7 +2267,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'G',
@@ -1579,7 +2280,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1588,7 +2293,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1597,7 +2306,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -1608,7 +2321,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -1617,7 +2334,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'C',
@@ -1626,7 +2347,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1635,7 +2360,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1644,7 +2373,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'H',
@@ -1653,7 +2386,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1662,7 +2399,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'L',
@@ -1671,7 +2412,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1680,7 +2425,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1689,7 +2438,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'P',
@@ -1698,7 +2451,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1707,7 +2464,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'Y',
@@ -1716,7 +2477,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1725,7 +2490,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'R',
@@ -1734,7 +2503,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -1745,7 +2518,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -1754,7 +2531,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1763,7 +2544,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1772,7 +2557,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -1781,7 +2570,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1790,7 +2583,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -1799,7 +2596,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'L',
@@ -1808,7 +2609,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'Y',
@@ -1817,7 +2622,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'J',
@@ -1826,7 +2635,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'U',
@@ -1835,7 +2648,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -1844,7 +2661,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'B',
@@ -1853,7 +2674,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'L',
@@ -1862,7 +2687,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1871,7 +2700,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -1882,7 +2715,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1891,7 +2728,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'P',
@@ -1900,7 +2741,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1909,7 +2754,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'O',
@@ -1918,7 +2767,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'M',
@@ -1927,7 +2780,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -1936,7 +2793,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'I',
@@ -1945,7 +2806,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -1954,7 +2819,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1963,7 +2832,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -1972,7 +2845,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -1981,7 +2858,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'A',
@@ -1990,7 +2871,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -1999,7 +2884,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -2008,7 +2897,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ],
   [
@@ -2019,7 +2912,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'N',
@@ -2028,7 +2925,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -2037,7 +2938,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -2046,7 +2951,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'W',
@@ -2055,7 +2964,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -2064,7 +2977,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'T',
@@ -2073,7 +2990,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'S',
@@ -2082,7 +3003,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: '.',
@@ -2091,7 +3016,11 @@ const tempBoard = [
       blackSquare: true,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square Square-Black',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'W',
@@ -2100,7 +3029,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -2109,7 +3042,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -2118,7 +3055,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'G',
@@ -2127,7 +3068,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'E',
@@ -2136,7 +3081,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     },
     {
       letter: 'D',
@@ -2145,7 +3094,11 @@ const tempBoard = [
       blackSquare: false,
       isChecked: false,
       displayWrong: false,
-      isRevealed: false
+      isRevealed: false,
+      className: 'Square',
+      numberClassName: 'Square-Number',
+      inputClassName: 'Square-Entry',
+      noEditInputClassName: 'Square-Revealed-Text Square-No-Select'
     }
   ]
 ]
