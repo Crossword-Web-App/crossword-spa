@@ -1,9 +1,10 @@
 .Board {
-  align-self: center;
-  height: 70vh;
   flex-basis: 40em;
-  display: flex;
-  flex-direction: column;
+  /* background-color: bisque; */
+}
+
+.Board-Header {
+  height: 6em;
 }
 
 .Row {
@@ -14,6 +15,10 @@
 
 @media screen and (max-width: 1160px) {
   .Board {
-    margin-top: 2.5em;
+    flex-basis: 33em;
+  }
+
+  .Board-Header {
+    height: 2em;
   }
 }

@@ -9,6 +9,8 @@ import selectedSquare from './selectedSquare'
 import selectedLine from './selectedLine'
 import selectedClue from './selectedClue'
 import selectedAltClue from './selectedAltClue'
+import clickedClueSquare from './clickedClueSquare'
+import remainingSquares from './remainingSquares'
 
 const reducer = combineReducers({
   board,
@@ -17,7 +19,9 @@ const reducer = combineReducers({
   selectedSquare,
   selectedLine,
   selectedClue,
-  selectedAltClue
+  selectedAltClue,
+  clickedClueSquare,
+  remainingSquares
 })
 
 const middleware = composeWithDevTools(

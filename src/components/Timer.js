@@ -32,9 +32,13 @@ class Timer extends Component {
     let minutes = Math.floor(divisor_for_minutes / 60)
     let divisor_for_seconds = divisor_for_minutes % 60
     let seconds = Math.ceil(divisor_for_seconds)
-    if (hours) return hours + ':' + minutes + ':' + seconds
-    else if (minutes) return minutes + ':' + seconds
-    else return seconds
+    if (hours) return `${hours}:${minutes}:${seconds}`
+    else if (minutes)
+      return `${minutes < 10 ? '0' + minutes : minutes}:${
+        seconds < 10 ? '0' + seconds : seconds
+      }`
+    else if (seconds < 10) return `0:0${seconds}`
+    else return `0:${seconds}`
   }
 
   render() {

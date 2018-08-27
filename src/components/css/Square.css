@@ -58,7 +58,6 @@
   background: transparent;
 }
 
-
 .Square-SemiSelected {
   background-color: rgba(110, 230, 250, 0.6);
 }
@@ -112,15 +111,25 @@
 
 @media screen and (max-width: 1160px) {
   .Square {
-    flex-basis: 1.75em;
     height: 1.75em;
+    flex-basis: 1.75em;
   }
 
   .Square-Number {
-    margin-bottom: -0.4em;
+    margin-bottom: 0em;
   }
 
   .Square-Entry {
-    font-size: 1.25em;
+    height: 0.9em;
+    font-size: 1em;
+  }
+
+  .Square-Revealed {
+    width: 5em;
+  }
+
+  .Square-Revealed-Text {
+    height: 0.9em;
+    font-size: 1em;
   }
 }

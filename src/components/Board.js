@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Square from './Square'
+import { setBorders, updateEntry, updateSelected } from '../store/board'
 import {
-  setBorders,
-  updateEntry,
-  checkSquare,
-  checkBoard,
-  revealSquare,
-  revealBoard,
-  updateSelected
-} from '../store/board'
-import { changeDirection, setAcross, setDown } from '../store/direction'
+  setMaxSquares,
+  addSquare,
+  removeSquare
+} from '../store/remainingSquares'
+import { changeDirection } from '../store/direction'
 import { selectSquare } from '../store/selectedSquare'
 import { selectLine } from '../store/selectedLine'
 import { selectClue } from '../store/selectedClue'
@@ -30,27 +27,12 @@ class Board extends Component {
   focusOnFirst = () => this.squareInputRefs[0].focus()
 
   // Event handlers
-  handleCheckClick = () => {
-    this.props.checkSquare(this.props.selectedSquare)
-  }
-
-  handleCheckBoardClick = () => {
-    this.props.checkBoard()
-  }
-
-  handleRevealClick = () => {
-    this.props.revealSquare(this.props.selectedSquare)
-  }
-
-  handleRevealBoardClick = () => {
-    this.props.revealBoard()
-  }
-
   handleSquareClick = ({ row, column }) => {
-    const { direction } = this.props
+    const { direction, selectedSquare } = this.props
     this.changeSquare(
       this.getNextSquareFromRowAndColumn(row, column),
-      direction
+      ({ row, column }) =>
+        selectedSquare.row === row && selectedSquare.column === column
     )
   }
 
@@ -60,40 +42,71 @@ class Board extends Component {
       board,
       selectedSquare,
       updateEntry,
-      setAcross,
-      setDown
+      remainingSquares,
+      addSquare,
+      removeSquare
     } = this.props
     const { row, column } = selectedSquare
 
     // Alphanumeric character
     if (event.keyCode >= 65 && event.keyCode <= 90) {
+      if (board[row][column]['entry'] === '') {
+        removeSquare()
+      }
+
       updateEntry({
         row,
         column,
         entry: String.fromCharCode(event.keyCode)
       })
 
-      if (
+      // handle all squares filled logic
+      if (remainingSquares <= 1) {
+        // check if it's correct, end game if so
+        const isCorrect =
+          board
+            .reduce((a, b) => a.concat(b))
+            .filter(square => !(square.letter === square.entry)).length <= 1 &&
+          board[row][column]['letter'] === String.fromCharCode(event.keyCode)
+
+        console.log(
+          { isCorrect,
+            wrongAnswers: board
+            .reduce((a, b) => a.concat(b))
+            .filter(square => !(square.letter === square.entry)).length,
+            correctCurLetter: board[row][column]['letter'] === String.fromCharCode(event.keyCode)
+          }
+        )
+
+        if (isCorrect) {
+          alert('Congratulations! A fun song should play now')
+        } else {
+          alert('all squares are filled but at least one letter is incorrect')
+        }
+
+        console.log('hit one remaining square')
+        this.changeSquare(this.getNextSquare, () => false)
+      } else if (
         direction === 'down' &&
         (row + 1 === board.length || board[row + 1][column]['blackSquare'])
       ) {
-        this.changeSquare(this.tabDown, direction)
+        this.changeSquare(this.tabDown, this.isBeforeFirstLetterSquare)
       } else {
-        this.changeSquare(this.getNextOpenSquare, direction)
+        this.changeSquare(this.getNextSquare, this.isBeforeSquare)
       }
     } else {
       event.preventDefault()
       let prevSquare = {}
       switch (event.keyCode) {
         case 9:
-          // TAB
-          direction === 'across'
-            ? this.changeSquare(this.tabAcross, direction)
-            : this.changeSquare(this.tabDown, direction)
-          break
+        // TAB
         case 32:
           // SPACEBAR
-          this.changeSquare(this.getNextOpenSquare, direction)
+          if (remainingSquares > 1) {
+            direction === 'across'
+              ? this.changeSquare(this.tabAcross, this.isBeforeSquare)
+              : this.changeSquare(this.tabDown, this.isBeforeFirstLetterSquare)
+          }
           break
         case 8:
         // DELETE on Mac, BACKSAPCE on Windows
@@ -102,18 +115,20 @@ class Board extends Component {
 
           // if nonempty, delete entry but stay in square
           if (board[row][column]['entry'] !== '') {
+            addSquare()
             updateEntry({
               row,
               column,
               entry: ''
             })
-            this.changeSquare(null, direction)
+            this.changeSquare(null, () => false)
             break
           }
 
           // if empty, delete previous square's entry and go back one square
           prevSquare = this.getPrevSquare(direction)
           if (board[prevSquare.row][prevSquare.column]['entry'] !== '') {
+            addSquare()
             updateEntry({
               row: prevSquare.row,
               column: prevSquare.column,
@@ -121,47 +136,27 @@ class Board extends Component {
             })
           }
 
-          this.changeSquare(this.getPrevSquare, direction)
+          this.changeSquare(this.getPrevSquare, () => false)
           break
         case 37:
           // LEFT ARROW
-          if (direction !== 'across') {
-            setAcross()
-            this.changeSquare(null, 'across')
-            break
-          }
-
-          this.changeSquare(this.getPrevSquare, 'across')
+          if (direction !== 'across') this.changeSquare(null, () => true)
+          else this.changeSquare(this.getPrevSquare, () => false)
           break
         case 39:
           // RIGHT ARROW
-          if (direction !== 'across') {
-            setAcross()
-            this.changeSquare(null, 'across')
-            break
-          }
-
-          this.changeSquare(this.getNextSquare, 'across')
+          if (direction !== 'across') this.changeSquare(null, () => true)
+          else this.changeSquare(this.getNextSquare, () => false)
           break
         case 38:
           // UP ARROW
-          if (direction !== 'down') {
-            setDown()
-            this.changeSquare(null, 'down')
-            break
-          }
-
-          this.changeSquare(this.getPrevSquare, 'down')
+          if (direction !== 'down') this.changeSquare(null, () => true)
+          else this.changeSquare(this.getPrevSquare, () => false)
           break
         case 40:
           // DOWN ARROW
-          if (direction !== 'down') {
-            setDown()
-            this.changeSquare(null, 'down')
-            break
-          }
-
-          this.changeSquare(this.getNextSquare, 'down')
+          if (direction !== 'down') this.changeSquare(null, () => true)
+          else this.changeSquare(this.getNextSquare, () => false)
           break
         default:
           break
@@ -169,18 +164,28 @@ class Board extends Component {
     }
   }
 
-  // lifecycle methods
+  // Lifecycle methods
   componentDidMount = () => {
     const {
       setBorders,
+      setMaxSquares,
       selectedSquare,
       selectLine,
       updateSelected,
+      board,
       direction
     } = this.props
 
     // add border css to appropriate squares
     setBorders()
+
+    // set number of squares to fill
+    setMaxSquares(
+      board
+        .reduce((a, b) => a.concat(b))
+        .filter(square => !square.blackSquare && square.entry !== square.letter)
+        .length
+    )
 
     // show selected square [0,0] and line
     let nextLine = this.getLine(selectedSquare, direction)
@@ -196,8 +201,23 @@ class Board extends Component {
     this.focusOnFirst()
   }
 
-  // helper methods for finding selected squares and changing UI selection
-  changeSquare = (selectorFn, direction) => {
+  componentDidUpdate = prevProps => {
+    const { clickedClueSquare } = this.props
+    const { row, column } = clickedClueSquare
+
+    if (
+      row !== prevProps.clickedClueSquare.row ||
+      column !== prevProps.clickedClueSquare.column
+    ) {
+      this.changeSquare(
+        this.getNextSquareFromRowAndColumn(row, column),
+        () => false
+      )
+    }
+  }
+
+  // Change Square function determines UI of next render
+  changeSquare = (selectorFn, shouldChangeDirectionFn) => {
     const {
       selectedSquare,
       selectedLine,
@@ -209,6 +229,7 @@ class Board extends Component {
       selectAltClue,
       changeDirection
     } = this.props
+    let direction = this.props.direction
     let nextSquare = selectedSquare
 
     // if a selector function has been provided, use it to find the next square
@@ -216,32 +237,10 @@ class Board extends Component {
       nextSquare = selectorFn(direction, selectedSquare)
     }
 
-    /**
-     *  if the new square is behind the current one, change direction, as a
-     *  change in direction is inferred (i.e., selector function has looped)
-     */
-    if (selectorFn !== this.getPrevSquare) {
-      if (selectorFn === this.tabDown) {
-        let topSquare = this.getPrevBlackOrBound(direction, selectedSquare)
-        if (
-          this.getSequentialPosition(nextSquare) <
-          this.getSequentialPosition(topSquare)
-        ) {
-          direction = this.getOtherDirection()
-          changeDirection()
-        }
-      } else if (
-        nextSquare.row === selectedSquare.row &&
-        nextSquare.column === selectedSquare.column
-      ) {
-        // second click on same square
-        direction = this.getOtherDirection(direction)
-        changeDirection()
-      } else if (
-        nextSquare.column < selectedSquare.column &&
-        this.getSequentialPosition(nextSquare) <
-          this.getSequentialPosition(selectedSquare)
-      ) {
+    // if a should change direction function has been provided, use it to
+    // determine whether to change the direction
+    if (shouldChangeDirectionFn) {
+      if (shouldChangeDirectionFn(nextSquare)) {
         direction = this.getOtherDirection(direction)
         changeDirection()
       }
@@ -251,19 +250,7 @@ class Board extends Component {
     const nextLine = this.getLine(nextSquare, direction)
 
     // get the next clue
-    let nextClue = 1
-    let nextAltClue = 1
-    if (direction === 'across') {
-      const row = this.getPrevBlackOrBound('down', nextSquare)
-      const column = this.getPrevBlackOrBound('across', nextSquare)
-      nextClue = board[nextSquare.row][column]['number']
-      nextAltClue = board[row][nextSquare.column]['number']
-    } else {
-      const row = this.getPrevBlackOrBound('down', nextSquare)
-      const column = this.getPrevBlackOrBound('across', nextSquare)
-      nextClue = board[row][nextSquare.column]['number']
-      nextAltClue = board[nextSquare.row][column]['number']
-    }
+    let { nextClue, nextAltClue } = this.getNextClue(direction, nextSquare)
 
     // make appropriate updates to the store
     updateSelected({
@@ -282,6 +269,8 @@ class Board extends Component {
       nextSquare.row * board.length - 1 + nextSquare.column + 1
     ].focus()
   }
+
+  // Helper methods for finding selected squares and changing UI selection
 
   // method for finding a new line based on a changed selected square
   getLine = (square, direction) => {
@@ -583,66 +572,121 @@ class Board extends Component {
     return { row: 0, column: 0 }
   }
 
+  // returns opposite of the provided direction
   getOtherDirection = direction => {
     return direction === 'across' ? 'down' : 'across'
   }
 
+  // Named shouldChangeDirectionFn functions
+
+  // gets the ordinal number of the square going across/down rows
   getSequentialPosition = square => {
     const { board } = this.props
     return square.row * (board.length - 1) + square.column
   }
 
+  isBeforeSquare = nextSquare => {
+    const { selectedSquare } = this.props
+    if (
+      nextSquare.column < selectedSquare.column &&
+      this.getSequentialPosition(nextSquare) <
+        this.getSequentialPosition(selectedSquare)
+    ) {
+      return true
+    }
+    return false
+  }
+
+  /* returns true if sequential position is less than the sequential position
+   * of the first letter of the current word
+   */
+  isBeforeFirstLetterSquare = nextSquare => {
+    const { direction, selectedSquare } = this.props
+    let topSquareRow = this.getPrevBlackOrBound(direction, selectedSquare)
+
+    if (
+      this.getSequentialPosition(nextSquare) <
+      this.getSequentialPosition({
+        row: topSquareRow,
+        column: selectedSquare.column
+      })
+    ) {
+      return true
+    }
+    return false
+  }
+
+  // Function to find the next selected clues
+  getNextClue = (direction, nextSquare) => {
+    const { board } = this.props
+    let nextClue = 1
+    let nextAltClue = 1
+    if (direction === 'across') {
+      const row = this.getPrevBlackOrBound('down', nextSquare)
+      const column = this.getPrevBlackOrBound('across', nextSquare)
+      nextClue = board[nextSquare.row][column]['number']
+      nextAltClue = board[row][nextSquare.column]['number']
+    } else {
+      const row = this.getPrevBlackOrBound('down', nextSquare)
+      const column = this.getPrevBlackOrBound('across', nextSquare)
+      nextClue = board[row][nextSquare.column]['number']
+      nextAltClue = board[nextSquare.row][column]['number']
+    }
+    return { nextClue, nextAltClue }
+  }
+
   render = () => (
-    <div className="Board" onKeyDown={this.handleKeyDown}>
-      {this.props.board.map((row, rowIdx) => (
-        <div className="Row" key={rowIdx}>
-          {row.map((square, columnIdx) => (
-            <Square
-              key={columnIdx}
-              row={rowIdx}
-              column={columnIdx}
-              square={square}
-              handleSquareClick={this.handleSquareClick}
-              inputRef={this.inputRef}
-            />
-          ))}
-        </div>
-      ))}
-      <div>
-        <button onClick={this.handleCheckClick}>Check</button>
-        <button onClick={this.handleCheckBoardClick}>Check Board</button>
+    <div className="Board">
+      <div className="Board-Header" />
+      <div className="Board-Grid" onKeyDown={this.handleKeyDown}>
+        {this.props.board.map((row, rowIdx) => (
+          <div className="Row" key={rowIdx}>
+            {row.map((square, columnIdx) => (
+              <Square
+                key={columnIdx}
+                row={rowIdx}
+                column={columnIdx}
+                square={square}
+                handleSquareClick={this.handleSquareClick}
+                inputRef={this.inputRef}
+              />
+            ))}
+          </div>
+        ))}
+        <div>{this.props.remainingSquares} squares to go</div>
       </div>
-      <div>
-        <button onClick={this.handleRevealClick}>Reveal</button>
-        <button onClick={this.handleRevealBoardClick}>Reveal Board</button>
-      </div>
-      <div>x More to go</div>
     </div>
   )
 }
 
-const mapState = ({ board, direction, selectedSquare, selectedLine }) => ({
+const mapState = ({
   board,
   direction,
   selectedSquare,
-  selectedLine
+  selectedLine,
+  clickedClueSquare,
+  remainingSquares
+}) => ({
+  board,
+  direction,
+  selectedSquare,
+  selectedLine,
+  clickedClueSquare,
+  remainingSquares
 })
 
 const mapDispatch = {
   setBorders,
+  setMaxSquares,
+  addSquare,
+  removeSquare,
   updateEntry,
-  checkSquare,
-  checkBoard,
-  revealSquare,
-  revealBoard,
   selectSquare,
   selectLine,
   selectClue,
   selectAltClue,
   updateSelected,
-  changeDirection,
-  setAcross,
-  setDown
+  changeDirection
 }
 
 export default connect(

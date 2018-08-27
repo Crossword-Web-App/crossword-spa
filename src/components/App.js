@@ -1,37 +1,34 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Board from './Board'
-import CluesPanel from './CluesPanel'
-import Timer from './Timer'
-import { loadBoard } from '../store/board'
+import { Route } from 'react-router-dom'
+import NavBar from './NavBar'
+import Home from './Home'
 import './css/App.css'
+
 
 class App extends Component {
   constructor(props) {
     super(props)
   }
 
-  componentDidMount() {
-    const { loadBoard } = this.props
-    const board = loadBoard()
-  }
-
   render() {
     return (
-      <div className="App">
-        <Board />
-        <CluesPanel />
-        {/* <Timer /> */}
+      <div>
+        <NavBar />
+        {/* <Routes /> */}
+        <Route exact path="/login" component={Home} />
+        <Route exact path="/signup" component={Home} />
+        <Route exact path="/autoplay" component={Home} />
+        <Route exact path="/create" component={Home} />
+        <Route exact path="/login" component={Home} />
+        <Route exact path="/browse" component={Home} />
+        {/* Displays our Splash component as a fallback */}
+        <Route component={Home} />
       </div>
     )
   }
 }
 
-const mapState = ({ board }) => ({ board })
 
-const mapDispatch = { loadBoard }
 
-export default connect(
-  mapState,
-  mapDispatch
-)(App)
+export default connect()(App)

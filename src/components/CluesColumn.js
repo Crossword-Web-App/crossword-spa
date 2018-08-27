@@ -1,44 +1,77 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Clue from './Clue'
 
-const CluesColumn = props => {
-  const { clues, dir, direction, selectedClue, selectedAltClue } = props
-  let className = 'CluesPanel-Clue'
+class CluesColumn extends Component {
+  constructor(props) {
+    super(props)
 
-  return (
-    <div className="CluesPanel-Column-Container">
-      <div className="CluesPanel-Header-Text">{dir}</div>
-      <div className="CluesPanel-Clues-Body">
-        {clues[dir].map(clue => (
-          <div
-            key={clue.clueId}
-            className={
-              clue.clueId === selectedClue && direction === dir
-                ? className + ' CluesPanel-Selected-Clue'
-                : className
-            }
-          >
-            <div
-              className={
-                clue.clueId === selectedAltClue && direction !== dir
-                  ? 'CluesPanel-Selected-Clue-Alt'
-                  : 'CluesPanel-Deselected-Clue-Alt'
-              }
+    this.yOffset = 0
+    this.clueBody = null
+    this.marginTop = 0
+    this.height = 0
+  }
+
+  changeScrollHeight = (yOffset, clueHeight) => {
+    if (this.clueBody) {
+
+      // console.log('yOffset', yOffset)
+      // console.log('this.clueBody.scrollTop', this.clueBody.scrollTop)
+
+      // "above" visble portion of scroll div
+      if (yOffset < this.clueBody.scrollTop) {
+        this.clueBody.scrollTop = yOffset
+        // this.marginTop='0px'
+        // this.height = this.clueBody.scrollTop - yOffset
+      }
+
+      // "below" visble portion of scroll div
+      if (yOffset > this.clueBody.scrollTop + this.clueBody.clientHeight - clueHeight) {
+        this.clueBody.scrollTop = yOffset
+        // this.marginTop = `${-yOffset}px`
+        // this.height = yOffset
+        // console.log('yOffset', yOffset)
+        // console.log('this.clueBody.style.height', this.clueBody.style.height)
+      }
+
+    }
+  }
+
+  getNewYOffset = clientHeight => {
+    this.yOffset += clientHeight
+    return this.yOffset - clientHeight
+  }
+
+  render = () => {
+    // console.log('rendering!', this.marginTop, this.height)
+    const { clues, dir, direction, selectedClue, selectedAltClue } = this.props
+
+    return (
+      <div className="CluesPanel-Column-Container">
+        <div className="CluesPanel-Header">
+          <div className="CluesPanel-Header-Text">{dir}</div>
+        </div>
+        <div
+          className="CluesPanel-Clues-Body"
+          // style={{marginTop: this.marginTop, height: `calc(45em + ${this.height}px`}}
+          ref={ref => (this.clueBody = ref)}
+        >
+          {clues[dir].map(clue => (
+            <Clue
+              key={clue.clueId}
+              clue={clue}
+              dir={dir}
+              direction={direction}
+              selectedClue={selectedClue}
+              selectedAltClue={selectedAltClue}
+              getNewYOffset={this.getNewYOffset}
+              changeScrollHeight={this.changeScrollHeight}
             />
-            <div
-              style={{
-                paddingLeft: '0.25em',
-                flexBasis: '18em',
-                flexGrow: '0'
-              }}
-            >
-              {clue.clueId}. {clue.clue}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 const mapState = ({ clues, selectedClue, selectedAltClue, direction }) => ({

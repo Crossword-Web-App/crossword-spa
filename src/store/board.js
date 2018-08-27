@@ -83,11 +83,14 @@ const setBordersOnSquares = state => {
 const updateLetterIsChecked = (square, state) => {
   state = [...state.map(row => [...row])]
   square = state[square.row][square.column]
-  square.isChecked = true
+  // square.isChecked = true
+  square.className += ' Square-Checked'
   if (square.entry === square.letter.toUpperCase()) {
     square.isRevealed = true
+    square.noEditInputClassName += ' Square-Correct'
   } else {
-    square.displayWrong = true
+    // square.displayWrong = true
+    square.inputClassName += ' Square-Checked-Incorrect'
   }
   return state
 }
@@ -96,9 +99,13 @@ const updateBoardIsChecked = state => {
   state = [...state.map(row => [...row])]
   state.forEach(row =>
     row.forEach(square => {
-      if (!square.blackSquare) square.isChecked = true
+      if (!square.blackSquare) {
+        // square.isChecked = true
+        square.className += ' Square-Checked'
+      }
       if (square.entry === square.letter.toUpperCase()) {
         square.isRevealed = true
+        square.noEditInputClassName += ' Square-Revealed-Text'
       } else {
         square.displayWrong = true
       }
@@ -110,12 +117,18 @@ const updateBoardIsChecked = state => {
 const updateLetterIsRevealed = (square, state) => {
   state = [...state.map(row => [...row])]
   state[square.row][square.column]['isRevealed'] = true
+  state[square.row][square.column]['className'] += ' Square-Revealed'
   return state
 }
 
 const updateBoardIsRevealed = state => {
   state = [...state.map(row => [...row])]
-  state.forEach(row => row.forEach(square => (square.isRevealed = true)))
+  state.forEach(row =>
+    row.forEach(square => {
+      square.isRevealed = true
+      square.className += ' Square-Revealed'
+    })
+  )
   return state
 }
 
@@ -149,7 +162,7 @@ const tempBoard = [
   [
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: 1,
       blackSquare: false,
       isChecked: false,
@@ -162,7 +175,7 @@ const tempBoard = [
     },
     {
       letter: 'W',
-      entry: '',
+      entry: 'W',
       number: 2,
       blackSquare: false,
       isChecked: false,
@@ -188,7 +201,7 @@ const tempBoard = [
     },
     {
       letter: 'L',
-      entry: '',
+      entry: 'L',
       number: 4,
       blackSquare: false,
       isChecked: false,
@@ -201,7 +214,7 @@ const tempBoard = [
     },
     {
       letter: 'V',
-      entry: '',
+      entry: 'V',
       number: 5,
       blackSquare: false,
       isChecked: false,
@@ -214,7 +227,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 6,
       blackSquare: false,
       isChecked: false,
@@ -227,7 +240,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -240,7 +253,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 7,
       blackSquare: false,
       isChecked: false,
@@ -253,7 +266,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: 8,
       blackSquare: false,
       isChecked: false,
@@ -266,7 +279,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: 9,
       blackSquare: false,
       isChecked: false,
@@ -279,7 +292,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: 10,
       blackSquare: false,
       isChecked: false,
@@ -292,7 +305,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -305,7 +318,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: 11,
       blackSquare: false,
       isChecked: false,
@@ -318,7 +331,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 12,
       blackSquare: false,
       isChecked: false,
@@ -331,7 +344,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: 13,
       blackSquare: false,
       isChecked: false,
@@ -346,7 +359,7 @@ const tempBoard = [
   [
     {
       letter: 'V',
-      entry: '',
+      entry: 'V',
       number: 14,
       blackSquare: false,
       isChecked: false,
@@ -359,7 +372,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -372,7 +385,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -385,7 +398,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -398,7 +411,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -411,7 +424,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -424,7 +437,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -437,7 +450,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: 15,
       blackSquare: false,
       isChecked: false,
@@ -450,7 +463,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -463,7 +476,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -476,7 +489,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -489,7 +502,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -502,7 +515,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: 16,
       blackSquare: false,
       isChecked: false,
@@ -515,7 +528,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -528,7 +541,7 @@ const tempBoard = [
     },
     {
       letter: 'U',
-      entry: '',
+      entry: 'U',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -543,7 +556,7 @@ const tempBoard = [
   [
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: 17,
       blackSquare: false,
       isChecked: false,
@@ -556,7 +569,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -569,7 +582,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -582,7 +595,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -595,7 +608,7 @@ const tempBoard = [
     },
     {
       letter: 'C',
-      entry: '',
+      entry: 'C',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -608,7 +621,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -621,7 +634,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: 18,
       blackSquare: false,
       isChecked: false,
@@ -634,7 +647,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -647,7 +660,7 @@ const tempBoard = [
     },
     {
       letter: 'B',
-      entry: '',
+      entry: 'B',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -660,7 +673,7 @@ const tempBoard = [
     },
     {
       letter: 'L',
-      entry: '',
+      entry: 'L',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -673,7 +686,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -686,7 +699,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -699,7 +712,7 @@ const tempBoard = [
     },
     {
       letter: 'W',
-      entry: '',
+      entry: 'W',
       number: 19,
       blackSquare: false,
       isChecked: false,
@@ -712,7 +725,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -725,7 +738,7 @@ const tempBoard = [
     },
     {
       letter: 'X',
-      entry: '',
+      entry: 'X',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -740,7 +753,7 @@ const tempBoard = [
   [
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: 20,
       blackSquare: false,
       isChecked: false,
@@ -753,7 +766,7 @@ const tempBoard = [
     },
     {
       letter: 'L',
-      entry: '',
+      entry: 'L',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -766,7 +779,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -779,7 +792,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -792,7 +805,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -805,7 +818,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -818,7 +831,7 @@ const tempBoard = [
     },
     {
       letter: 'B',
-      entry: '',
+      entry: 'B',
       number: 21,
       blackSquare: false,
       isChecked: false,
@@ -831,7 +844,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -844,7 +857,7 @@ const tempBoard = [
     },
     {
       letter: 'B',
-      entry: '',
+      entry: 'B',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -857,7 +870,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -870,7 +883,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -883,7 +896,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: 22,
       blackSquare: false,
       isChecked: false,
@@ -896,7 +909,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -909,7 +922,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -922,7 +935,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -937,7 +950,7 @@ const tempBoard = [
   [
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -950,7 +963,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -963,7 +976,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: 23,
       blackSquare: false,
       isChecked: false,
@@ -976,7 +989,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -989,7 +1002,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1002,7 +1015,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1028,7 +1041,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1041,7 +1054,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1054,7 +1067,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1067,7 +1080,7 @@ const tempBoard = [
     },
     {
       letter: 'F',
-      entry: '',
+      entry: 'F',
       number: 25,
       blackSquare: false,
       isChecked: false,
@@ -1080,7 +1093,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1093,7 +1106,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1106,7 +1119,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1119,7 +1132,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1134,7 +1147,7 @@ const tempBoard = [
   [
     {
       letter: 'W',
-      entry: '',
+      entry: 'W',
       number: 26,
       blackSquare: false,
       isChecked: false,
@@ -1147,7 +1160,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: 27,
       blackSquare: false,
       isChecked: false,
@@ -1160,7 +1173,7 @@ const tempBoard = [
     },
     {
       letter: 'G',
-      entry: '',
+      entry: 'G',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1173,7 +1186,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1186,7 +1199,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1199,7 +1212,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: 28,
       blackSquare: false,
       isChecked: false,
@@ -1212,7 +1225,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1225,7 +1238,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1238,7 +1251,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1251,7 +1264,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1264,7 +1277,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: 29,
       blackSquare: false,
       isChecked: false,
@@ -1277,7 +1290,7 @@ const tempBoard = [
     },
     {
       letter: 'U',
-      entry: '',
+      entry: 'U',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1290,7 +1303,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1303,7 +1316,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1316,7 +1329,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1331,7 +1344,7 @@ const tempBoard = [
   [
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 30,
       blackSquare: false,
       isChecked: false,
@@ -1344,7 +1357,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1357,7 +1370,7 @@ const tempBoard = [
     },
     {
       letter: 'U',
-      entry: '',
+      entry: 'U',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1370,7 +1383,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1383,7 +1396,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1396,7 +1409,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: 31,
       blackSquare: false,
       isChecked: false,
@@ -1409,7 +1422,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: 32,
       blackSquare: false,
       isChecked: false,
@@ -1422,7 +1435,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: 33,
       blackSquare: false,
       isChecked: false,
@@ -1435,7 +1448,7 @@ const tempBoard = [
     },
     {
       letter: 'B',
-      entry: '',
+      entry: 'B',
       number: 34,
       blackSquare: false,
       isChecked: false,
@@ -1448,7 +1461,7 @@ const tempBoard = [
     },
     {
       letter: 'U',
-      entry: '',
+      entry: 'U',
       number: 35,
       blackSquare: false,
       isChecked: false,
@@ -1461,7 +1474,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1474,7 +1487,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1487,7 +1500,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1500,7 +1513,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1513,7 +1526,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1528,7 +1541,7 @@ const tempBoard = [
   [
     {
       letter: 'B',
-      entry: '',
+      entry: 'B',
       number: 36,
       blackSquare: false,
       isChecked: false,
@@ -1541,7 +1554,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1554,7 +1567,7 @@ const tempBoard = [
     },
     {
       letter: 'P',
-      entry: '',
+      entry: 'P',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1567,7 +1580,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: 37,
       blackSquare: false,
       isChecked: false,
@@ -1580,7 +1593,7 @@ const tempBoard = [
     },
     {
       letter: 'L',
-      entry: '',
+      entry: 'L',
       number: 38,
       blackSquare: false,
       isChecked: false,
@@ -1593,7 +1606,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1606,7 +1619,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1619,7 +1632,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1632,7 +1645,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1645,7 +1658,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1658,7 +1671,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1671,7 +1684,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1684,7 +1697,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: 39,
       blackSquare: false,
       isChecked: false,
@@ -1697,7 +1710,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 40,
       blackSquare: false,
       isChecked: false,
@@ -1710,7 +1723,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: 41,
       blackSquare: false,
       isChecked: false,
@@ -1725,7 +1738,7 @@ const tempBoard = [
   [
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1738,7 +1751,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1751,7 +1764,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1764,7 +1777,7 @@ const tempBoard = [
     },
     {
       letter: 'B',
-      entry: '',
+      entry: 'B',
       number: 42,
       blackSquare: false,
       isChecked: false,
@@ -1777,7 +1790,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1790,7 +1803,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1803,7 +1816,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1816,7 +1829,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1829,7 +1842,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1842,7 +1855,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1855,7 +1868,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1868,7 +1881,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -1881,7 +1894,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: 43,
       blackSquare: false,
       isChecked: false,
@@ -1894,7 +1907,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1907,7 +1920,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1922,7 +1935,7 @@ const tempBoard = [
   [
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: 44,
       blackSquare: false,
       isChecked: false,
@@ -1935,7 +1948,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: 45,
       blackSquare: false,
       isChecked: false,
@@ -1948,7 +1961,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 46,
       blackSquare: false,
       isChecked: false,
@@ -1961,7 +1974,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1974,7 +1987,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -1987,7 +2000,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2000,7 +2013,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2013,7 +2026,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2026,7 +2039,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2039,7 +2052,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: 47,
       blackSquare: false,
       isChecked: false,
@@ -2052,7 +2065,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: 48,
       blackSquare: false,
       isChecked: false,
@@ -2065,7 +2078,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: 49,
       blackSquare: false,
       isChecked: false,
@@ -2078,7 +2091,7 @@ const tempBoard = [
     },
     {
       letter: 'G',
-      entry: '',
+      entry: 'G',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2091,7 +2104,7 @@ const tempBoard = [
     },
     {
       letter: 'U',
-      entry: '',
+      entry: 'U',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2104,7 +2117,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2119,7 +2132,7 @@ const tempBoard = [
   [
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: 50,
       blackSquare: false,
       isChecked: false,
@@ -2132,7 +2145,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2145,7 +2158,7 @@ const tempBoard = [
     },
     {
       letter: 'X',
-      entry: '',
+      entry: 'X',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2158,7 +2171,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2171,7 +2184,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2184,7 +2197,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: 51,
       blackSquare: false,
       isChecked: false,
@@ -2197,7 +2210,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: 52,
       blackSquare: false,
       isChecked: false,
@@ -2210,7 +2223,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 53,
       blackSquare: false,
       isChecked: false,
@@ -2223,7 +2236,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: 54,
       blackSquare: false,
       isChecked: false,
@@ -2236,7 +2249,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2249,7 +2262,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: 55,
       blackSquare: false,
       isChecked: false,
@@ -2262,7 +2275,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2275,7 +2288,7 @@ const tempBoard = [
     },
     {
       letter: 'G',
-      entry: '',
+      entry: 'G',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2288,7 +2301,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2301,7 +2314,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2316,7 +2329,7 @@ const tempBoard = [
   [
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: 56,
       blackSquare: false,
       isChecked: false,
@@ -2329,7 +2342,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2342,7 +2355,7 @@ const tempBoard = [
     },
     {
       letter: 'C',
-      entry: '',
+      entry: 'C',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2355,7 +2368,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2368,7 +2381,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2381,7 +2394,7 @@ const tempBoard = [
     },
     {
       letter: 'H',
-      entry: '',
+      entry: 'H',
       number: 57,
       blackSquare: false,
       isChecked: false,
@@ -2394,7 +2407,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2407,7 +2420,7 @@ const tempBoard = [
     },
     {
       letter: 'L',
-      entry: '',
+      entry: 'L',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2420,7 +2433,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2433,7 +2446,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2446,7 +2459,7 @@ const tempBoard = [
     },
     {
       letter: 'P',
-      entry: '',
+      entry: 'P',
       number: 58,
       blackSquare: false,
       isChecked: false,
@@ -2459,7 +2472,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2472,7 +2485,7 @@ const tempBoard = [
     },
     {
       letter: 'Y',
-      entry: '',
+      entry: 'Y',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2485,7 +2498,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 59,
       blackSquare: false,
       isChecked: false,
@@ -2498,7 +2511,7 @@ const tempBoard = [
     },
     {
       letter: 'R',
-      entry: '',
+      entry: 'R',
       number: 60,
       blackSquare: false,
       isChecked: false,
@@ -2513,7 +2526,7 @@ const tempBoard = [
   [
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: 61,
       blackSquare: false,
       isChecked: false,
@@ -2526,7 +2539,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2539,7 +2552,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2552,7 +2565,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2565,7 +2578,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: 62,
       blackSquare: false,
       isChecked: false,
@@ -2578,7 +2591,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2591,7 +2604,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2604,7 +2617,7 @@ const tempBoard = [
     },
     {
       letter: 'L',
-      entry: '',
+      entry: 'L',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2617,7 +2630,7 @@ const tempBoard = [
     },
     {
       letter: 'Y',
-      entry: '',
+      entry: 'Y',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2630,7 +2643,7 @@ const tempBoard = [
     },
     {
       letter: 'J',
-      entry: '',
+      entry: 'J',
       number: 63,
       blackSquare: false,
       isChecked: false,
@@ -2643,7 +2656,7 @@ const tempBoard = [
     },
     {
       letter: 'U',
-      entry: '',
+      entry: 'U',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2656,7 +2669,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2669,7 +2682,7 @@ const tempBoard = [
     },
     {
       letter: 'B',
-      entry: '',
+      entry: 'B',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2682,7 +2695,7 @@ const tempBoard = [
     },
     {
       letter: 'L',
-      entry: '',
+      entry: 'L',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2695,7 +2708,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2710,7 +2723,7 @@ const tempBoard = [
   [
     {
       letter: 'G',
-      entry: '',
+      entry: 'G',
       number: 64,
       blackSquare: false,
       isChecked: false,
@@ -2723,7 +2736,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2736,7 +2749,7 @@ const tempBoard = [
     },
     {
       letter: 'P',
-      entry: '',
+      entry: 'P',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2749,7 +2762,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2762,7 +2775,7 @@ const tempBoard = [
     },
     {
       letter: 'O',
-      entry: '',
+      entry: 'O',
       number: 65,
       blackSquare: false,
       isChecked: false,
@@ -2775,7 +2788,7 @@ const tempBoard = [
     },
     {
       letter: 'M',
-      entry: '',
+      entry: 'M',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2788,7 +2801,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2801,7 +2814,7 @@ const tempBoard = [
     },
     {
       letter: 'I',
-      entry: '',
+      entry: 'I',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2814,7 +2827,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2827,7 +2840,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: 66,
       blackSquare: false,
       isChecked: false,
@@ -2840,7 +2853,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2853,7 +2866,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2866,7 +2879,7 @@ const tempBoard = [
     },
     {
       letter: 'A',
-      entry: '',
+      entry: 'A',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2879,7 +2892,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2892,7 +2905,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2907,7 +2920,7 @@ const tempBoard = [
   [
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: 67,
       blackSquare: false,
       isChecked: false,
@@ -2920,7 +2933,7 @@ const tempBoard = [
     },
     {
       letter: 'N',
-      entry: '',
+      entry: 'N',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2933,7 +2946,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2946,7 +2959,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -2959,7 +2972,7 @@ const tempBoard = [
     },
     {
       letter: 'W',
-      entry: '',
+      entry: 'W',
       number: 68,
       blackSquare: false,
       isChecked: false,
@@ -2972,7 +2985,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2985,7 +2998,7 @@ const tempBoard = [
     },
     {
       letter: 'T',
-      entry: '',
+      entry: 'T',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -2998,7 +3011,7 @@ const tempBoard = [
     },
     {
       letter: 'S',
-      entry: '',
+      entry: 'S',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -3011,7 +3024,7 @@ const tempBoard = [
     },
     {
       letter: '.',
-      entry: '',
+      entry: '.',
       number: '',
       blackSquare: true,
       isChecked: false,
@@ -3024,7 +3037,7 @@ const tempBoard = [
     },
     {
       letter: 'W',
-      entry: '',
+      entry: 'W',
       number: 69,
       blackSquare: false,
       isChecked: false,
@@ -3037,7 +3050,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -3050,7 +3063,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -3063,7 +3076,7 @@ const tempBoard = [
     },
     {
       letter: 'G',
-      entry: '',
+      entry: 'G',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -3076,7 +3089,7 @@ const tempBoard = [
     },
     {
       letter: 'E',
-      entry: '',
+      entry: 'E',
       number: '',
       blackSquare: false,
       isChecked: false,
@@ -3089,7 +3102,7 @@ const tempBoard = [
     },
     {
       letter: 'D',
-      entry: '',
+      entry: 'D',
       number: '',
       blackSquare: false,
       isChecked: false,
