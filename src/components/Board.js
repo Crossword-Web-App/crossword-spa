@@ -12,6 +12,7 @@ import { selectSquare } from '../store/selectedSquare'
 import { selectLine } from '../store/selectedLine'
 import { selectClue } from '../store/selectedClue'
 import { selectAltClue } from '../store/selectedAltClue'
+import { endGame } from '../store/gameState'
 import './css/Board.css'
 
 class Board extends Component {
@@ -66,21 +67,14 @@ class Board extends Component {
         const isCorrect =
           board
             .reduce((a, b) => a.concat(b))
-            .filter(square => !(square.letter === square.entry)).length <= 1 &&
+            .filter(square => !(square.letter === square.entry)).length < 1 &&
           board[row][column]['letter'] === String.fromCharCode(event.keyCode)
 
-        console.log(
-          { isCorrect,
-            wrongAnswers: board
-            .reduce((a, b) => a.concat(b))
-            .filter(square => !(square.letter === square.entry)).length,
-            correctCurLetter: board[row][column]['letter'] === String.fromCharCode(event.keyCode)
-          }
-        )
-
-        if (isCorrect) {
-          alert('Congratulations! A fun song should play now')
-        } else {
+          if (isCorrect) {
+            alert('Congratulations! A fun song should play now')
+            this.props.endGame()
+          } 
+          else {
           alert('all squares are filled but at least one letter is incorrect')
         }
 
@@ -686,7 +680,8 @@ const mapDispatch = {
   selectClue,
   selectAltClue,
   updateSelected,
-  changeDirection
+  changeDirection,
+  endGame
 }
 
 export default connect(

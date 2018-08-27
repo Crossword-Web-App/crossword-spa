@@ -8,3 +8,13 @@
     color: #7b7b7b;
     font-size: 1em;
 }
+
+.Timer-PauseButton {
+    background-color: black;
+    color: white;
+    height: 1em;
+    width: 100%;
+    font-size: .75em;
+    text-align: center;
+    margin: 0, 1em;
+}

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import './css/Timer.css'
+import { startGame, pauseGame } from '../store/gameState'
 
 class Timer extends Component {
   constructor(props) {
@@ -16,14 +18,23 @@ class Timer extends Component {
   componentDidMount() {
     let timer = setInterval(this.tick, 1000)
     this.setState({ timer })
+    this.props.startGame()
   }
   componentWillUnmount() {
-    this.clearInterval(this.state.timer)
+    clearInterval(this.state.timer)
   }
   tick() {
+    if (this.props.gameState === 'inProgress') {
     this.setState({
       counter: this.state.counter + 1
     })
+  }
+  }
+
+  handlePauseButtonClick = () => {
+    if (this.props.gameState === 'paused') this.props.startGame()
+  
+    else this.props.pauseGame()
   }
 
   secondsToTime(secs) {
@@ -42,8 +53,22 @@ class Timer extends Component {
   }
 
   render() {
-    return <div className="Timer">{this.secondsToTime(this.state.counter)}</div>
+    return (
+      <div className="Timer">
+        <div>
+          {this.secondsToTime(this.state.counter)}, {this.props.gameState}
+        </div>
+        {(this.props.gameState === 'inProgress' || this.props.gameState === 'paused') && 
+        <div className="Timer-PauseButton" onClick = {this.handlePauseButtonClick}>Pause</div>}
+      </div>
+    )
   }
 }
 
-export default Timer
+const mapState = ({ gameState }) => ({ gameState })
+const mapDispatch = { startGame, pauseGame }
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Timer)
