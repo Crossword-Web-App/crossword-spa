@@ -159,27 +159,13 @@ class Board extends Component {
   }
 
   // Lifecycle methods
-  componentDidMount = () => {
+   componentDidMount = async () => {
     const {
-      setBorders,
-      setMaxSquares,
       selectedSquare,
       selectLine,
       updateSelected,
-      board,
       direction
     } = this.props
-
-    // add border css to appropriate squares
-    setBorders()
-
-    // set number of squares to fill
-    setMaxSquares(
-      board
-        .reduce((a, b) => a.concat(b))
-        .filter(square => !square.blackSquare && square.entry !== square.letter)
-        .length
-    )
 
     // show selected square [0,0] and line
     let nextLine = this.getLine(selectedSquare, direction)
@@ -629,7 +615,7 @@ class Board extends Component {
     return { nextClue, nextAltClue }
   }
 
-  render = () => (
+  render = () => (this.props.board.length ?
     <div className="Board">
       <div className="Board-Header" />
       <div className="Board-Grid" onKeyDown={this.handleKeyDown}>
@@ -649,7 +635,7 @@ class Board extends Component {
         ))}
         <div>{this.props.remainingSquares} squares to go</div>
       </div>
-    </div>
+    </div> : <div></div>
   )
 }
 
@@ -670,8 +656,6 @@ const mapState = ({
 })
 
 const mapDispatch = {
-  setBorders,
-  setMaxSquares,
   addSquare,
   removeSquare,
   updateEntry,

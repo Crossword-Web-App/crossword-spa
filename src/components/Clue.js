@@ -57,7 +57,7 @@ class Clue extends Component {
       changeScrollHeight(this.yOffset, this.clientHeight)
     }
 
-    return (
+    return (clue ?
       <div
         key={clue.clueId}
         className={className}
@@ -76,7 +76,7 @@ class Clue extends Component {
         >
           {clue.clueId}. {clue.clue}
         </div>
-      </div>
+      </div>  : <div></div>
     )
   }
 }

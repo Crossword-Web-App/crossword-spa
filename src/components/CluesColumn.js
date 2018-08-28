@@ -43,10 +43,9 @@ class CluesColumn extends Component {
   }
 
   render = () => {
-    // console.log('rendering!', this.marginTop, this.height)
     const { clues, dir, direction, selectedClue, selectedAltClue } = this.props
-
-    return (
+    console.log(clues === true)
+    return (Object.keys(clues).length ? 
       <div className="CluesPanel-Column-Container">
         <div className="CluesPanel-Header">
           <div className="CluesPanel-Header-Text">{dir}</div>
@@ -69,7 +68,7 @@ class CluesColumn extends Component {
             />
           ))}
         </div>
-      </div>
+      </div> : <div></div>
     )
   }
 }
