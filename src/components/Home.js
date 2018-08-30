@@ -4,10 +4,9 @@ import Board from './Board'
 import CluesPanel from './CluesPanel'
 import Timer from './Timer'
 import axios from 'axios'
-import { setBorders, getBoard } from '../store/board'
-import { setMaxSquares } from '../store/remainingSquares'
+import { getBoard } from '../store/board'
 import { getClues } from '../store/clues'
-const API_URL = 'XXXXXXXX'
+import { API_URL } from '../../secrets'
 
 class Home extends Component {
   constructor(props) {
@@ -15,26 +14,29 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const { setBorders, setMaxSquares, board } = this.props
-
+    
     await this.props.loadGame(1)
 
-    // add border css to appropriate squares
-    setBorders()
   }
   render() {
     return (
       <div>
-        <div className="App">
-          <Board />
-          <CluesPanel />
-          {/* <AnswerPanel /> */}
-          <Timer />
-        </div>
+        {(this.props.board.length &&
+          Object.keys(this.props.clues).length) ? (
+            <div className="App">
+              <Board />
+              <CluesPanel />
+              {/* <AnswerPanel /> */}
+              <Timer />
+            </div>
+          ) : <div></div>
+          }
       </div>
     )
   }
 }
+
+const mapState = ({ board, clues }) => ({ board, clues })
 
 const mapDispatch = {
   loadGame: id => async dispatch => {
@@ -44,21 +46,13 @@ const mapDispatch = {
       const clues = await res.data.clues
       dispatch(getBoard(board))
       dispatch(getClues(clues))
-      dispatch(setMaxSquares(
-        board
-          .reduce((a, b) => a.concat(b))
-          .filter(
-            square => !square.blackSquare && square.entry !== square.letter
-          ).length
-      ))
     } catch (error) {
       console.error(error)
     }
-  },
-  setBorders
+  }
 }
 
 export default connect(
-  null,
+  mapState,
   mapDispatch
 )(Home)

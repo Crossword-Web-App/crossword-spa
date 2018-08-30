@@ -70,11 +70,10 @@ class Board extends Component {
             .filter(square => !(square.letter === square.entry)).length < 1 &&
           board[row][column]['letter'] === String.fromCharCode(event.keyCode)
 
-          if (isCorrect) {
-            alert('Congratulations! A fun song should play now')
-            this.props.endGame()
-          } 
-          else {
+        if (isCorrect) {
+          alert('Congratulations! A fun song should play now')
+          this.props.endGame()
+        } else {
           alert('all squares are filled but at least one letter is incorrect')
         }
 
@@ -159,13 +158,15 @@ class Board extends Component {
   }
 
   // Lifecycle methods
-   componentDidMount = async () => {
-    const {
-      selectedSquare,
-      selectLine,
-      updateSelected,
-      direction
-    } = this.props
+  componentDidMount = async () => {
+    const { selectedSquare, selectLine, updateSelected, direction, setBorders, setMaxSquares, board } = this.props
+    setMaxSquares(
+      board
+      .reduce((a, b) => a.concat(b))
+      .filter(square => !square.blackSquare && square.entry !== square.letter)
+      .length
+    )
+    setBorders()
 
     // show selected square [0,0] and line
     let nextLine = this.getLine(selectedSquare, direction)
@@ -615,28 +616,31 @@ class Board extends Component {
     return { nextClue, nextAltClue }
   }
 
-  render = () => (this.props.board.length ?
-    <div className="Board">
-      <div className="Board-Header" />
-      <div className="Board-Grid" onKeyDown={this.handleKeyDown}>
-        {this.props.board.map((row, rowIdx) => (
-          <div className="Row" key={rowIdx}>
-            {row.map((square, columnIdx) => (
-              <Square
-                key={columnIdx}
-                row={rowIdx}
-                column={columnIdx}
-                square={square}
-                handleSquareClick={this.handleSquareClick}
-                inputRef={this.inputRef}
-              />
-            ))}
-          </div>
-        ))}
-        <div>{this.props.remainingSquares} squares to go</div>
+  render = () =>
+    this.props.board.length ? (
+      <div className="Board">
+        <div className="Board-Header" />
+        <div className="Board-Grid" onKeyDown={this.handleKeyDown}>
+          {this.props.board.map((row, rowIdx) => (
+            <div className="Row" key={rowIdx}>
+              {row.map((square, columnIdx) => (
+                <Square
+                  key={columnIdx}
+                  row={rowIdx}
+                  column={columnIdx}
+                  square={square}
+                  handleSquareClick={this.handleSquareClick}
+                  inputRef={this.inputRef}
+                />
+              ))}
+            </div>
+          ))}
+          <div>{this.props.remainingSquares} squares to go</div>
+        </div>
       </div>
-    </div> : <div></div>
-  )
+    ) : (
+      <div />
+    )
 }
 
 const mapState = ({
@@ -665,7 +669,9 @@ const mapDispatch = {
   selectAltClue,
   updateSelected,
   changeDirection,
-  endGame
+  endGame,
+  setBorders,
+  setMaxSquares
 }
 
 export default connect(

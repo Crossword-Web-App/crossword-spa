@@ -56,7 +56,7 @@ class Timer extends Component {
     return (
       <div className="Timer">
         <div>
-          {this.secondsToTime(this.state.counter)}, {this.props.gameState}
+          {this.secondsToTime(this.state.counter)}
         </div>
         {(this.props.gameState === 'inProgress' || this.props.gameState === 'paused') && 
         <div className="Timer-PauseButton" onClick = {this.handlePauseButtonClick}>Pause</div>}
