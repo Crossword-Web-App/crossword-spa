@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Clue from './Clue'
 
@@ -14,10 +15,6 @@ class CluesColumn extends Component {
 
   changeScrollHeight = (yOffset, clueHeight) => {
     if (this.clueBody) {
-
-      // console.log('yOffset', yOffset)
-      // console.log('this.clueBody.scrollTop', this.clueBody.scrollTop)
-
       // "above" visble portion of scroll div
       if (yOffset < this.clueBody.scrollTop) {
         this.clueBody.scrollTop = yOffset
@@ -26,14 +23,12 @@ class CluesColumn extends Component {
       }
 
       // "below" visble portion of scroll div
-      if (yOffset > this.clueBody.scrollTop + this.clueBody.clientHeight - clueHeight) {
+      if (
+        yOffset >
+        this.clueBody.scrollTop + this.clueBody.clientHeight - clueHeight
+      ) {
         this.clueBody.scrollTop = yOffset
-        // this.marginTop = `${-yOffset}px`
-        // this.height = yOffset
-        // console.log('yOffset', yOffset)
-        // console.log('this.clueBody.style.height', this.clueBody.style.height)
       }
-
     }
   }
 
@@ -43,24 +38,30 @@ class CluesColumn extends Component {
   }
 
   render = () => {
-    // console.log('rendering!', this.marginTop, this.height)
-    const { clues, dir, direction, selectedClue, selectedAltClue } = this.props
+    const {
+      clues,
+      panel,
+      direction,
+      selectedClue,
+      selectedAltClue
+    } = this.props
 
     return (
       <div className="CluesPanel-Column-Container">
         <div className="CluesPanel-Header">
-          <div className="CluesPanel-Header-Text">{dir}</div>
+          <div className="CluesPanel-Header-Text">{panel}</div>
         </div>
         <div
           className="CluesPanel-Clues-Body"
-          // style={{marginTop: this.marginTop, height: `calc(45em + ${this.height}px`}}
-          ref={ref => (this.clueBody = ref)}
+          ref={ref => {
+            this.clueBody = ref
+          }}
         >
-          {clues[dir].map(clue => (
+          {clues[panel].map(clue => (
             <Clue
               key={clue.clueId}
               clue={clue}
-              dir={dir}
+              panel={panel}
               direction={direction}
               selectedClue={selectedClue}
               selectedAltClue={selectedAltClue}
@@ -72,6 +73,27 @@ class CluesColumn extends Component {
       </div>
     )
   }
+}
+
+CluesColumn.propTypes = {
+  clues: PropTypes.shape({
+    across: PropTypes.arrayOf(
+      PropTypes.shape({
+        clueId: PropTypes.number.isRequired,
+        clue: PropTypes.string.isRequired
+      })
+    ),
+    down: PropTypes.arrayOf(
+      PropTypes.shape({
+        clueId: PropTypes.number.isRequired,
+        clue: PropTypes.string.isRequired
+      })
+    )
+  }).isRequired,
+  selectedClue: PropTypes.number.isRequired,
+  selectedAltClue: PropTypes.number.isRequired,
+  panel: PropTypes.string.isRequired,
+  direction: PropTypes.string.isRequired
 }
 
 const mapState = ({ clues, selectedClue, selectedAltClue, direction }) => ({

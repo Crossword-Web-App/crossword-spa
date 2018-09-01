@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './css/Navbar.css'
+import './css/NavBar.css'
 
-const Navbar = () => (
+const NavBar = () => (
 
   <header>
     <div id="title">Crosswords</div>
@@ -27,4 +27,4 @@ const Navbar = () => (
   </header>
 )
 
-export default Navbar
+export default NavBar

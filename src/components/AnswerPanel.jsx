@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   checkSquare,
@@ -17,19 +18,23 @@ class AnswerPanel extends Component {
 
   // Event handlers
   handleCheckClick = () => {
-    this.props.checkSquare(this.props.selectedSquare)
+    const { checkSquare, selectedSquare} = this.props
+    checkSquare(selectedSquare)
   }
 
   handleCheckBoardClick = () => {
-    this.props.checkBoard()
+    const { checkBoard } = this.props
+    checkBoard()
   }
 
   handleRevealClick = () => {
-    this.props.revealSquare(this.props.selectedSquare)
+    const { revealSquare, selectedSquare} = this.props
+    revealSquare(selectedSquare)
   }
 
   handleRevealBoardClick = () => {
-    this.props.revealBoard()
+    const { revealBoard } = this.props
+    revealBoard()
   }
 
   displayCheckButtons = () => {
@@ -57,7 +62,7 @@ class AnswerPanel extends Component {
           className="AnswerPanel-Hidden"
           onClick={this.handleCheckClick}
           ref={ref => {
-            this.buttonRefs['checkSquare'] = ref
+            this.buttonRefs.checkSquare = ref
           }}
         >
           Check Square
@@ -66,7 +71,7 @@ class AnswerPanel extends Component {
           className="AnswerPanel-Hidden"
           onClick={this.handleCheckBoardClick}
           ref={ref => {
-            this.buttonRefs['checkBoard'] = ref
+            this.buttonRefs.checkBoard = ref
           }}
         >
           Check Board
@@ -78,7 +83,7 @@ class AnswerPanel extends Component {
           className="AnswerPanel-Hidden"
           onClick={this.handleRevealClick}
           ref={ref => {
-            this.buttonRefs['revealSquare'] = ref
+            this.buttonRefs.revealSquare = ref
           }}
         >
           Reveal Square
@@ -87,7 +92,7 @@ class AnswerPanel extends Component {
           className="AnswerPanel-Hidden"
           onClick={this.handleRevealBoardClick}
           ref={ref => {
-            this.buttonRefs['revealBoard'] = ref
+            this.buttonRefs.revealBoard = ref
           }}
         >
           Reveal Board
@@ -95,6 +100,17 @@ class AnswerPanel extends Component {
       </div>
     </div>
   )
+}
+
+AnswerPanel.propTypes = {
+  selectedSquare: PropTypes.shape({
+    row: PropTypes.number,
+    column: PropTypes.number
+  }).isRequired,
+  checkSquare: PropTypes.func.isRequired,
+  checkBoard: PropTypes.func.isRequired,
+  revealSquare: PropTypes.func.isRequired,
+  revealBoard: PropTypes.func.isRequired,
 }
 
 const mapState = ({ selectedSquare }) => ({ selectedSquare })

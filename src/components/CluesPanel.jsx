@@ -4,8 +4,8 @@ import './css/CluesPanel.css'
 
 const CluesPanel = () => (
   <div className="CluesPanel">
-    <CluesColumn dir="across" />
-    <CluesColumn dir="down" />
+    <CluesColumn panel="across" />
+    <CluesColumn panel="down" />
   </div>
 )
 

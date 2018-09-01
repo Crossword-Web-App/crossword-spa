@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { selectClueSquare } from '../store/clickedClueSquare'
 import { changeDirection } from '../store/direction'
@@ -12,27 +13,31 @@ class Clue extends Component {
   }
 
   handleClueClick = event => {
-    const { clue, board, selectClueSquare, dir, direction, changeDirection } = this.props
+    const {
+      clue,
+      board,
+      selectClueSquare,
+      panel,
+      direction,
+      changeDirection
+    } = this.props
     let square = { row: 0, column: 0 }
     event.preventDefault()
     board.forEach((row, rowIdx) => {
       row.forEach((_, columnIdx) => {
-        // console.log('row', rowIdx, 'column', columnIdx)
-        if (board[rowIdx][columnIdx]['number'] === clue.clueId) {
-          console.log('lol', board[rowIdx][columnIdx]['number'])
+        if (board[rowIdx][columnIdx].number === clue.clueId) {
           square = { row: rowIdx, column: columnIdx }
         }
       })
     })
-    console.log('square', square)
     selectClueSquare(square)
 
-    if (dir !== direction) changeDirection()
+    if (panel !== direction) changeDirection()
   }
 
   componentDidMount = () => {
-    this.yOffset = this.props.getNewYOffset(this.clientHeight)
-    // console.log('this.yOffset', this.yOffset)
+    const { getNewYOffset } = this.props
+    this.yOffset = getNewYOffset(this.clientHeight)
   }
 
   render = () => {
@@ -41,18 +46,18 @@ class Clue extends Component {
       selectedClue,
       selectedAltClue,
       direction,
-      dir,
+      panel,
       changeScrollHeight
     } = this.props
     let className = 'CluesPanel-Clue'
     let altSelectedClassName = 'CluesPanel-Deselected-Clue-Alt'
 
-    if (clue.clueId === selectedClue && direction === dir) {
+    if (clue.clueId === selectedClue && direction === panel) {
       className += ' CluesPanel-Selected-Clue'
       changeScrollHeight(this.yOffset, this.clientHeight)
     }
 
-    if (clue.clueId === selectedAltClue && direction !== dir) {
+    if (clue.clueId === selectedAltClue && direction !== panel) {
       altSelectedClassName = 'CluesPanel-Selected-Clue-Alt'
       changeScrollHeight(this.yOffset, this.clientHeight)
     }
@@ -74,11 +79,43 @@ class Clue extends Component {
             flexGrow: '0'
           }}
         >
-          {clue.clueId}. {clue.clue}
+          {`${clue.clueId}.${clue.clue}`}
         </div>
       </div>
     )
   }
+}
+
+Clue.propTypes = {
+  board: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        letter: PropTypes.string,
+        entry: PropTypes.string,
+        number: PropTypes.number.isRequired,
+        blackSquare: PropTypes.bool.isRequired,
+        isChecked: PropTypes.bool.isRequired,
+        displayWrong: PropTypes.bool.isRequired,
+        isRevealed: PropTypes.bool.isRequired,
+        className: PropTypes.string.isRequired,
+        numberClassName: PropTypes.string.isRequired,
+        inputClassName: PropTypes.string.isRequired,
+        noEditInputClassName: PropTypes.string.isRequired
+      })
+    )
+  ).isRequired,
+  clue: PropTypes.shape({
+    clueId: PropTypes.number.isRequired,
+    clue: PropTypes.string.isRequired,
+  }).isRequired,
+  selectedClue: PropTypes.number.isRequired,
+  selectedAltClue: PropTypes.number.isRequired,
+  direction: PropTypes.string.isRequired,
+  panel: PropTypes.string.isRequired,
+  selectClueSquare: PropTypes.func.isRequired,
+  changeDirection: PropTypes.func.isRequired,
+  changeScrollHeight: PropTypes.func.isRequired,
+  getNewYOffset: PropTypes.func.isRequired
 }
 
 const mapState = ({ board }) => ({ board })
