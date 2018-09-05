@@ -1,3 +1,24 @@
 .Board {
-  align-self: center;
+  flex-basis: 40em;
+  /* background-color: bisque; */
+}
+
+.Board-Header {
+  height: 6em;
+}
+
+.Row {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0
+}
+
+@media screen and (max-width: 1160px) {
+  .Board {
+    flex-basis: 33em;
+  }
+
+  .Board-Header {
+    height: 2em;
+  }
 }
