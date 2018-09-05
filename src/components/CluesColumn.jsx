@@ -45,8 +45,7 @@ class CluesColumn extends Component {
       selectedClue,
       selectedAltClue
     } = this.props
-
-    return (
+    return Object.keys(clues).length ? (
       <div className="CluesPanel-Column-Container">
         <div className="CluesPanel-Header">
           <div className="CluesPanel-Header-Text">{panel}</div>
@@ -71,6 +70,8 @@ class CluesColumn extends Component {
           ))}
         </div>
       </div>
+    ) : (
+      <div />
     )
   }
 }
