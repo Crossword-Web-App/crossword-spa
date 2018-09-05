@@ -1,0 +1,45 @@
+/* navbar styles */
+header {
+  display: flex;
+  height: 4em;
+  color: white;
+  background-color: black;
+}
+
+#title {
+  flex-grow: 1;
+  margin-left: 1em;
+  font-size: 2em;
+  font-weight: 700;
+  color: white;
+  align-self: center;
+}
+
+header nav {
+  display: flex;
+  align-self: center;
+}
+
+.nav-item {
+  margin-right: 1em;
+}
+
+.nav-item a {
+  padding: 0 1em 0 1em;
+  text-align: center;
+  line-height: 10vh;
+  color: white;
+  transition: opacity 0.25s ease;
+}
+
+.nav-item a:hover {
+  opacity: 0.5;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited{
+  color: white;
+}

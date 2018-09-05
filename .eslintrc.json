@@ -1,0 +1,17 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true
+    },
+    "extends": ["airbnb", "prettier"],
+    "rules": {
+        "semi": ["error", "never"],
+        "max-len": ["error", 80],
+        "arrow-body-style": ["error", "as-needed"],
+        "no-unused-expressions": ["error", { "allowTernary": true }],
+        "no-fallthrough": "off",
+        "no-shadow": "off",
+        "import/no-named-as-default": "off",
+        "import/no-named-as-default-member": "off"
+    }
+}

@@ -1,12 +1,12 @@
 // Action Type
-const SELECT_SQUARE = 'SELECT_SQUARE'
+const SET_CLICKED_CLUE_SQUARE = 'SET_CLICKED_CLUE_SQUARE'
 
-export const selectSquare = square => ({ type: SELECT_SQUARE, square })
+export const selectClueSquare = square => ({ type: SET_CLICKED_CLUE_SQUARE, square })
 
 // Reducer
 const reducer = (state = {row: 0, column: 0}, action) => {
   switch (action.type) {
-    case SELECT_SQUARE:
+    case SET_CLICKED_CLUE_SQUARE:
       return action.square
     default:
       return state
