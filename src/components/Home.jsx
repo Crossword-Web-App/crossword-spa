@@ -10,9 +10,6 @@ import { getClues } from '../store/clues'
 import { API_URL } from '../../secrets'
 
 class Home extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   async componentDidMount() {
     const { loadGame } = this.props
@@ -80,10 +77,8 @@ const mapDispatch = {
       /* axios returns call to spa server if no API_URL provided,
        * will fail silently
        */
-      console.log('API_URL', API_URL)
       const res = await axios.get(`${API_URL}/api/crossword/1`)
       const data = await res.data
-      console.log('res', data)
       const { board, clues } = data
       dispatch(getBoard(board))
       dispatch(getClues(clues))
