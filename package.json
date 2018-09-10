@@ -26,7 +26,7 @@
     "deploy": "scripts/deploy",
     "lint": "eslint ./ --ignore-path .gitignore",
     "postinstall": "touch secrets.js",
-    "start": "babel-node src/server",
+    "start": "webpack -p; babel-node src/server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-server": "nodemon --exec npm run start -e html,js,scss --ignore public",
     "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/test' mocha ./src/server/**/*.spec.js ./src/server/**/**/*.spec.js ./client/**/*.spec.js --compilers js:babel-register"
