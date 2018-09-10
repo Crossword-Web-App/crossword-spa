@@ -7,7 +7,8 @@ import CluesPanel from './CluesPanel'
 import Timer from './Timer'
 import { getBoard } from '../store/board'
 import { getClues } from '../store/clues'
-import { API_URL } from '../../secrets'
+
+const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class Home extends Component {
 
