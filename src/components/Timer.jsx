@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { startGame, pauseGame } from '../store/gameState'
 import secondsToTime from '../utilities/secondsToTime'
 import './css/Timer.css'
+import pauseButton from './icons/pause.svg'
+import playButton from './icons/play.svg'
 
 class Timer extends Component {
   constructor(props) {
@@ -50,18 +52,24 @@ class Timer extends Component {
     const { counter } = this.state
     return (
       <div className="Timer">
-        <div>
+        <div className="Timer-Time">
           {secondsToTime(counter)}
         </div>
-        {(gameState === 'inProgress' ||
-          gameState === 'paused') && (
-          <button
+        {gameState === 'inProgress' && (
+          <img
             className="Timer-PauseButton"
             onClick={this.handlePauseButtonClick}
-            type="button"
-          >
-            Pause
-          </button>
+            src={pauseButton}
+            alt="P"
+          />
+        )}
+        {gameState === 'paused' && (
+          <img
+          className="Timer-PlayButton"
+          onClick={this.handlePauseButtonClick}
+          src={playButton}
+          alt="P"
+        />
         )}
       </div>
     )

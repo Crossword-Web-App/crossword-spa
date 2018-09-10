@@ -27,6 +27,7 @@ const Square = ({ square, row, column, handleSquareClick, inputRef }) =>
           {square.letter.toUpperCase()}
         </div>
       )}
+      {square.isChecked && <div className="Square-CheckedDot" />}
     </div>
   ) : (
     <div className={square.className} ref={inputRef} />

@@ -5,7 +5,9 @@ import './css/NavBar.css'
 const NavBar = () => (
 
   <header>
-    <div id="title">Crosswords</div>
+    <div id="title">
+      <Link to="/">Crosswords</Link>
+    </div>
     <nav>
       <div className="nav-item">
         <Link to="/autoplay">AutoPlay</Link>
@@ -17,7 +19,7 @@ const NavBar = () => (
         <Link to="/browse">Browse</Link>
       </div>
       <div className="nav-item">
-        <a href="/home">Logout</a>
+        <a href="/">Logout</a>
       </div>
       <div className="nav-item">
         <Link to="/login">Login</Link>

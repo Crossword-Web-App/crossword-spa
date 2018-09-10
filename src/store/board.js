@@ -22,8 +22,19 @@ export const revealBoard = () => ({ type: REVEAL_BOARD })
 
 const updateLetterEntry = (square, state) => {
   state = [...state.map(row => [...row])]
-  state[square.row][square.column]['entry'] = square.entry
-  state[square.row][square.column]['displayWrong'] = false
+  state[square.row][square.column].entry = square.entry
+  state[square.row][square.column].displayWrong = false
+
+  if (
+    state[square.row][square.column].inputClassName.includes(
+      'Square-Checked-Incorrect'
+    )
+  ) {
+    state[square.row][square.column].inputClassName = state[square.row][
+      square.column
+    ].inputClassName.replace('Square-Checked-Incorrect', '')
+  }
+
   return state
 }
 
@@ -35,30 +46,31 @@ const updateSelectedSquares = (
 
   // remove 'Square-Selected' from className of previous square
   if (Object.keys(selectedSquare).length > 0) {
-    state[selectedSquare.row][selectedSquare.column]['className'] = state[
+    state[selectedSquare.row][selectedSquare.column].className = state[
       selectedSquare.row
-    ][selectedSquare.column]['className'].replace(' Square-Selected', '')
+    ][selectedSquare.column].className.replace(' Square-Selected', '')
   }
 
   // add 'Square-Selected' to className for newly selected square
-  state[nextSquare.row][nextSquare.column]['className'] += ' Square-Selected'
+  state[nextSquare.row][nextSquare.column].className += ' Square-Selected'
 
   // remove 'Square-SemiSelected' from className of previous line
   selectedLine.forEach(({ row, column }) => {
-    state[row][column]['className'] = state[row][column]['className'].replace(
+    state[row][column].className = state[row][column].className.replace(
       ' Square-SemiSelected',
       ''
     )
   })
   // add 'Square-SemiSelected' to className of newly selected line
   nextLine.forEach(({ row, column }) => {
-    state[row][column]['className'] += ' Square-SemiSelected'
+    state[row][column].className += ' Square-SemiSelected'
   })
 
   return state
 }
 
 const setBordersOnSquares = state => {
+  const lastCell = state[0].length - 1
   state = state.map((row, rowIdx) => {
     row.map((square, columnIdx) => {
       if (rowIdx === 0) square.className += ' Square-Top'
@@ -69,19 +81,23 @@ const setBordersOnSquares = state => {
     })
     return row
   })
+
+  state[0][0].className += ' Square-Top-Left'
+  state[0][lastCell].className += ' Square-Top-Right'
+  state[lastCell][0].className += ' Square-Bottom-Left'
+  state[lastCell][lastCell].className += ' Square-Bottom-Right'
+
   return state
 }
 
 const updateLetterIsChecked = (square, state) => {
   state = [...state.map(row => [...row])]
   square = state[square.row][square.column]
-  // square.isChecked = true
-  square.className += ' Square-Checked'
+  square.isChecked = true
   if (square.entry === square.letter.toUpperCase()) {
     square.isRevealed = true
     square.noEditInputClassName += ' Square-Correct'
   } else {
-    // square.displayWrong = true
     square.inputClassName += ' Square-Checked-Incorrect'
   }
   return state
@@ -91,10 +107,7 @@ const updateBoardIsChecked = state => {
   state = [...state.map(row => [...row])]
   state.forEach(row =>
     row.forEach(square => {
-      if (!square.blackSquare) {
-        // square.isChecked = true
-        square.className += ' Square-Checked'
-      }
+      if (!square.blackSquare) square.isChecked = true
       if (square.entry === square.letter.toUpperCase()) {
         square.isRevealed = true
         square.noEditInputClassName += ' Square-Revealed-Text'
@@ -108,8 +121,8 @@ const updateBoardIsChecked = state => {
 
 const updateLetterIsRevealed = (square, state) => {
   state = [...state.map(row => [...row])]
-  state[square.row][square.column]['isRevealed'] = true
-  state[square.row][square.column]['className'] += ' Square-Revealed'
+  state[square.row][square.column].isRevealed = true
+  state[square.row][square.column].className += ' Square-Revealed'
   return state
 }
 
@@ -117,8 +130,10 @@ const updateBoardIsRevealed = state => {
   state = [...state.map(row => [...row])]
   state.forEach(row =>
     row.forEach(square => {
-      square.isRevealed = true
-      square.className += ' Square-Revealed'
+      if (!square.blackSquare) {
+        square.isRevealed = true
+        square.className += ' Square-Revealed'
+      }
     })
   )
   return state

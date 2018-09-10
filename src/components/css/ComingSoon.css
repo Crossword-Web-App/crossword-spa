@@ -1,0 +1,14 @@
+.ComingSoon {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.ComingSoon-Header {
+  padding-top: 20%;
+  font-size: 5em;
+}
+
+.ComingSoon-SubHeader {
+  font-size: 2em;
+}

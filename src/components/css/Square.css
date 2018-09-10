@@ -1,4 +1,5 @@
 .Square {
+  position: relative;
   max-height: 2.25em;
   flex-basis: 2.25em;
   background-color: white;
@@ -20,6 +21,22 @@
 
 .Square-Bottom {
   border-bottom: 3px solid rgba(0, 0, 0, 0.9);
+}
+
+.Square-Top-Left {
+  border-top-left-radius: 5px;
+}
+
+.Square-Top-Right {
+  border-top-right-radius: 5px;
+}
+
+.Square-Bottom-Left {
+  border-bottom-left-radius: 5px;
+}
+
+.Square-Bottom-Right {
+  border-bottom-right-radius: 5px;
 }
 
 .Square-Number {
@@ -66,17 +83,13 @@
   background-color:rgb(255, 231, 97);
 }
 
-.Square-Revealed {
-  background-color: salmon;
-}
-
 .Square-Revealed-Text {
   height: 1.2em;
   width: 100%;
   border: 0px solid;
   font-size: 1.75em;
   font-weight: 600;
-  color: mediumblue;
+  color: rgb(66, 66, 192);
   text-align: center;
 }
 
@@ -95,21 +108,28 @@
 }
 
 .Square-Correct {
-  color: green
-/* bold, green, something like that */
+  color: rgb(83, 182, 116)
 }
 
-.Square-Checked {
-  background-color: yellow
-/* flag */
+.Square-CheckedDot {
+  width: 20%;
+  height: 20%;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background-color: salmon;
+  border-radius: 100%;
+}
+
+.Square-Revealed {
+  background-color: salmon;
 }
 
 .Square-Checked-Incorrect {
-  text-shadow: 0 0 red
-/* red mark */
+  text-shadow: 0 0 salmon;
 }
 
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 1160px) and (min-width: 813px) {
   .Square {
     height: 1.75em;
     flex-basis: 1.75em;
@@ -130,6 +150,18 @@
 
   .Square-Revealed-Text {
     height: 0.9em;
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 812px) {
+  .Square {
+    flex-grow: 1;
+    max-height: 4em;
+  }
+
+  .Square-Entry {
+    height: 2.8em;
     font-size: 1em;
   }
 }
