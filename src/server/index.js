@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
+
 const PORT = 3000
 const app = express()
 
@@ -42,7 +43,7 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
-  const server = app.listen(PORT, () => console.log(`Serving on port ${PORT}`))
+  const server = app.listen(process.env.PORT ||PORT, () => console.log(`Serving on port ${process.env.PORT || PORT}`))
 }
 
 if (require.main === module) {
