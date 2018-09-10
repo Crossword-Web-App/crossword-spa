@@ -9,7 +9,9 @@ const Square = ({ square, row, column, handleSquareClick, inputRef }) =>
       onClick={() => handleSquareClick({ row, column })}
     >
       {/* Answer number, if any */}
-      <div className={square.numberClassName}>{square.number}</div>
+      <div className={square.numberClassName}>
+        {square.number > 0 ? square.number : ''}
+      </div>
       {/* Editable input or uneditable revealed letter box */}
       {!square.isRevealed ? (
         <input
