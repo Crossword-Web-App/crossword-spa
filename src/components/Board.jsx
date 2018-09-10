@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Square from './Square'
+import AnswerPanel from './AnswerPanel'
 import { setBorders, updateEntry, updateSelected } from '../store/board'
 import {
   setMaxSquares,
@@ -623,7 +624,7 @@ class Board extends Component {
   }
 
   render = () => {
-    const { board, remainingSquares } = this.props
+    const { board } = this.props
     return (
       <div className="Board">
         <div className="Board-Header" />
@@ -648,8 +649,8 @@ class Board extends Component {
               ))}
             </div>
           ))}
-          <div>{`${remainingSquares} squares to go`}</div>
         </div>
+        <AnswerPanel rowWidth={board.length} />
       </div>
     )
   }

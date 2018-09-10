@@ -1,6 +1,9 @@
 .Board {
   flex-basis: 40em;
-  /* background-color: bisque; */
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
 .Board-Header {
@@ -10,15 +13,45 @@
 .Row {
   display: flex;
   justify-content: center;
-  flex-shrink: 0
 }
 
-@media screen and (max-width: 1160px) {
+@media screen
+  and (max-width: 1160px)
+  and (min-width: 813px)
+  and (orientation: landscape) {
   .Board {
     flex-basis: 33em;
   }
 
   .Board-Header {
     height: 2em;
+  }
+
+  .Row {
+    width: 100%;
+  }
+}
+
+@media screen
+  and (max-width: 812px)
+  and (orientation: portrait) {
+  .Board {
+    width: 50em;
+    flex-basis: 100%;
+  }
+
+  .Board-Header {
+    height: 0em;
+  }
+
+  .Board-Grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Row {
+    width: 95%;
+    align-self: center;
   }
 }

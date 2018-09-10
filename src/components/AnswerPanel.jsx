@@ -8,6 +8,7 @@ import {
   revealBoard
 } from '../store/board'
 import './css/AnswerPanel.css'
+import gearButton from './icons/gear.svg'
 
 class AnswerPanel extends Component {
   constructor(props) {
@@ -18,91 +19,145 @@ class AnswerPanel extends Component {
 
   // Event handlers
   handleCheckClick = () => {
-    const { checkSquare, selectedSquare} = this.props
-    checkSquare(selectedSquare)
+    const { checkSquare, selectedSquare } = this.props
+    if (
+      this.buttonRefs.checkSquare.className.includes('AnswerPanel-Revealed')
+    ) {
+      checkSquare(selectedSquare)
+    }
   }
 
   handleCheckBoardClick = () => {
     const { checkBoard } = this.props
-    checkBoard()
+    if (this.buttonRefs.checkBoard.className.includes('AnswerPanel-Revealed')) {
+      checkBoard()
+    }
   }
 
   handleRevealClick = () => {
-    const { revealSquare, selectedSquare} = this.props
-    revealSquare(selectedSquare)
+    const { revealSquare, selectedSquare } = this.props
+    if (
+      this.buttonRefs.revealSquare.className.includes('AnswerPanel-Revealed')
+    ) {
+      revealSquare(selectedSquare)
+    }
   }
 
   handleRevealBoardClick = () => {
     const { revealBoard } = this.props
-    revealBoard()
+    if (
+      this.buttonRefs.revealSquare.className.includes('AnswerPanel-Revealed')
+    ) {
+      revealBoard()
+    }
   }
 
-  displayCheckButtons = () => {
-    this.buttonRefs.checkSquare.style.color = 'black'
-    this.buttonRefs.checkSquare.style.height = '2em'
-    this.buttonRefs.checkBoard.style.color = 'black'
-    this.buttonRefs.checkBoard.style.height = '2em'
+  toggleDisplayCheckButtons = () => {
+    if (
+      this.buttonRefs.checkSquare.className.includes('AnswerPanel-Revealed')
+    ) {
+      this.buttonRefs.checkSquare.className = 'AnswerPanel-Hidden'
+      this.buttonRefs.checkBoard.className = 'AnswerPanel-Hidden'
+    } else {
+      this.buttonRefs.checkSquare.className += ' AnswerPanel-Revealed'
+      this.buttonRefs.checkBoard.className += ' AnswerPanel-Revealed'
+    }
+
+    if (
+      this.buttonRefs.revealSquare.className.includes('AnswerPanel-Revealed')
+    ) {
+      this.buttonRefs.revealSquare.className = 'AnswerPanel-Hidden'
+      this.buttonRefs.revealBoard.className = 'AnswerPanel-Hidden'
+    }
   }
 
-  displayRevealButtons = () => {
-    this.buttonRefs.revealSquare.style.color = 'black'
-    this.buttonRefs.revealSquare.style.height = '2em'
-    this.buttonRefs.revealBoard.style.color = 'black'
-    this.buttonRefs.revealBoard.style.height = '2em'
+  toggleDisplayRevealButtons = () => {
+    if (
+      this.buttonRefs.revealSquare.className.includes('AnswerPanel-Revealed')
+    ) {
+      this.buttonRefs.revealSquare.className = 'AnswerPanel-Hidden'
+      this.buttonRefs.revealBoard.className = 'AnswerPanel-Hidden'
+    } else {
+      this.buttonRefs.revealSquare.className += ' AnswerPanel-Revealed'
+      this.buttonRefs.revealBoard.className += ' AnswerPanel-Revealed'
+    }
+
+    if (
+      this.buttonRefs.checkSquare.className.includes('AnswerPanel-Revealed')
+    ) {
+      this.buttonRefs.checkSquare.className = 'AnswerPanel-Hidden'
+      this.buttonRefs.checkBoard.className = 'AnswerPanel-Hidden'
+    }
   }
 
-  render = () => (
-    <div className="AnswerPanel">
-      <div className="AnswerPanel-Section">
-        <div className="AnswerPanel-Header" />
-        <div className="AnswerPanel-Type" onClick={this.displayCheckButtons}>
-          Check
+  render = () => {
+    const { rowWidth } = this.props
+    return (
+      <div className="AnswerPanel" style={{ width: `${rowWidth * 2.25}em` }}>
+        <img
+          className="AnswerPanel-GearButton"
+          src={gearButton}
+          alt="Options"
+        />
+        <div className="AnswerPanel-DropDownContainer">
+          <div
+            className="AnswerPanel-Button"
+            onClick={this.toggleDisplayCheckButtons}
+          >
+            Check
+          </div>
+          <div
+            className="AnswerPanel-Hidden"
+            onClick={this.handleCheckClick}
+            ref={ref => {
+              this.buttonRefs.checkSquare = ref
+            }}
+          >
+            Square
+          </div>
+          <div
+            className="AnswerPanel-Hidden"
+            onClick={this.handleCheckBoardClick}
+            ref={ref => {
+              this.buttonRefs.checkBoard = ref
+            }}
+          >
+            Board
+          </div>
         </div>
-        <div
-          className="AnswerPanel-Hidden"
-          onClick={this.handleCheckClick}
-          ref={ref => {
-            this.buttonRefs.checkSquare = ref
-          }}
-        >
-          Check Square
-        </div>
-        <div
-          className="AnswerPanel-Hidden"
-          onClick={this.handleCheckBoardClick}
-          ref={ref => {
-            this.buttonRefs.checkBoard = ref
-          }}
-        >
-          Check Board
-        </div>
-        <div className="AnswerPanel-Type" onClick={this.displayRevealButtons}>
-          Reveal
-        </div>
-        <div
-          className="AnswerPanel-Hidden"
-          onClick={this.handleRevealClick}
-          ref={ref => {
-            this.buttonRefs.revealSquare = ref
-          }}
-        >
-          Reveal Square
-        </div>
-        <div
-          className="AnswerPanel-Hidden"
-          onClick={this.handleRevealBoardClick}
-          ref={ref => {
-            this.buttonRefs.revealBoard = ref
-          }}
-        >
-          Reveal Board
+        <div className="AnswerPanel-DropDownContainer">
+          <div
+            className="AnswerPanel-Button"
+            onClick={this.toggleDisplayRevealButtons}
+          >
+            Reveal
+          </div>
+          <div
+            className="AnswerPanel-Hidden"
+            onClick={this.handleRevealClick}
+            ref={ref => {
+              this.buttonRefs.revealSquare = ref
+            }}
+          >
+            Square
+          </div>
+          <div
+            className="AnswerPanel-Hidden"
+            onClick={this.handleRevealBoardClick}
+            ref={ref => {
+              this.buttonRefs.revealBoard = ref
+            }}
+          >
+            Board
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 AnswerPanel.propTypes = {
+  rowWidth: PropTypes.number.isRequired,
   selectedSquare: PropTypes.shape({
     row: PropTypes.number,
     column: PropTypes.number
@@ -110,7 +165,7 @@ AnswerPanel.propTypes = {
   checkSquare: PropTypes.func.isRequired,
   checkBoard: PropTypes.func.isRequired,
   revealSquare: PropTypes.func.isRequired,
-  revealBoard: PropTypes.func.isRequired,
+  revealBoard: PropTypes.func.isRequired
 }
 
 const mapState = ({ selectedSquare }) => ({ selectedSquare })

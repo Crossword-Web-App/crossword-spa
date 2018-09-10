@@ -1,23 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import NavBar from './NavBar'
-import Home from './Home'
+import Game from './Game'
+import ComingSoon from './ComingSoon'
 import './css/App.css'
 
 const App = () => (
-  <div>
+  <div className="App-Container">
     <NavBar />
     {/* <Routes /> */}
-    <Route exact path="/login" component={Home} />
-    <Route exact path="/signup" component={Home} />
-    <Route exact path="/autoplay" component={Home} />
-    <Route exact path="/create" component={Home} />
-    <Route exact path="/login" component={Home} />
-    <Route exact path="/browse" component={Home} />
-    {/* Displays our Splash component as a fallback */}
-    <Route component={Home} />
+    <Switch>
+      <Route exact path="/login" component={ComingSoon} />
+      <Route exact path="/signup" component={ComingSoon} />
+      <Route exact path="/autoplay" component={ComingSoon} />
+      <Route exact path="/create" component={ComingSoon} />
+      <Route exact path="/login" component={ComingSoon} />
+      <Route exact path="/browse" component={ComingSoon} />
+      {/* Displays our Splash component as a fallback */}
+      <Route component={Game} />
+    </Switch>
   </div>
 )
 
-export default connect()(App)
+export default withRouter(connect()(App))

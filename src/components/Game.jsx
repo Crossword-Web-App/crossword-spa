@@ -12,8 +12,10 @@ import { API_URL } from '../../secrets'
 class Home extends Component {
 
   async componentDidMount() {
-    const { loadGame } = this.props
-    await loadGame(1)
+    const { board, loadGame } = this.props
+    if (board && !board.length) {
+      await loadGame(1)
+    }
   }
 
   render() {
@@ -24,7 +26,6 @@ class Home extends Component {
           <div className="App">
             <Board />
             <CluesPanel />
-            {/* <AnswerPanel /> */}
             <Timer />
           </div>
         ) : (
