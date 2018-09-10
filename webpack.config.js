@@ -1,3 +1,5 @@
+import { DefinePlugin } from 'webpack'
+
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -39,5 +41,10 @@ module.exports = {
   },
   plugins: isDev ? [new LiveReloadPlugin({
     appendScriptTag: true,
-  })] : [],
+  })] : [new DefinePlugin({
+    'process.env': {
+      'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'API_URL': JSON.stringify(process.env.API_URL)
+    }
+  })],
 }
