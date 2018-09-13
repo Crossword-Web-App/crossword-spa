@@ -7,20 +7,28 @@ import CluesPanel from './CluesPanel'
 import Timer from './Timer'
 import { getBoard } from '../store/board'
 import { getClues } from '../store/clues'
+import { withRouter } from 'react-router-dom'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class Home extends Component {
-
   async componentDidMount() {
-    const { board, loadGame } = this.props
-    if (board && !board.length) {
-      await loadGame(1)
+    const { board, loadGame, key } = this.props
+    if (board) {
+      await loadGame(key)
     }
   }
 
+  // async componentDidUpdate(prevProps) {
+  //   const { loadGame, match } = this.props
+  //   console.log(match)
+  //   if (prevProps.match.params.id !== match.params.id) {
+  //     await loadGame(match.params.id)
+  //   }
+  // }
+
   render() {
-    const { board, clues } = this.props
+    const { board, clues, match } = this.props
     return (
       <div>
         {board.length && Object.keys(clues).length ? (
@@ -79,7 +87,7 @@ const mapDispatch = {
       /* axios returns call to spa server if no API_URL provided,
        * will fail silently
        */
-      const res = await axios.get(`${API_URL}/api/crossword/1`)
+      const res = await axios.get(`${API_URL}/api/crossword/${id || 1}`)
       const data = await res.data
       const { board, clues } = data
       dispatch(getBoard(board))
@@ -92,7 +100,8 @@ const mapDispatch = {
   }
 }
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Home)
+export default
+  connect(
+    mapState,
+    mapDispatch
+  )(Home)

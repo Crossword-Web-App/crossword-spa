@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import getRandomPuzzleId from '../utilities/getRandomPuzzleId'
 import './css/NavBar.css'
 
 const NavBar = () => (
@@ -10,7 +11,7 @@ const NavBar = () => (
     </div>
     <nav>
       <div className="nav-item">
-        <Link to="/autoplay">AutoPlay</Link>
+        <Link to={`/autoplay/${getRandomPuzzleId()}`}>AutoPlay</Link>
       </div>
       <div className="nav-item">
         <Link to="/create">Create</Link>
@@ -28,5 +29,6 @@ const NavBar = () => (
     </nav>
   </header>
 )
+
 
 export default NavBar

@@ -160,8 +160,8 @@ class Board extends Component {
     }
   }
 
-  // Lifecycle methods
-  componentDidMount = async () => {
+  async componentDidMount() {
+    
     const {
       selectedSquare,
       selectLine,
@@ -194,9 +194,8 @@ class Board extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    const { clickedClueSquare } = this.props
+    const { clickedClueSquare, id, board } = this.props
     const { row, column } = clickedClueSquare
-
     if (
       row !== prevProps.clickedClueSquare.row ||
       column !== prevProps.clickedClueSquare.column
