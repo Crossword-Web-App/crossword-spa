@@ -73,6 +73,30 @@ const setBordersOnSquares = state => {
   const lastCell = state[0].length - 1
   state = state.map((row, rowIdx) => {
     row.map((square, columnIdx) => {
+      // set entry to '' to start
+      square.entry = ''
+
+      // set relevant class names
+      square.className = 'Square'
+      square.numberClassName = 'Square-Number'
+      square.inputClassName = 'Square-Entry'
+      square.noEditInputClassName = 'Square-Revealed-Text Square-No-Select'
+      square.checkedDotClassName = 'Square-CheckedDot'
+
+      // set default answer booleans to false
+      square.isChecked = false
+      square.displayWrong = false
+      square.isRevealed = false
+
+      // set black squares
+      if (square.letter === '.') {
+        square.blackSquare = true
+        square.className += ' Square-Black'
+      } else {
+        square.blackSquare = false
+      }
+
+      // set borders
       if (rowIdx === 0) square.className += ' Square-Top'
       if (rowIdx === row.length - 1) square.className += ' Square-Bottom'
       if (columnIdx === 0) square.className += ' Square-Left'
@@ -82,6 +106,7 @@ const setBordersOnSquares = state => {
     return row
   })
 
+  // handle corners
   state[0][0].className += ' Square-Top-Left'
   state[0][lastCell].className += ' Square-Top-Right'
   state[lastCell][0].className += ' Square-Bottom-Left'
