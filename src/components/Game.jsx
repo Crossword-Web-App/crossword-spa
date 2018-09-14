@@ -12,18 +12,20 @@ import { withRouter } from 'react-router-dom'
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class Home extends Component {
-  async componentDidMount() {
+  componentDidMount() {
     const { board, loadGame, key } = this.props
+    console.log('PROPSSSs', this.props);
     if (board) {
-      await loadGame(key)
+      console.log('THIS IS AN ID IN MOUNT', this.props.match.params.id)
+      loadGame(this.props.match.params.id)
     }
   }
 
-  // async componentDidUpdate(prevProps) {
+  // componentDidUpdate(prevProps) {
   //   const { loadGame, match } = this.props
   //   console.log(match)
   //   if (prevProps.match.params.id !== match.params.id) {
-  //     await loadGame(match.params.id)
+  //     loadGame(match.params.id)
   //   }
   // }
 
@@ -33,7 +35,7 @@ class Home extends Component {
       <div>
         {board.length && Object.keys(clues).length ? (
           <div className="App">
-            <Board />
+            <Board key={this.props.match.params.id} />
             <CluesPanel />
             <Timer />
           </div>

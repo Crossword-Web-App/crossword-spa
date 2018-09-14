@@ -160,8 +160,8 @@ class Board extends Component {
     }
   }
 
-  async componentDidMount() {
-    
+  componentDidMount() {
+    console.log('I RAN')
     const {
       selectedSquare,
       selectLine,
