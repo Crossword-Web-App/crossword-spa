@@ -3,6 +3,7 @@ import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import board from './board'
+import boardId from './boardId'
 import direction from './direction'
 import clues from './clues'
 import selectedSquare from './selectedSquare'
@@ -15,6 +16,7 @@ import gameState from './gameState'
 
 const reducer = combineReducers({
   board,
+  boardId,
   direction,
   clues,
   selectedSquare,

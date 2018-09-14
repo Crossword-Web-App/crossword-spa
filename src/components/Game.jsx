@@ -1,22 +1,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Board from './Board'
 import CluesPanel from './CluesPanel'
 import Timer from './Timer'
 import { getBoard } from '../store/board'
 import { getClues } from '../store/clues'
+import { setBoardId } from '../store/boardId'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
-class Home extends Component {
+class Game extends Component {
+  componentDidMount() {
+    const { board, loadGame, match } = this.props
+    if (board && !board.length) loadGame(match.params.id)
+  }
 
-  async componentDidMount() {
-    const { board, loadGame } = this.props
-    if (board && !board.length) {
-      await loadGame(1)
-    }
+  componentDidUpdate(prevProps) {
+    const { loadGame, match } = this.props
+    if (prevProps.match.params.id !== match.params.id) loadGame(match.params.id)
   }
 
   render() {
@@ -37,7 +41,7 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
+Game.propTypes = {
   board: PropTypes.arrayOf(
     PropTypes.arrayOf(
       PropTypes.shape({
@@ -68,22 +72,29 @@ Home.propTypes = {
         clue: PropTypes.string.isRequired
       })
     )
-  }).isRequired
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.node
+    }).isRequired
+  }).isRequired,
+  loadGame: PropTypes.func.isRequired
 }
 
 const mapState = ({ board, clues }) => ({ board, clues })
 
 const mapDispatch = {
-  loadGame: id => async dispatch => {
+  loadGame: boardId => async dispatch => {
     try {
       /* axios returns call to spa server if no API_URL provided,
        * will fail silently
        */
-      const res = await axios.get(`${API_URL}/api/crossword/1`)
+      const res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
       const data = await res.data
-      const { board, clues } = data
+      const { board, clues, id } = data
       dispatch(getBoard(board))
       dispatch(getClues(clues))
+      dispatch(setBoardId(id))
     } catch (error) {
       console.error(error)
       dispatch(getBoard([]))
@@ -92,7 +103,9 @@ const mapDispatch = {
   }
 }
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Home)
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Game)
+)

@@ -7,6 +7,11 @@
   border-left: 1px solid #7b7b7b;
 }
 
+.Square-Small {
+  max-height: 1.75em;
+  flex-basis: 1.75em;
+}
+
 .Square-Left {
   border-left: 3px solid rgba(0, 0, 0, 0.9);
 }
@@ -75,6 +80,10 @@
   background: transparent;
 }
 
+.Square-Entry-Small {
+  font-size: 1.25em;
+}
+
 .Square-SemiSelected {
   background-color: rgba(110, 230, 250, 0.6);
 }
@@ -91,6 +100,10 @@
   font-weight: 600;
   color: rgb(66, 66, 192);
   text-align: center;
+}
+
+.Square-Revealed-Text-Small {
+  font-size: 1.25em;
 }
 
 .Square-No-Select {

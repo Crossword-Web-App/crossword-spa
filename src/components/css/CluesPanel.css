@@ -69,14 +69,6 @@
     .CluesPanel-Column-Container {
       flex-basis: 18em;
     }
-
-    .CluesPanel-Header {
-      height: 0em;
-    }
-
-    .CluesPanel-Clues-Body {
-      height: 100%;
-    }
   }
 
   @media screen
