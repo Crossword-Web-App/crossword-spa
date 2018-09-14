@@ -11,7 +11,7 @@ const NavBar = () => (
     </div>
     <nav>
       <div className="nav-item">
-        <Link to={`/autoplay/${getRandomPuzzleId()}`}>AutoPlay</Link>
+        <Link to={`/crossword/${getRandomPuzzleId()}`}>AutoPlay</Link>
       </div>
       <div className="nav-item">
         <Link to="/create">Create</Link>

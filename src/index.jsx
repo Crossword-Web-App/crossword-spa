@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import App from './components/App'
-import registerServiceWorker from './utilities/registerServiceWorker'
 import store from './store'
 
 ReactDOM.render(
@@ -14,4 +13,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
-registerServiceWorker()
+

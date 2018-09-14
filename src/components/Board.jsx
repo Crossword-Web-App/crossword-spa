@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Square from './Square'
 import AnswerPanel from './AnswerPanel'
-import { setBorders, updateEntry, updateSelected } from '../store/board'
+import { updateEntry, updateSelected } from '../store/board'
 import {
   setMaxSquares,
   addSquare,
@@ -160,42 +160,45 @@ class Board extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log('I RAN')
+  componentDidUpdate = prevProps => {
     const {
-      selectedSquare,
+      board,
+      boardId,
+      selectSquare,
       selectLine,
       updateSelected,
-      direction,
-      setBorders,
       setMaxSquares,
-      board
+      clickedClueSquare
     } = this.props
-    setMaxSquares(
-      board
-        .reduce((a, b) => a.concat(b))
-        .filter(square => !square.blackSquare && square.entry !== square.letter)
-        .length
-    )
-    setBorders()
-
-    // show selected square [0,0] and line
-    const nextLine = this.getLine(selectedSquare, direction)
-    updateSelected({
-      selectedSquare,
-      nextSquare: selectedSquare,
-      selectedLine: [],
-      nextLine
-    })
-    selectLine(nextLine)
-
-    // focus on square [0,0] input
-    this.focusOnFirst()
-  }
-
-  componentDidUpdate = prevProps => {
-    const { clickedClueSquare, id, board } = this.props
     const { row, column } = clickedClueSquare
+
+    // refresh the board when a new game is loaded
+    if (prevProps.boardId !== boardId) {
+
+      setMaxSquares(
+        board
+          .reduce((a, b) => a.concat(b))
+          .filter(
+            square => !square.blackSquare && square.entry !== square.letter
+          ).length
+      )
+
+      // show selected square [0,0] and line
+      const nextLine = this.getLine({row: 0, column: 0}, 'across')
+      selectSquare({row: 0, column: 0})
+      updateSelected({
+        selectedSquare: {row: 0, column: 0},
+        nextSquare: {row: 0, column: 0},
+        selectedLine: [],
+        nextLine
+      })
+      selectLine(nextLine)
+
+      // focus on square [0,0] input
+      this.focusOnFirst()
+    }
+
+    // update selected square based on changed clue panel selection
     if (
       row !== prevProps.clickedClueSquare.row ||
       column !== prevProps.clickedClueSquare.column
@@ -673,6 +676,7 @@ Board.propTypes = {
       })
     )
   ).isRequired,
+  boardId: PropTypes.number.isRequired,
   selectedSquare: PropTypes.shape({
     row: PropTypes.number,
     column: PropTypes.number
@@ -693,7 +697,6 @@ Board.propTypes = {
   addSquare: PropTypes.func.isRequired,
   removeSquare: PropTypes.func.isRequired,
   endGame: PropTypes.func.isRequired,
-  setBorders: PropTypes.func.isRequired,
   setMaxSquares: PropTypes.func.isRequired,
   selectSquare: PropTypes.func.isRequired,
   selectClue: PropTypes.func.isRequired,
@@ -705,6 +708,7 @@ Board.propTypes = {
 
 const mapState = ({
   board,
+  boardId,
   direction,
   selectedSquare,
   selectedLine,
@@ -712,6 +716,7 @@ const mapState = ({
   remainingSquares
 }) => ({
   board,
+  boardId,
   direction,
   selectedSquare,
   selectedLine,
@@ -730,7 +735,6 @@ const mapDispatch = {
   updateSelected,
   changeDirection,
   endGame,
-  setBorders,
   setMaxSquares
 }
 

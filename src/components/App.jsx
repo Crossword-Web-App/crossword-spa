@@ -13,7 +13,8 @@ const App = () => (
     <Switch>
       <Route exact path="/login" component={ComingSoon} />
       <Route exact path="/signup" component={ComingSoon} />
-      <Route exact path="/autoplay/:id" render={(props) => (<Game key={props.match.params.id} {...props} />) } />
+      <Route exact path="/autoplay" component={ComingSoon} />
+      <Route exact path="/crossword/:id" component={Game} />
       <Route exact path="/create" component={ComingSoon} />
       <Route exact path="/login" component={ComingSoon} />
       <Route exact path="/browse" component={ComingSoon} />

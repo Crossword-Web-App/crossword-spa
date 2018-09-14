@@ -26,13 +26,20 @@ class Timer extends Component {
     startGame()
   }
 
+  componentDidUpdate(prevProps) {
+    const { boardId } = this.props
+    if (prevProps.boardId !== boardId) {
+      this.setState({ counter: 0 })
+    }
+  }
+
   componentWillUnmount() {
     const { timer } = this.state
     clearInterval(timer)
   }
 
   handlePauseButtonClick = () => {
-    const { gameState, startGame, pauseGame} = this.props
+    const { gameState, startGame, pauseGame } = this.props
     if (gameState === 'paused') startGame()
     else pauseGame()
   }
@@ -52,9 +59,7 @@ class Timer extends Component {
     const { counter } = this.state
     return (
       <div className="Timer">
-        <div className="Timer-Time">
-          {secondsToTime(counter)}
-        </div>
+        <div className="Timer-Time">{secondsToTime(counter)}</div>
         {gameState === 'inProgress' && (
           <img
             className="Timer-PauseButton"
@@ -65,11 +70,11 @@ class Timer extends Component {
         )}
         {gameState === 'paused' && (
           <img
-          className="Timer-PlayButton"
-          onClick={this.handlePauseButtonClick}
-          src={playButton}
-          alt="P"
-        />
+            className="Timer-PlayButton"
+            onClick={this.handlePauseButtonClick}
+            src={playButton}
+            alt="P"
+          />
         )}
       </div>
     )
@@ -79,10 +84,11 @@ class Timer extends Component {
 Timer.propTypes = {
   startGame: PropTypes.func.isRequired,
   pauseGame: PropTypes.func.isRequired,
-  gameState: PropTypes.string.isRequired
+  gameState: PropTypes.string.isRequired,
+  boardId: PropTypes.number.isRequired
 }
 
-const mapState = ({ gameState }) => ({ gameState })
+const mapState = ({ gameState, boardId }) => ({ gameState, boardId })
 
 const mapDispatch = { startGame, pauseGame }
 

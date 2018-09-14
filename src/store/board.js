@@ -1,6 +1,5 @@
 // Action Type
 const GET_BOARD = 'GET_BOARD'
-const SET_BORDERS = 'SET_BORDERS'
 const UPDATE_ENTRY = 'UPDATE_ENTRY'
 const UPDATE_SELECTED = 'UPDATE_SELECTED'
 const CHECK_SQUARE = 'CHECK_SQUARE'
@@ -10,7 +9,6 @@ const REVEAL_BOARD = 'REVEAL_BOARD'
 
 // Action Creators
 export const getBoard = board => ({ type: GET_BOARD, board })
-export const setBorders = board => ({ type: SET_BORDERS, board })
 export const updateEntry = square => ({ type: UPDATE_ENTRY, square })
 export const updateSelected = squares => ({ type: UPDATE_SELECTED, squares })
 export const checkSquare = square => ({ type: CHECK_SQUARE, square })
@@ -69,7 +67,7 @@ const updateSelectedSquares = (
   return state
 }
 
-const setBordersOnSquares = state => {
+const initializeBoard = state => {
   const lastCell = state[0].length - 1
   state = state.map((row, rowIdx) => {
     row.map((square, columnIdx) => {
@@ -82,6 +80,12 @@ const setBordersOnSquares = state => {
       square.inputClassName = 'Square-Entry'
       square.noEditInputClassName = 'Square-Revealed-Text Square-No-Select'
       square.checkedDotClassName = 'Square-CheckedDot'
+
+      if (state && state[0].length > 15) {
+        square.className += ' Square-Small'
+        square.inputClassName += ' Square-Entry-Small'
+        square.noEditInputClassName += ' Square-Revealed-Text-Small'
+      }
 
       // set default answer booleans to false
       square.isChecked = false
@@ -168,9 +172,7 @@ const updateBoardIsRevealed = state => {
 const reducer = (state = [], action) => {
   switch (action.type) {
     case GET_BOARD:
-      return action.board
-    case SET_BORDERS:
-      return setBordersOnSquares(state)
+      return initializeBoard(action.board)
     case UPDATE_ENTRY:
       return updateLetterEntry(action.square, state)
     case UPDATE_SELECTED:
