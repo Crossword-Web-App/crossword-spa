@@ -1,26 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import NavBar from './NavBar'
-import Game from './Game'
-import ComingSoon from './ComingSoon'
+import Routes from './Routes'
 import './css/App.css'
 
 const App = () => (
   <div className="App-Container">
     <NavBar />
-    {/* <Routes /> */}
-    <Switch>
-      <Route exact path="/login" component={ComingSoon} />
-      <Route exact path="/signup" component={ComingSoon} />
-      <Route exact path="/autoplay" component={ComingSoon} />
-      <Route exact path="/crossword/:id" component={Game} />
-      <Route exact path="/create" component={ComingSoon} />
-      <Route exact path="/login" component={ComingSoon} />
-      <Route exact path="/browse" component={ComingSoon} />
-      {/* Displays our Splash component as a fallback */}
-      <Route component={Game} />
-    </Switch>
+    <Routes />
   </div>
 )
 

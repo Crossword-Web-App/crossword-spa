@@ -41,6 +41,33 @@ class Game extends Component {
   }
 }
 
+const mapState = ({ board, clues }) => ({ board, clues })
+
+const mapDispatch = {
+  loadGame: boardId => async dispatch => {
+    try {
+      const res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
+      const data = await res.data
+      const { board, clues, id } = data
+      dispatch(getBoard(board))
+      dispatch(getClues(clues))
+      dispatch(setBoardId(id))
+    } catch (error) {
+      console.error(error)
+      dispatch(getBoard([]))
+      dispatch(getClues({}))
+    }
+  }
+}
+
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Game)
+)
+
+/* PROP TYPES */
 Game.propTypes = {
   board: PropTypes.arrayOf(
     PropTypes.arrayOf(
@@ -50,7 +77,6 @@ Game.propTypes = {
         number: PropTypes.number.isRequired,
         blackSquare: PropTypes.bool.isRequired,
         isChecked: PropTypes.bool.isRequired,
-        displayWrong: PropTypes.bool.isRequired,
         isRevealed: PropTypes.bool.isRequired,
         className: PropTypes.string.isRequired,
         numberClassName: PropTypes.string.isRequired,
@@ -80,32 +106,3 @@ Game.propTypes = {
   }).isRequired,
   loadGame: PropTypes.func.isRequired
 }
-
-const mapState = ({ board, clues }) => ({ board, clues })
-
-const mapDispatch = {
-  loadGame: boardId => async dispatch => {
-    try {
-      /* axios returns call to spa server if no API_URL provided,
-       * will fail silently
-       */
-      const res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
-      const data = await res.data
-      const { board, clues, id } = data
-      dispatch(getBoard(board))
-      dispatch(getClues(clues))
-      dispatch(setBoardId(id))
-    } catch (error) {
-      console.error(error)
-      dispatch(getBoard([]))
-      dispatch(getClues({}))
-    }
-  }
-}
-
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(Game)
-)

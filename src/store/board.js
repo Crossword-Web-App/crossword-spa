@@ -21,7 +21,10 @@ export const revealBoard = () => ({ type: REVEAL_BOARD })
 const updateLetterEntry = (square, state) => {
   state = [...state.map(row => [...row])]
   state[square.row][square.column].entry = square.entry
-  state[square.row][square.column].displayWrong = false
+
+  if (!square.entry) {
+    state[square.row][square.column].isChecked = false
+  }
 
   if (
     state[square.row][square.column].inputClassName.includes(
@@ -89,7 +92,6 @@ const initializeBoard = state => {
 
       // set default answer booleans to false
       square.isChecked = false
-      square.displayWrong = false
       square.isRevealed = false
 
       // set black squares
@@ -122,11 +124,11 @@ const initializeBoard = state => {
 const updateLetterIsChecked = (square, state) => {
   state = [...state.map(row => [...row])]
   square = state[square.row][square.column]
-  square.isChecked = true
   if (square.entry === square.letter.toUpperCase()) {
     square.isRevealed = true
     square.noEditInputClassName += ' Square-Correct'
   } else {
+    if (square.entry) square.isChecked = true
     square.inputClassName += ' Square-Checked-Incorrect'
   }
   return state
@@ -136,14 +138,15 @@ const updateBoardIsChecked = state => {
   state = [...state.map(row => [...row])]
   state.forEach(row =>
     row.forEach(square => {
-      if (!square.blackSquare) square.isChecked = true
       if (square.entry === square.letter.toUpperCase()) {
         square.isRevealed = true
         square.noEditInputClassName += ' Square-Revealed-Text'
-      } else {
-        square.displayWrong = true
+      } else if (square.entry) {
+          square.isChecked = true
+          square.inputClassName += ' Square-Checked-Incorrect'
+        }
       }
-    })
+    )
   )
   return state
 }

@@ -13,6 +13,7 @@ import selectedAltClue from './selectedAltClue'
 import clickedClueSquare from './clickedClueSquare'
 import remainingSquares from './remainingSquares'
 import gameState from './gameState'
+import user from './user'
 
 const reducer = combineReducers({
   board,
@@ -25,7 +26,8 @@ const reducer = combineReducers({
   selectedAltClue,
   clickedClueSquare,
   remainingSquares,
-  gameState
+  gameState,
+  user
 })
 
 const middleware = composeWithDevTools(

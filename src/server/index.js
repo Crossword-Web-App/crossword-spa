@@ -43,7 +43,9 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
-  const server = app.listen(process.env.PORT ||PORT, () => console.log(`Serving on port ${process.env.PORT || PORT}`))
+  app.listen(process.env.PORT || PORT, () => {
+    console.log(`Serving on port ${process.env.PORT || PORT}`)
+  })
 }
 
 if (require.main === module) {
