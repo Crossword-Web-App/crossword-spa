@@ -44,7 +44,6 @@ header nav {
 .nav-item img {
   height: 40px;
   border-radius: 100%;
-  /* padding: 0 1em; */
   transition: opacity 0.25s ease;
 }
 
@@ -52,6 +51,7 @@ header nav {
   padding-bottom: calc(2.4em - 2px);
   border-bottom: 2px solid rgba(0,0,0,0.9);
 }
+
 
 #img-item:hover {
   padding-bottom: 2.4em;

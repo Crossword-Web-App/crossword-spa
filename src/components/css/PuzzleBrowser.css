@@ -1,0 +1,166 @@
+@media screen
+  and (orientation: landscape) {
+    #PuzzleBrowser-Container {
+      margin: 6vh 3em;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .PuzzleBrowser-Section {
+      margin-bottom: 6vh;
+    }
+
+    .PuzzleBrowser-Section-Title {
+      width: 100%;
+      margin-bottom: 0.75em;
+      font-size: 1.5em;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .PuzzleBrowser-Section-Container {
+      display: flex;
+      position: relative;
+      height: 16em;
+      overflow: hidden;
+      width: 100%;
+      /* background-color: moccasin; */
+    }
+
+    .PuzzleBrowser-Arrow-Container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 1em 0;
+      flex-basis: 3em;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .PuzzleBrowser-Arrow-Container:hover {
+      opacity: 1;
+      background-color:  rgba(110, 230, 250, 0.1);
+    }
+
+    .PuzzleBrowser-No-Arrow {
+      align-self: center;
+      height: 0.5em;
+      width: 0.5em;
+      border-radius: 0.25em;
+      background-color:  rgb(110, 230, 250);
+    }
+
+    .PuzzleBrowser-Arrow {
+      align-self: center;
+      height: 1.5em;
+      width: 1.5em;
+    }
+
+    .PuzzleBrowser-Right-Arrow-Container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 1em 0;
+      flex-basis: 3em;
+      background-color: rgb(17, 198, 230);;
+      opacity: 0.1;
+    }
+
+    .PuzzleBrowser-Right-Arrow:hover {
+      opacity: 0.8;
+    }
+
+    .PuzzleBrowser-Puzzle-Container {
+      display: flex;
+      position: relative;
+      height: 16em;
+      flex-grow: 1;
+    }
+
+    .PuzzleBrowser-Puzzle {
+      flex-basis: 18em;
+      display: flex;
+      justify-content: center;
+      flex-shrink: 1;
+      flex-grow:1;
+    }
+
+    .PuzzleBrowser-Board {
+      position: relative;
+      width: 15em;
+      height: 15em;
+      align-self: center;
+      background-color: white;
+      border-radius: 2px;
+      border-top: 1px solid black;
+      border-bottom: 2px solid black;
+      border-left: 1px solid black;
+      border-right: 2px solid black;
+    }
+
+    .PuzzleBrowser-Board-Overlay {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      left: 1px;
+      top: 1px;
+      height: calc(100% - 1px);
+      width: calc(100% - 1px);
+      background-color: rgba(255, 231, 97, 0.85);
+      opacity: 0;
+      transition: opacity 0.25s ease-in;
+    }
+
+    .PuzzleBrowser-Board-Overlay:hover {
+      opacity: 1;
+    }
+
+    .PuzzleBrowser-Board-Overlay-Text {
+      display: flex;
+      width: 70%;
+      padding: 0.25em 0;
+      color: black;
+      text-transform: uppercase;
+      font-size: 0.75em;
+      font-weight: 600;
+      align-self: center;
+    }
+
+    .PuzzleBrowser-Board-Overlay-Text-Metric {
+      flex-grow: 1;
+    }
+
+    .PuzzleBrowser-Board-Overlay-Banner {
+      padding: 0.5em;
+      margin-top: 2em;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 1em;
+      font-weight: 500;
+      width: 50%;
+      border-radius: 0.25em;
+      background-color: rgb(17, 198, 230);
+      align-self: center;
+      cursor: pointer;
+    }
+
+    .PuzzleBrowser-Board-Overlay-Banner a {
+      text-decoration: none;
+      color: white;
+    }
+
+    .PuzzleBrowser-Board-Squares {
+      position: absolute;
+      display: grid;
+      height: 100%;
+      width: 100%;
+      grid-template-columns: repeat(15, 1fr);
+    }
+
+    .PuzzleBrowser-Square {
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+    }
+  }
+
