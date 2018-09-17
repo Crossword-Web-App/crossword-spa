@@ -6,6 +6,7 @@ const CHECK_SQUARE = 'CHECK_SQUARE'
 const CHECK_BOARD = 'CHECK_BOARD'
 const REVEAL_SQUARE = 'REVEAL_SQUARE'
 const REVEAL_BOARD = 'REVEAL_BOARD'
+const REMOVE_BOARD = 'REMOVE_BOARD'
 
 // Action Creators
 export const getBoard = board => ({ type: GET_BOARD, board })
@@ -15,6 +16,7 @@ export const checkSquare = square => ({ type: CHECK_SQUARE, square })
 export const checkBoard = () => ({ type: CHECK_BOARD })
 export const revealSquare = square => ({ type: REVEAL_SQUARE, square })
 export const revealBoard = () => ({ type: REVEAL_BOARD })
+export const removeBoard = () => ({ type: REMOVE_BOARD })
 
 // Thunks
 
@@ -188,6 +190,8 @@ const reducer = (state = [], action) => {
       return updateLetterIsRevealed(action.square, state)
     case REVEAL_BOARD:
       return updateBoardIsRevealed(state)
+    case REMOVE_BOARD:
+      return []
     default:
       return state
   }
