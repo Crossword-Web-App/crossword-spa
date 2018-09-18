@@ -76,8 +76,8 @@ const initializeBoard = state => {
   const lastCell = state[0].length - 1
   state = state.map((row, rowIdx) => {
     row.map((square, columnIdx) => {
-      // set entry to '' to start
-      square.entry = ''
+      // set entry to '' if it doesn't have an entry yet
+      if (!square.entry) square.entry = ''
 
       // set relevant class names
       square.className = 'Square'
