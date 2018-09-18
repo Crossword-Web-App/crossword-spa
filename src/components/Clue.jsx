@@ -95,7 +95,6 @@ Clue.propTypes = {
         number: PropTypes.number.isRequired,
         blackSquare: PropTypes.bool.isRequired,
         isChecked: PropTypes.bool.isRequired,
-        displayWrong: PropTypes.bool.isRequired,
         isRevealed: PropTypes.bool.isRequired,
         className: PropTypes.string.isRequired,
         numberClassName: PropTypes.string.isRequired,

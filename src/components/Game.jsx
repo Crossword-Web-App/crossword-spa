@@ -6,8 +6,9 @@ import axios from 'axios'
 import Board from './Board'
 import CluesPanel from './CluesPanel'
 import Timer from './Timer'
-import { getBoard } from '../store/board'
-import { getClues } from '../store/clues'
+import { getBoard, removeBoard } from '../store/board'
+import { getClues, removeClues } from '../store/clues'
+import { removeSelectClue } from '../store/selectedClue'
 import { setBoardId } from '../store/boardId'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
@@ -15,12 +16,18 @@ const API_URL = process.env.API_URL || 'http://localhost:8080'
 class Game extends Component {
   componentDidMount() {
     const { board, loadGame, match } = this.props
-    if (board && !board.length) loadGame(match.params.id)
+    loadGame(match.params.id)
+
   }
 
   componentDidUpdate(prevProps) {
     const { loadGame, match } = this.props
     if (prevProps.match.params.id !== match.params.id) loadGame(match.params.id)
+  }
+
+  componentWillUnmount() {
+    const { unloadGame } = this.props
+    unloadGame()
   }
 
   render() {
@@ -41,6 +48,38 @@ class Game extends Component {
   }
 }
 
+const mapState = ({ board, clues }) => ({ board, clues })
+
+const mapDispatch = {
+  loadGame: boardId => async dispatch => {
+    try {
+      const res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
+      const data = await res.data
+      const { board, clues, id } = data
+      dispatch(getBoard(board))
+      dispatch(getClues(clues))
+      dispatch(setBoardId(id))
+    } catch (error) {
+      console.error(error)
+      dispatch(getBoard([]))
+      dispatch(getClues({}))
+    }
+  },
+  unloadGame: () => dispatch => {
+    dispatch(removeBoard())
+    dispatch(removeClues())
+    dispatch(removeSelectClue())
+  }
+}
+
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Game)
+)
+
+/* PROP TYPES */
 Game.propTypes = {
   board: PropTypes.arrayOf(
     PropTypes.arrayOf(
@@ -50,7 +89,6 @@ Game.propTypes = {
         number: PropTypes.number.isRequired,
         blackSquare: PropTypes.bool.isRequired,
         isChecked: PropTypes.bool.isRequired,
-        displayWrong: PropTypes.bool.isRequired,
         isRevealed: PropTypes.bool.isRequired,
         className: PropTypes.string.isRequired,
         numberClassName: PropTypes.string.isRequired,
@@ -78,34 +116,6 @@ Game.propTypes = {
       id: PropTypes.node
     }).isRequired
   }).isRequired,
-  loadGame: PropTypes.func.isRequired
+  loadGame: PropTypes.func.isRequired,
+  unloadGame: PropTypes.func.isRequired
 }
-
-const mapState = ({ board, clues }) => ({ board, clues })
-
-const mapDispatch = {
-  loadGame: boardId => async dispatch => {
-    try {
-      /* axios returns call to spa server if no API_URL provided,
-       * will fail silently
-       */
-      const res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
-      const data = await res.data
-      const { board, clues, id } = data
-      dispatch(getBoard(board))
-      dispatch(getClues(clues))
-      dispatch(setBoardId(id))
-    } catch (error) {
-      console.error(error)
-      dispatch(getBoard([]))
-      dispatch(getClues({}))
-    }
-  }
-}
-
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(Game)
-)

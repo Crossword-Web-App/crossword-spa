@@ -89,7 +89,7 @@
 }
 
 .Square-Selected {
-  background-color:rgb(255, 231, 97);
+  background-color: rgb(255, 231, 97);
 }
 
 .Square-Revealed-Text {
@@ -108,11 +108,11 @@
 
 .Square-No-Select {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
 
@@ -121,7 +121,7 @@
 }
 
 .Square-Correct {
-  color: rgb(83, 182, 116)
+  color: rgb(83, 182, 116);
 }
 
 .Square-CheckedDot {

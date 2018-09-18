@@ -6,6 +6,7 @@ const CHECK_SQUARE = 'CHECK_SQUARE'
 const CHECK_BOARD = 'CHECK_BOARD'
 const REVEAL_SQUARE = 'REVEAL_SQUARE'
 const REVEAL_BOARD = 'REVEAL_BOARD'
+const REMOVE_BOARD = 'REMOVE_BOARD'
 
 // Action Creators
 export const getBoard = board => ({ type: GET_BOARD, board })
@@ -15,13 +16,17 @@ export const checkSquare = square => ({ type: CHECK_SQUARE, square })
 export const checkBoard = () => ({ type: CHECK_BOARD })
 export const revealSquare = square => ({ type: REVEAL_SQUARE, square })
 export const revealBoard = () => ({ type: REVEAL_BOARD })
+export const removeBoard = () => ({ type: REMOVE_BOARD })
 
 // Thunks
 
 const updateLetterEntry = (square, state) => {
   state = [...state.map(row => [...row])]
   state[square.row][square.column].entry = square.entry
-  state[square.row][square.column].displayWrong = false
+
+  if (!square.entry) {
+    state[square.row][square.column].isChecked = false
+  }
 
   if (
     state[square.row][square.column].inputClassName.includes(
@@ -89,7 +94,6 @@ const initializeBoard = state => {
 
       // set default answer booleans to false
       square.isChecked = false
-      square.displayWrong = false
       square.isRevealed = false
 
       // set black squares
@@ -122,11 +126,11 @@ const initializeBoard = state => {
 const updateLetterIsChecked = (square, state) => {
   state = [...state.map(row => [...row])]
   square = state[square.row][square.column]
-  square.isChecked = true
   if (square.entry === square.letter.toUpperCase()) {
     square.isRevealed = true
     square.noEditInputClassName += ' Square-Correct'
   } else {
+    if (square.entry) square.isChecked = true
     square.inputClassName += ' Square-Checked-Incorrect'
   }
   return state
@@ -136,14 +140,15 @@ const updateBoardIsChecked = state => {
   state = [...state.map(row => [...row])]
   state.forEach(row =>
     row.forEach(square => {
-      if (!square.blackSquare) square.isChecked = true
       if (square.entry === square.letter.toUpperCase()) {
         square.isRevealed = true
         square.noEditInputClassName += ' Square-Revealed-Text'
-      } else {
-        square.displayWrong = true
+      } else if (square.entry) {
+          square.isChecked = true
+          square.inputClassName += ' Square-Checked-Incorrect'
+        }
       }
-    })
+    )
   )
   return state
 }
@@ -185,6 +190,8 @@ const reducer = (state = [], action) => {
       return updateLetterIsRevealed(action.square, state)
     case REVEAL_BOARD:
       return updateBoardIsRevealed(state)
+    case REMOVE_BOARD:
+      return []
     default:
       return state
   }

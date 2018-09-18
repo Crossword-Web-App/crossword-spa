@@ -1,0 +1,94 @@
+@media screen and (orientation: landscape) {
+  .Splash {
+    margin: 0 3em;
+    display: flex;
+  }
+
+  .Splash-Puzzle {
+    margin-top: 10vh;
+    width: 50%;
+    flex-basis: 18em;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 1;
+    flex-grow: 1;
+  }
+
+  .Splash-Board {
+    position: relative;
+    width: 35em;
+    height: 35em;
+    align-self: center;
+    background-color: white;
+    border-radius: 6px;
+    border-top: 2px solid black;
+    border-bottom: 4px solid black;
+    border-left: 2px solid black;
+    border-right: 4px solid black;
+  }
+
+  .Splash-Board-Squares {
+    position: absolute;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: repeat(15, 1fr);
+  }
+
+  .Splash-Square {
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+  }
+
+  .Splash-Actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10vh;
+    width: 50%;
+    text-align: center;
+  }
+
+  .Splash-Button {
+    align-self: center;
+    margin: calc(2em + 4px) 0;
+    width: 50%;
+    height: 3.5em;
+    padding: 1em;
+    border-radius: 0.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    background-color: rgba(110, 230, 250, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: background-color 0.25s ease-in;
+  }
+
+  .Splash-Button a {
+    text-decoration: none;
+    font-size: 1.65em;
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  .Splash-Button:hover {
+    background-color: rgba(110, 230, 250, 1);
+  }
+
+  .Splash-Google {
+    margin: 2em 0;
+  }
+
+  .Splash-Google img {
+    width: 55%;
+  }
+
+  .Splash-Button-Minitext {
+    font-size: 1em;
+    letter-spacing: 0em;
+    font-weight: 300;
+    text-transform: lowercase;
+    opacity: 0.5;
+  }
+}

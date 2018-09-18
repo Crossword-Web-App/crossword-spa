@@ -28,6 +28,7 @@ header nav {
   font-weight: bold;
   letter-spacing: -0.05em;
   padding: 2.4em 0;
+  align-self: center;
 }
 
 .nav-item a {
@@ -36,13 +37,33 @@ header nav {
   transition: color 0.25s ease;
 }
 
+.nav-item #img-link {
+  padding: 0 0 0 1.25em;
+}
+
+.nav-item img {
+  height: 40px;
+  border-radius: 100%;
+  transition: opacity 0.25s ease;
+}
+
 .nav-item:hover {
-  padding-bottom: calc(1.25em - 2px);
+  padding-bottom: calc(2.4em - 2px);
   border-bottom: 2px solid rgba(0,0,0,0.9);
 }
 
+
+#img-item:hover {
+  padding-bottom: 2.4em;
+  border-bottom: none;
+}
+
 .nav-item a:hover {
-  color:  rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.nav-item img:hover {
+  opacity: 0.75;
 }
 
 a {
