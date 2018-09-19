@@ -62,7 +62,7 @@ class Clue extends Component {
       changeScrollHeight(this.yOffset, this.clientHeight)
     }
 
-    return (clue ?
+    return clue ? (
       <div
         key={clue.clueId}
         className={className}
@@ -81,7 +81,9 @@ class Clue extends Component {
         >
           {`${clue.clueId}.${clue.clue}`}
         </div>
-      </div>  : <div></div>
+      </div>
+    ) : (
+      <div />
     )
   }
 }
@@ -105,7 +107,7 @@ Clue.propTypes = {
   ).isRequired,
   clue: PropTypes.shape({
     clueId: PropTypes.number.isRequired,
-    clue: PropTypes.string.isRequired,
+    clue: PropTypes.string.isRequired
   }).isRequired,
   selectedClue: PropTypes.number.isRequired,
   selectedAltClue: PropTypes.number.isRequired,

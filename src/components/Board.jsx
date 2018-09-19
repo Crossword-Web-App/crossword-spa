@@ -27,7 +27,7 @@ class Board extends Component {
 
   // Input ref helper functions
   inputRef = ref => this.squareInputRefs.push(ref)
-  
+
   // Given a square, find its position in the refs array and focus on it
   focusOnSquare = (square) => this.squareInputRefs[this.getSequentialPosition(square)].focus()
 
@@ -175,7 +175,6 @@ class Board extends Component {
 
     // refresh the board when a new game is loaded
     if (prevProps.boardId !== boardId) {
-
       setMaxSquares(
         board
           .reduce((a, b) => a.concat(b))
@@ -262,7 +261,14 @@ class Board extends Component {
       selectedLine,
       nextLine
     })
-    selectSquare(nextSquare)
+
+    if (
+      nextSquare.row !== selectedSquare.row ||
+      nextSquare.column !== selectedSquare.column
+    ){
+      selectSquare(nextSquare)
+    }
+
     selectLine(nextLine)
     selectClue(nextClue)
     selectAltClue(nextAltClue)
