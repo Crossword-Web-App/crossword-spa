@@ -174,7 +174,6 @@ class Board extends Component {
 
     // refresh the board when a new game is loaded
     if (prevProps.boardId !== boardId) {
-
       setMaxSquares(
         board
           .reduce((a, b) => a.concat(b))
@@ -184,11 +183,11 @@ class Board extends Component {
       )
 
       // show selected square [0,0] and line
-      const nextLine = this.getLine({row: 0, column: 0}, 'across')
-      selectSquare({row: 0, column: 0})
+      const nextLine = this.getLine({ row: 0, column: 0 }, 'across')
+      selectSquare({ row: 0, column: 0 })
       updateSelected({
-        selectedSquare: {row: 0, column: 0},
-        nextSquare: {row: 0, column: 0},
+        selectedSquare: { row: 0, column: 0 },
+        nextSquare: { row: 0, column: 0 },
         selectedLine: [],
         nextLine
       })
@@ -253,7 +252,14 @@ class Board extends Component {
       selectedLine,
       nextLine
     })
-    selectSquare(nextSquare)
+
+    if (
+      nextSquare.row !== selectedSquare.row ||
+      nextSquare.column !== selectedSquare.column
+    ){
+      selectSquare(nextSquare)
+    }
+
     selectLine(nextLine)
     selectClue(nextClue)
     selectAltClue(nextAltClue)
