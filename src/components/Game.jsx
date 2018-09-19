@@ -15,9 +15,13 @@ const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class Game extends Component {
   componentDidMount() {
-    const { board, loadGame, match } = this.props
-    loadGame(match.params.id)
+    const { board, loadGame, match, isLoggedIn, user } = this.props
 
+    if (isLoggedIn && user && user._id) {
+      loadGame(match.params.id, user._id)
+    } else {
+      loadGame(match.params.id)
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -48,12 +52,24 @@ class Game extends Component {
   }
 }
 
-const mapState = ({ board, clues }) => ({ board, clues })
+const mapState = ({ board, clues, user }) => ({
+  board,
+  clues,
+  user,
+  isLoggedIn: !!user._id
+})
 
 const mapDispatch = {
-  loadGame: boardId => async dispatch => {
+  loadGame: (boardId, userId) => async dispatch => {
     try {
-      const res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
+      let res
+      if (userId) {
+        res = await axios.get(
+          `${API_URL}/api/users/${userId}/crossword/${boardId}`
+        )
+      } else {
+        res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
+      }
       const data = await res.data
       const { board, clues, id } = data
       dispatch(getBoard(board))

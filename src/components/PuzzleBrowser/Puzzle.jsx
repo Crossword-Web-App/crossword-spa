@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import getRandomPuzzleId from '../../utilities/getRandomPuzzleId'
 
 const getRandomBoardSquares = () => {
   const boardSquares = []
@@ -16,13 +15,21 @@ const getRandomBoardSquares = () => {
   return boardSquares
 }
 
-const Puzzle = () => (
+const Puzzle = ({ id }) => (
   <div className="PuzzleBrowser-Puzzle">
     <div className="PuzzleBrowser-Board">
       <div className="PuzzleBrowser-Board-Squares">
         {getRandomBoardSquares().map(square => square)}
       </div>
       <div className="PuzzleBrowser-Board-Overlay">
+        {id && (
+          <div className="PuzzleBrowser-Board-Overlay-Text">
+            <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
+              Crossword Id:
+            </div>
+            <div className="PuzzleBrowser-Board-Overlay-Text-Value">{id}</div>
+          </div>
+        )}
         <div className="PuzzleBrowser-Board-Overlay-Text">
           <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
             Last Played:
@@ -42,7 +49,7 @@ const Puzzle = () => (
           <div className="PuzzleBrowser-Board-Overlay-Text-Value">120</div>
         </div>
         <div className="PuzzleBrowser-Board-Overlay-Banner">
-          <Link to={`/crossword/${getRandomPuzzleId()}`}>
+          <Link to={`/crossword/${id}`}>
             <span role="img" aria-label="star">
               🌟
             </span>
