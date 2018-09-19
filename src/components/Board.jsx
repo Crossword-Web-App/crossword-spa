@@ -27,8 +27,9 @@ class Board extends Component {
 
   // Input ref helper functions
   inputRef = ref => this.squareInputRefs.push(ref)
-
-  focusOnFirst = () => this.squareInputRefs[0].focus()
+  
+  // Given a square, find its position in the refs array and focus on it
+  focusOnSquare = (square) => this.squareInputRefs[this.getSequentialPosition(square)].focus()
 
   // Event handlers
   handleSquareClick = ({ row, column }) => {
@@ -183,18 +184,34 @@ class Board extends Component {
       )
 
       // show selected square [0,0] and line
+<<<<<<< HEAD
       const nextLine = this.getLine({ row: 0, column: 0 }, 'across')
       selectSquare({ row: 0, column: 0 })
       updateSelected({
         selectedSquare: { row: 0, column: 0 },
         nextSquare: { row: 0, column: 0 },
+=======
+      // if board[0,0] is black or filled, find the next open square to focus on
+      let square = {}
+      if (!board[0][0].blackSquare && board[0][0].entry === '') {
+        square = {row: 0, column: 0}
+        selectSquare(square)
+      }
+      else {
+        square = this.getNextOpenSquare('across', {row: 0, column: 0})
+        selectSquare(square)
+      }
+      const nextLine = this.getLine(square, 'across')
+      updateSelected({
+        selectedSquare: square,
+        nextSquare: square,
+>>>>>>> c3daa58d45ba65ae225fd3d3986724683872004a
         selectedLine: [],
         nextLine
       })
       selectLine(nextLine)
-
       // focus on square [0,0] input
-      this.focusOnFirst()
+      this.focusOnSquare(square)
     }
 
     // update selected square based on changed clue panel selection
