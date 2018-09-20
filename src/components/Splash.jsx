@@ -70,7 +70,7 @@ class Splash extends Component {
         </div>
         <div className="Splash-Actions">
           <div className="Splash-Button">
-            <Link to={`/crossword/${getRandomPuzzleId()}`}>
+            <Link to={`/crossword/${1234}`}>
               Start Playing Now
             </Link>
           </div>

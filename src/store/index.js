@@ -30,9 +30,14 @@ const reducer = combineReducers({
   user
 })
 
-const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
-)
+let middleware = [thunkMiddleware]
+console.log('process.env.NODE_ENV ', process.env.NODE_ENV )
+if (process.env.NODE_ENV === 'production') {
+  middleware = applyMiddleware(...middleware)
+} else {
+  middleware = [...middleware, createLogger({ collapsed: true })]
+  middleware = composeWithDevTools(applyMiddleware(...middleware))
+}
 
 const store = createStore(reducer, middleware)
 
