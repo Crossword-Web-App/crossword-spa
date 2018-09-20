@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Puzzle from './PuzzleBrowser/Puzzle'
+import getRandomPuzzleId from '../utilities/getRandomPuzzleId'
 import './css/PuzzleBrowser.css'
 import leftArrowButton from './icons/arrow-left.svg'
 import rightArrowButton from './icons/arrow-right.svg'
@@ -17,19 +18,63 @@ class PuzzleBrowser extends Component {
 
     this.state = {
       crosswords: [],
+      randomCrosswords: [[], []],
       fillers: []
     }
   }
 
   async componentDidMount() {
     const { user } = this.props
+
+    // get the user's recent incomplete crosswords
     try {
       if (user._id) {
         let res = await axios(`${API_URL}/api/users/${user._id}/all_crosswords`)
         let crosswords = await res.data
+        crosswords.forEach(crossword => {
+          crossword.gridStyle = {
+            gridTemplateColumns: `repeat(${crossword.board[0].length}, 1fr)`
+          }
+          delete crossword.clues
+        })
+
+        // add fillers if fewer than 5 recent crosswords
         let fillers = []
-        for (let i = 0; i < 5 - crosswords.length; i++) fillers.push(0)
-        this.setState({ crosswords, fillers })
+        for (let i = 0; i < 5 - crosswords.length; i++) {
+          fillers.push('filler' + i)
+        }
+
+        // grab a random set of 10 crosswords from the database
+        const randomCrosswords = [[], []]
+        for (let i = 0; i < 5; i++) {
+          let res = await axios(
+            `${API_URL}/api/crossword/${getRandomPuzzleId()}`
+          )
+          let crossword = await res.data
+          randomCrosswords[0].push(crossword)
+        }
+        randomCrosswords[0].forEach(crossword => {
+          crossword.gridStyle = {
+            gridTemplateColumns: `repeat(${crossword.board[0].length}, 1fr)`
+          }
+          delete crossword.clues
+        })
+
+        for (let i = 0; i < 5; i++) {
+          let res = await axios(
+            `${API_URL}/api/crossword/${getRandomPuzzleId()}`
+          )
+          let crossword = await res.data
+          randomCrosswords[1].push(crossword)
+        }
+        randomCrosswords[1].forEach(crossword => {
+          crossword.gridStyle = {
+            gridTemplateColumns: `repeat(${crossword.board[0].length}, 1fr)`
+          }
+          delete crossword.clues
+        })
+
+        this.setState({ crosswords, randomCrosswords, fillers })
       }
     } catch (err) {
       console.error(err)
@@ -38,7 +83,7 @@ class PuzzleBrowser extends Component {
 
   render = () => {
     const { isLoggedIn, user } = this.props
-    const { crosswords, fillers } = this.state
+    const { crosswords, randomCrosswords, fillers } = this.state
     return (
       <div id="PuzzleBrowser-Container">
         {isLoggedIn &&
@@ -52,8 +97,12 @@ class PuzzleBrowser extends Component {
                   <div className="PuzzleBrowser-No-Arrow" />
                 </div>
                 <div className="PuzzleBrowser-Puzzle-Container">
-                  {crosswords.map(crossword => <Puzzle id={crossword.id} />)}
-                  {fillers.map(() => <div style={this.fillerStyle} />)}
+                  {crosswords.map(crossword => (
+                    <Puzzle key={crossword.id} crossword={crossword} />
+                  ))}
+                  {fillers.map(filler => (
+                    <div style={this.fillerStyle} key={filler} />
+                  ))}
                 </div>
                 <div className="PuzzleBrowser-Arrow-Container">
                   <div className="PuzzleBrowser-No-Arrow" />
@@ -68,11 +117,9 @@ class PuzzleBrowser extends Component {
               <div className="PuzzleBrowser-No-Arrow" />
             </div>
             <div className="PuzzleBrowser-Puzzle-Container">
-              <Puzzle />
-              <Puzzle />
-              <Puzzle />
-              <Puzzle />
-              <Puzzle />
+              {randomCrosswords[0].map(crossword => (
+                <Puzzle key={crossword.id} crossword={crossword} />
+              ))}
             </div>
             <div className="PuzzleBrowser-Arrow-Container">
               <div className="PuzzleBrowser-Arrow">
@@ -90,11 +137,9 @@ class PuzzleBrowser extends Component {
               </div>
             </div>
             <div className="PuzzleBrowser-Puzzle-Container">
-              <Puzzle />
-              <Puzzle />
-              <Puzzle />
-              <Puzzle />
-              <Puzzle />
+              {randomCrosswords[1].map(crossword => (
+                <Puzzle key={crossword.id} crossword={crossword} />
+              ))}
             </div>
             <div className="PuzzleBrowser-Arrow-Container">
               <div className="PuzzleBrowser-Arrow">

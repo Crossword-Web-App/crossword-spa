@@ -15,23 +15,33 @@ const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class Game extends Component {
   componentDidMount() {
-    const { board, loadGame, match, isLoggedIn, user } = this.props
-
-    if (isLoggedIn && user && user._id) {
-      loadGame(match.params.id, user._id)
-    } else {
-      loadGame(match.params.id)
-    }
+    this.loadUserGameOrNew()
   }
 
   componentDidUpdate(prevProps) {
-    const { loadGame, match } = this.props
-    if (prevProps.match.params.id !== match.params.id) loadGame(match.params.id)
+    const { match, user, unloadGame } = this.props
+    if (
+      prevProps.match.params.id !== match.params.id ||
+      prevProps.user !== user
+    ) {
+      unloadGame()
+      this.loadUserGameOrNew()
+    }
   }
 
   componentWillUnmount() {
     const { unloadGame } = this.props
     unloadGame()
+  }
+
+  loadUserGameOrNew = () => {
+    const { loadGame, match, user, hasCrossword } = this.props
+
+    if (user && user._id && hasCrossword(match.params.id)) {
+      loadGame(match.params.id, user._id)
+    } else {
+      loadGame(match.params.id)
+    }
   }
 
   render() {
@@ -56,7 +66,13 @@ const mapState = ({ board, clues, user }) => ({
   board,
   clues,
   user,
-  isLoggedIn: !!user._id
+  hasCrossword: id => {
+    return (
+      user &&
+      user.hasOwnProperty('saved_crosswords') &&
+      user.saved_crosswords.some(el => el === +id)
+    )
+  }
 })
 
 const mapDispatch = {
