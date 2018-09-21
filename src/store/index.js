@@ -31,7 +31,7 @@ const reducer = combineReducers({
 })
 
 let middleware = [thunkMiddleware]
-console.log('process.env.NODE_ENV ', process.env.NODE_ENV )
+
 if (process.env.NODE_ENV === 'production') {
   middleware = applyMiddleware(...middleware)
 } else {

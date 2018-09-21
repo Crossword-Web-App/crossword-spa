@@ -69,8 +69,8 @@ const mapState = ({ board, clues, user }) => ({
   hasCrossword: id => {
     return (
       user &&
-      user.hasOwnProperty('saved_crosswords') &&
-      user.saved_crosswords.some(el => el === +id)
+      user.hasOwnProperty('savedCrosswords') &&
+      user.savedCrosswords.some(el => el === +id)
     )
   }
 })

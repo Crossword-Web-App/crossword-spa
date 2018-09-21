@@ -25,11 +25,11 @@ class PuzzleBrowser extends Component {
 
   async componentDidMount() {
     const { user } = this.props
-
     // get the user's recent incomplete crosswords
     try {
       if (user._id) {
         let res = await axios(`${API_URL}/api/users/${user._id}/all_crosswords`)
+        console.log(res)
         let crosswords = await res.data
         crosswords.forEach(crossword => {
           crossword.gridStyle = {
