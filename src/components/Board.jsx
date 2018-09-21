@@ -16,6 +16,12 @@ import { selectClue } from '../store/selectedClue'
 import { selectAltClue } from '../store/selectedAltClue'
 import { endGame } from '../store/gameState'
 import './css/Board.css'
+import debounce from '../utilities/debounce'
+import axios from 'axios'
+
+axios.defaults.withCredentials = true
+
+const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class Board extends Component {
   constructor(props) {
@@ -27,9 +33,10 @@ class Board extends Component {
 
   // Input ref helper functions
   inputRef = ref => this.squareInputRefs.push(ref)
-  
+
   // Given a square, find its position in the refs array and focus on it
-  focusOnSquare = (square) => this.squareInputRefs[this.getSequentialPosition(square)].focus()
+  focusOnSquare = square =>
+    this.squareInputRefs[this.getSequentialPosition(square)].focus()
 
   // Event handlers
   handleSquareClick = ({ row, column }) => {
@@ -45,12 +52,14 @@ class Board extends Component {
     const {
       direction,
       board,
+      boardId,
       selectedSquare,
       updateEntry,
       remainingSquares,
       addSquare,
       removeSquare,
-      endGame
+      endGame,
+      user
     } = this.props
     const { row, column } = selectedSquare
 
@@ -65,7 +74,10 @@ class Board extends Component {
         column,
         entry: String.fromCharCode(event.keyCode)
       })
-
+      if (user && user._id)
+        debounce(3000, () => {
+          this.saveBoardData(user._id, board, boardId)
+        })()
       // handle all squares filled logic
       if (remainingSquares <= 1) {
         // check if it's correct, end game if so
@@ -175,7 +187,6 @@ class Board extends Component {
 
     // refresh the board when a new game is loaded
     if (prevProps.boardId !== boardId) {
-
       setMaxSquares(
         board
           .reduce((a, b) => a.concat(b))
@@ -188,11 +199,10 @@ class Board extends Component {
       // if board[0,0] is black or filled, find the next open square to focus on
       let square = {}
       if (!board[0][0].blackSquare && board[0][0].entry === '') {
-        square = {row: 0, column: 0}
+        square = { row: 0, column: 0 }
         selectSquare(square)
-      }
-      else {
-        square = this.getNextOpenSquare('across', {row: 0, column: 0})
+      } else {
+        square = this.getNextOpenSquare('across', { row: 0, column: 0 })
         selectSquare(square)
       }
       const nextLine = this.getLine(square, 'across')
@@ -634,6 +644,21 @@ class Board extends Component {
     return { nextClue, nextAltClue }
   }
 
+  saveBoardData = (userId, boardData, boardId) => {
+    boardData = boardData.map(row =>
+      row.map(({ letter, entry, number }) => ({ letter, entry, number }))
+    )
+
+    try {
+      axios.put(`${API_URL}/api/users/${userId}/crossword`, {
+        id: boardId,
+        board: boardData
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   render = () => {
     const { board } = this.props
     return (
@@ -721,7 +746,8 @@ const mapState = ({
   selectedSquare,
   selectedLine,
   clickedClueSquare,
-  remainingSquares
+  remainingSquares,
+  user
 }) => ({
   board,
   boardId,
@@ -729,7 +755,8 @@ const mapState = ({
   selectedSquare,
   selectedLine,
   clickedClueSquare,
-  remainingSquares
+  remainingSquares,
+  user
 })
 
 const mapDispatch = {
