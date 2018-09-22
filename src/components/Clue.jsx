@@ -19,20 +19,23 @@ class Clue extends Component {
       selectClueSquare,
       panel,
       direction,
-      changeDirection
+      changeDirection,
+      gameState
     } = this.props
     let square = { row: 0, column: 0 }
     event.preventDefault()
-    board.forEach((row, rowIdx) => {
-      row.forEach((_, columnIdx) => {
-        if (board[rowIdx][columnIdx].number === clue.clueId) {
-          square = { row: rowIdx, column: columnIdx }
-        }
+    if (!(gameState === 'preGame' || gameState === 'paused')) {
+      board.forEach((row, rowIdx) => {
+        row.forEach((_, columnIdx) => {
+          if (board[rowIdx][columnIdx].number === clue.clueId) {
+            square = { row: rowIdx, column: columnIdx }
+          }
+        })
       })
-    })
-    selectClueSquare(square)
+      selectClueSquare(square)
 
-    if (panel !== direction) changeDirection()
+      if (panel !== direction) changeDirection()
+    }
   }
 
   componentDidMount = () => {
@@ -117,7 +120,7 @@ Clue.propTypes = {
   getNewYOffset: PropTypes.func.isRequired
 }
 
-const mapState = ({ board }) => ({ board })
+const mapState = ({ board, gameState }) => ({ board, gameState })
 
 const mapDispatch = { selectClueSquare, changeDirection }
 

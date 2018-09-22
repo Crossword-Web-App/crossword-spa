@@ -2,7 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './css/Square.css'
 
-const Square = ({ square, row, column, handleSquareClick, inputRef }) =>
+const Square = ({
+  square,
+  row,
+  column,
+  handleSquareClick,
+  inputRef,
+  noInput
+}) =>
   !square.blackSquare ? (
     <div
       className={square.className}
@@ -21,6 +28,7 @@ const Square = ({ square, row, column, handleSquareClick, inputRef }) =>
           tabIndex="-1"
           value={square.entry}
           ref={inputRef}
+          disabled={noInput}
         />
       ) : (
         <div className={square.noEditInputClassName}>

@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { startGame, pauseGame, startNewGame } from '../store/gameState'
+import axios from 'axios'
 import secondsToTime from '../utilities/secondsToTime'
 import './css/Timer.css'
 import pauseButton from './icons/pause.svg'
 import playButton from './icons/play.svg'
-import axios from 'axios'
 
 axios.defaults.withCredentials = true
 

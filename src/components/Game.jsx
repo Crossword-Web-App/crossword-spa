@@ -6,10 +6,13 @@ import axios from 'axios'
 import Board from './Board'
 import CluesPanel from './CluesPanel'
 import Timer from './Timer'
+import StartModal from './StartModal'
 import { getBoard, removeBoard } from '../store/board'
 import { getClues, removeClues } from '../store/clues'
-import { removeSelectClue } from '../store/selectedClue'
+import { startGame } from '../store/gameState'
+import { removeSelectedClue } from '../store/selectedClue'
 import { setBoardId } from '../store/boardId'
+import './css/Game.css'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
@@ -45,14 +48,15 @@ class Game extends Component {
   }
 
   render() {
-    const { board, clues } = this.props
+    const { board, clues, startGame } = this.props
     return (
-      <div>
+      <div className="Game">
         {board.length && Object.keys(clues).length ? (
           <div className="App">
             <Board />
             <CluesPanel />
             <Timer />
+            <StartModal onClick={startGame} />
           </div>
         ) : (
           <div />
@@ -100,8 +104,9 @@ const mapDispatch = {
   unloadGame: () => dispatch => {
     dispatch(removeBoard())
     dispatch(removeClues())
-    dispatch(removeSelectClue())
-  }
+    dispatch(removeSelectedClue())
+  },
+  startGame
 }
 
 export default withRouter(
