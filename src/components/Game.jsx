@@ -9,7 +9,6 @@ import Timer from './Timer'
 import StartModal from './StartModal'
 import { getBoard, removeBoard } from '../store/board'
 import { getClues, removeClues } from '../store/clues'
-import { startGame } from '../store/gameState'
 import { removeSelectedClue } from '../store/selectedClue'
 import { setBoardId } from '../store/boardId'
 import './css/Game.css'
@@ -56,7 +55,7 @@ class Game extends Component {
             <Board />
             <CluesPanel />
             <Timer />
-            <StartModal onClick={startGame} />
+            <StartModal />
           </div>
         ) : (
           <div />
@@ -105,8 +104,7 @@ const mapDispatch = {
     dispatch(removeBoard())
     dispatch(removeClues())
     dispatch(removeSelectedClue())
-  },
-  startGame
+  }
 }
 
 export default withRouter(

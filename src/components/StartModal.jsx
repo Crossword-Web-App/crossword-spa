@@ -1,26 +1,54 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import axios from 'axios'
+import { startGame } from '../store/gameState';
 import './css/StartModal.css'
 
-const StartModal = ({ inGame, onClick }) => (
-  <div className="Start-Modal-Container" style={inGame ? noDisplayStyle : {}}>
-    <div className="Start-Modal">
-      <div>Ready to Play?</div>
-      <button onClick={onClick}>OK</button>
-    </div>
-  </div>
-)
+const API_URL = process.env.API_URL || 'http://localhost:8080'
+
+class StartModal extends Component {
+
+  handleClick = () => {
+    const { gameState, user, boardId, startGame } = this.props
+    console.log('RAN', gameState)
+    if (gameState === 'preGame' && user && user._id) {
+      console.log('RAAAN')
+      axios.post(`${API_URL}/api/users/${user._id}/crossword`, {crosswordID: boardId})
+    }
+    startGame()
+  }
+
+  render = () => {
+    const { inGame } = this.props
+    return (
+      <div
+        className="Start-Modal-Container"
+        style={inGame ? noDisplayStyle : {}}
+      >
+        <div className="Start-Modal">
+          <div>Ready to Play?</div>
+          <button onClick={this.handleClick}>OK</button>
+        </div>
+      </div>
+    )
+  }
+}
 
 const noDisplayStyle = {
   display: 'none'
 }
 
-const mapState = ({ gameState }) => ({
-  inGame: !(gameState === 'preGame')
+const mapState = ({ user, gameState, boardId }) => ({
+  user,
+  gameState,
+  inGame: !(gameState === 'preGame'),
+  boardId
 })
 
-export default connect(mapState)(StartModal)
+const mapDispatch = { startGame }
+
+export default connect(mapState, mapDispatch)(StartModal)
 
 /* PROP TYPES */
 StartModal.propTypes = {

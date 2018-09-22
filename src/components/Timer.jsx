@@ -2,15 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { startGame, pauseGame, startNewGame } from '../store/gameState'
-import axios from 'axios'
 import secondsToTime from '../utilities/secondsToTime'
 import './css/Timer.css'
 import pauseButton from './icons/pause.svg'
 import playButton from './icons/play.svg'
-
-axios.defaults.withCredentials = true
-
-const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class Timer extends Component {
   constructor(props) {
@@ -43,11 +38,8 @@ class Timer extends Component {
   }
 
   handlePauseButtonClick = () => {
-    const { gameState, startGame, pauseGame, boardId, user } = this.props
-    if (gameState === 'preGame' && user && user._id) {
-      axios.post(`${API_URL}/api/users/${user._id}/crossword`, {crosswordID: boardId})
-    }
-    if (gameState === 'paused' || gameState === 'preGame') startGame()
+    const { gameState, startGame, pauseGame } = this.props
+    if (gameState === 'paused') startGame()
     else pauseGame()
   }
 
@@ -64,15 +56,18 @@ class Timer extends Component {
   render() {
     const { gameState } = this.props
     const { counter } = this.state
+    let timerClassName =
+      gameState === 'preGame' ? 'Timer' : 'Timer Timer-Displayed'
+
     return (
-      <div className="Timer">
+      <div className={timerClassName}>
         <div className="Timer-Time">{secondsToTime(counter)}</div>
         {gameState === 'inProgress' && (
           <img
             className="Timer-PauseButton"
             onClick={this.handlePauseButtonClick}
             src={pauseButton}
-            alt="P"
+            alt="Pause"
           />
         )}
         {(gameState === 'paused' || gameState === 'preGame') && (
@@ -80,7 +75,7 @@ class Timer extends Component {
             className="Timer-PlayButton"
             onClick={this.handlePauseButtonClick}
             src={playButton}
-            alt="P"
+            alt="Play"
           />
         )}
       </div>
@@ -96,7 +91,7 @@ Timer.propTypes = {
   boardId: PropTypes.number.isRequired
 }
 
-const mapState = ({ gameState, boardId, user }) => ({ gameState, boardId, user })
+const mapState = ({ gameState, boardId }) => ({ gameState, boardId })
 
 const mapDispatch = { startGame, pauseGame, startNewGame }
 

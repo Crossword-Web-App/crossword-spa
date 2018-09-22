@@ -128,7 +128,7 @@ class PuzzleBrowser extends Component {
           </div>
         </div>
         <div className="PuzzleBrowser-Section">
-          <div className="PuzzleBrowser-Section-Title">NYTimes Collection</div>
+          <div className="PuzzleBrowser-Section-Title">Based on Your Tastes</div>
           <div className="PuzzleBrowser-Section-Container">
             <div className="PuzzleBrowser-Arrow-Container">
               <div className="PuzzleBrowser-Arrow">

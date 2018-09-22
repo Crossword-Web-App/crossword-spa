@@ -666,9 +666,9 @@ class Board extends Component {
   }
 
   render = () => {
-    const { board, noInput } = this.props
+    const { board, acceptsInput } = this.props
     return (
-      <div className="Board" style={noInput ? blurStyle : {}}>
+      <div className="Board" style={acceptsInput ? noBlurStyle : {}}>
         <div className="Board-Header" />
         <div className="Board-Grid" onKeyDown={this.handleKeyDown}>
           {board.map((row, rowIdx) => (
@@ -687,7 +687,7 @@ class Board extends Component {
                   square={square}
                   handleSquareClick={this.handleSquareClick}
                   inputRef={this.inputRef}
-                  noInput={noInput}
+                  noInput={acceptsInput}
                 />
               ))}
             </div>
@@ -699,8 +699,8 @@ class Board extends Component {
   }
 }
 
-const blurStyle = {
-  filter: 'blur(20px) grayscale(30%)'
+const noBlurStyle = {
+  filter: 'blur(0px) grayscale(0%)'
 }
 
 const mapState = ({
@@ -722,7 +722,7 @@ const mapState = ({
   clickedClueSquare,
   remainingSquares,
   user,
-  noInput: gameState === 'preGame' || gameState === 'paused'
+  acceptsInput: gameState !== 'preGame' && gameState !== 'paused'
 })
 
 const mapDispatch = {
