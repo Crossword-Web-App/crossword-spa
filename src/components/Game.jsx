@@ -47,9 +47,9 @@ class Game extends Component {
   }
 
   render() {
-    const { board, clues, startGame } = this.props
+    const { board, clues } = this.props
     return (
-      <div className="Game">
+      <div className="Game" >
         {board.length && Object.keys(clues).length ? (
           <div className="App">
             <Board />

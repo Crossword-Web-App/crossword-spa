@@ -11,9 +11,7 @@ class StartModal extends Component {
 
   handleClick = () => {
     const { gameState, user, boardId, startGame } = this.props
-    console.log('RAN', gameState)
     if (gameState === 'preGame' && user && user._id) {
-      console.log('RAAAN')
       axios.post(`${API_URL}/api/users/${user._id}/crossword`, {crosswordID: boardId})
     }
     startGame()
