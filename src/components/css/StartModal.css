@@ -1,0 +1,52 @@
+.Start-Modal-Container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Start-Modal {
+  align-self: center;
+  height: 30vh;
+  width: 35vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 1em;
+  background-color: white;
+  box-shadow: 0 0 30px 6px rgba(31, 51, 73, 0.1);
+}
+
+.Start-Modal * {
+  align-self: center;
+}
+
+.Start-Modal div {
+  font-size: 2em;
+  font-weight: 700;
+  color: rgba(0,0,0,0.9);
+  margin-bottom: 1.5em;
+}
+
+.Start-Modal button {
+  border: 0;
+  border-radius: 0.5em;
+  background-color: #1e88e5;
+  color: white;
+  font-family: inherit;
+  font-size: 1.2em;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 1em 4em;
+  cursor: pointer;
+}
+
+.Start-Modal button:hover {
+  background-color: #3494e9;
+}

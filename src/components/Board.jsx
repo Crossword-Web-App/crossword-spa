@@ -29,6 +29,9 @@ class Board extends Component {
 
     // allows focus on change events
     this.squareInputRefs = []
+
+    // debounced version of function to reduce calls to server
+    this.saveBoardData = debounce(3000, this.saveBoardData)
   }
 
   // Input ref helper functions
@@ -40,12 +43,14 @@ class Board extends Component {
 
   // Event handlers
   handleSquareClick = ({ row, column }) => {
-    const { selectedSquare } = this.props
-    this.changeSquare(
-      this.getNextSquareFromRowAndColumn(row, column),
-      ({ row, column }) =>
-        selectedSquare.row === row && selectedSquare.column === column
-    )
+    const { selectedSquare, noInput } = this.props
+    if (!noInput) {
+      this.changeSquare(
+        this.getNextSquareFromRowAndColumn(row, column),
+        ({ row, column }) =>
+          selectedSquare.row === row && selectedSquare.column === column
+      )
+    }
   }
 
   handleKeyDown = event => {
@@ -74,10 +79,9 @@ class Board extends Component {
         column,
         entry: String.fromCharCode(event.keyCode)
       })
-      if (user && user._id)
-        debounce(3000, () => {
-          this.saveBoardData(user._id, board, boardId)
-        })()
+
+      if (user && user._id) this.saveBoardData(user._id, board, boardId)
+
       // handle all squares filled logic
       if (remainingSquares <= 1) {
         // check if it's correct, end game if so
@@ -144,6 +148,8 @@ class Board extends Component {
               entry: ''
             })
           }
+
+          if (user && user._id) this.saveBoardData(user._id, board, boardId)
 
           this.changeSquare(this.getPrevSquare, () => false)
           break
@@ -660,9 +666,9 @@ class Board extends Component {
   }
 
   render = () => {
-    const { board } = this.props
+    const { board, acceptsInput } = this.props
     return (
-      <div className="Board">
+      <div className="Board" style={acceptsInput ? noBlurStyle : {}}>
         <div className="Board-Header" />
         <div className="Board-Grid" onKeyDown={this.handleKeyDown}>
           {board.map((row, rowIdx) => (
@@ -681,6 +687,7 @@ class Board extends Component {
                   square={square}
                   handleSquareClick={this.handleSquareClick}
                   inputRef={this.inputRef}
+                  noInput={acceptsInput}
                 />
               ))}
             </div>
@@ -692,6 +699,52 @@ class Board extends Component {
   }
 }
 
+const noBlurStyle = {
+  filter: 'blur(0px) grayscale(0%)'
+}
+
+const mapState = ({
+  board,
+  boardId,
+  direction,
+  selectedSquare,
+  selectedLine,
+  clickedClueSquare,
+  remainingSquares,
+  user,
+  gameState
+}) => ({
+  board,
+  boardId,
+  direction,
+  selectedSquare,
+  selectedLine,
+  clickedClueSquare,
+  remainingSquares,
+  user,
+  acceptsInput: gameState !== 'preGame' && gameState !== 'paused'
+})
+
+const mapDispatch = {
+  addSquare,
+  removeSquare,
+  updateEntry,
+  selectSquare,
+  selectLine,
+  selectClue,
+  selectAltClue,
+  updateSelected,
+  changeDirection,
+  endGame,
+  setMaxSquares
+}
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Board)
+
+/* PROP TYPES */
 Board.propTypes = {
   board: PropTypes.arrayOf(
     PropTypes.arrayOf(
@@ -738,42 +791,3 @@ Board.propTypes = {
   updateSelected: PropTypes.func.isRequired,
   changeDirection: PropTypes.func.isRequired
 }
-
-const mapState = ({
-  board,
-  boardId,
-  direction,
-  selectedSquare,
-  selectedLine,
-  clickedClueSquare,
-  remainingSquares,
-  user
-}) => ({
-  board,
-  boardId,
-  direction,
-  selectedSquare,
-  selectedLine,
-  clickedClueSquare,
-  remainingSquares,
-  user
-})
-
-const mapDispatch = {
-  addSquare,
-  removeSquare,
-  updateEntry,
-  selectSquare,
-  selectLine,
-  selectClue,
-  selectAltClue,
-  updateSelected,
-  changeDirection,
-  endGame,
-  setMaxSquares
-}
-
-export default connect(
-  mapState,
-  mapDispatch
-)(Board)

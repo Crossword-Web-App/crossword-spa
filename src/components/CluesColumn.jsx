@@ -18,8 +18,6 @@ class CluesColumn extends Component {
       // "above" visble portion of scroll div
       if (yOffset < this.clueBody.scrollTop) {
         this.clueBody.scrollTop = yOffset
-        // this.marginTop='0px'
-        // this.height = this.clueBody.scrollTop - yOffset
       }
 
       // "below" visble portion of scroll div
@@ -43,7 +41,8 @@ class CluesColumn extends Component {
       panel,
       direction,
       selectedClue,
-      selectedAltClue
+      selectedAltClue,
+      gameState
     } = this.props
     return Object.keys(clues).length ? (
       <div className="CluesPanel-Column-Container">
@@ -55,6 +54,11 @@ class CluesColumn extends Component {
           ref={ref => {
             this.clueBody = ref
           }}
+          style={
+            gameState === 'preGame' || gameState === 'paused'
+              ? noScrollStyle
+              : {}
+          }
         >
           {clues[panel].map(clue => (
             <Clue
@@ -76,6 +80,29 @@ class CluesColumn extends Component {
   }
 }
 
+const noScrollStyle = { overflow: 'hidden' }
+
+const mapState = ({
+  clues,
+  selectedClue,
+  selectedAltClue,
+  direction,
+  gameState
+}) => ({
+  clues,
+  selectedClue,
+  selectedAltClue,
+  direction,
+  gameState
+})
+
+export default connect(
+  mapState,
+  null
+)(CluesColumn)
+
+
+/* PROP TYPES */
 CluesColumn.propTypes = {
   clues: PropTypes.shape({
     across: PropTypes.arrayOf(
@@ -96,15 +123,3 @@ CluesColumn.propTypes = {
   panel: PropTypes.string.isRequired,
   direction: PropTypes.string.isRequired
 }
-
-const mapState = ({ clues, selectedClue, selectedAltClue, direction }) => ({
-  clues,
-  selectedClue,
-  selectedAltClue,
-  direction
-})
-
-export default connect(
-  mapState,
-  null
-)(CluesColumn)
