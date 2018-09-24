@@ -9,7 +9,7 @@ const Square = ({
   handleSquareClick,
   inputRef,
   acceptsInput
-}) =>
+}) => 
   !square.blackSquare ? (
     <div
       className={square.className}
@@ -28,7 +28,7 @@ const Square = ({
           tabIndex="-1"
           value={square.entry}
           ref={inputRef}
-          disabled={acceptsInput}
+          disabled={!acceptsInput}
         />
       ) : (
         <div className={square.noEditInputClassName}>
