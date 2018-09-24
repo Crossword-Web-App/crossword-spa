@@ -43,8 +43,8 @@ class Board extends Component {
 
   // Event handlers
   handleSquareClick = ({ row, column }) => {
-    const { selectedSquare, noInput } = this.props
-    if (!noInput) {
+    const { selectedSquare, acceptsInput } = this.props
+    if (acceptsInput) {
       this.changeSquare(
         this.getNextSquareFromRowAndColumn(row, column),
         ({ row, column }) =>
@@ -687,7 +687,7 @@ class Board extends Component {
                   square={square}
                   handleSquareClick={this.handleSquareClick}
                   inputRef={this.inputRef}
-                  noInput={acceptsInput}
+                  acceptsInput={acceptsInput}
                 />
               ))}
             </div>
