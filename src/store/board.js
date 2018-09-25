@@ -73,7 +73,8 @@ const updateSelectedSquares = (
 }
 
 const initializeBoard = state => {
-  const lastCell = state[0].length - 1
+  const lastRow = state.length - 1
+  const lastCol = state[0].length - 1
   state = state.map((row, rowIdx) => {
     row.map((square, columnIdx) => {
       // set entry to '' if it doesn't have an entry yet
@@ -106,9 +107,9 @@ const initializeBoard = state => {
 
       // set borders
       if (rowIdx === 0) square.className += ' Square-Top'
-      if (rowIdx === row.length - 1) square.className += ' Square-Bottom'
+      if (rowIdx === lastRow) square.className += ' Square-Bottom'
       if (columnIdx === 0) square.className += ' Square-Left'
-      if (columnIdx === row.length - 1) square.className += ' Square-Right'
+      if (columnIdx === lastCol) square.className += ' Square-Right'
       return square
     })
     return row
@@ -116,9 +117,9 @@ const initializeBoard = state => {
 
   //  corners
   state[0][0].className += ' Square-Top-Left'
-  state[0][lastCell].className += ' Square-Top-Right'
-  state[lastCell][0].className += ' Square-Bottom-Left'
-  state[lastCell][lastCell].className += ' Square-Bottom-Right'
+  state[0][lastCol].className += ' Square-Top-Right'
+  state[lastRow][0].className += ' Square-Bottom-Left'
+  state[lastRow][lastCol].className += ' Square-Bottom-Right'
 
   return state
 }

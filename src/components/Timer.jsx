@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { startGame, pauseGame, startNewGame } from '../store/gameState'
-import { secondsToTime, getTimeSpent } from '../utilities/timeUtils'
+import { setAccumulatedTime, setStartTime } from '../store/timer'
 import './css/Timer.css'
 import pauseButton from './icons/pause.svg'
 import playButton from './icons/play.svg'
-import { setAccumulatedTime, setStartTime } from '../store/timer'
 import { saveBoardData } from '../utilities/apiUtils'
+import { secondsToTime, getTimeSpent } from '../utilities/timeUtils'
 
 class Timer extends Component {
   constructor(props) {
@@ -16,6 +16,34 @@ class Timer extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener('beforeunload', e => {
+      e.preventDefault()
+
+      const { user, board, boardId, timer, gameState } = this.props
+
+      if (gameState === 'inProgress') {
+        saveBoardData(user._id, board, boardId, timer)
+      }
+
+      // Chrome requires returnValue to be set.
+      e.returnValue = undefined
+    })
+
+    window.addEventListener('blur', e => {
+      e.preventDefault()
+
+      const { gameState, timer } = this.props
+      this.timeout = setTimeout(() => {
+        if (gameState === 'inProgress') this.handlePauseButtonClick()
+      }, 10000)
+    })
+
+    window.addEventListener('focus', e => {
+      e.preventDefault()
+
+      clearTimeout(this.timeout)
+    })
+
     this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000)
   }
 
@@ -25,11 +53,11 @@ class Timer extends Component {
       startNewGame()
     }
   }
-  
+
   componentWillUnmount() {
     clearInterval(this.interval)
   }
-  
+
   handlePauseButtonClick = () => {
     const {
       gameState,
@@ -47,7 +75,7 @@ class Timer extends Component {
       setStartTime(Date.now())
     } else {
       pauseGame()
-      setAccumulatedTime(Date.now())
+      setAccumulatedTime(getTimeSpent(timer))
       saveBoardData(user._id, board, boardId, timer)
     }
   }

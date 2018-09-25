@@ -11,6 +11,7 @@ import { getBoard, removeBoard } from '../store/board'
 import { getClues, removeClues } from '../store/clues'
 import { removeSelectedClue } from '../store/selectedClue'
 import { setBoardId } from '../store/boardId'
+import { setAccumulatedTime } from '../store/timer'
 import './css/Game.css'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
@@ -90,12 +91,13 @@ const mapDispatch = {
         res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
       }
       const data = await res.data
-      if (!data.timer) data.timer = 0
+      if (!data.spentTime) data.spentTime = 0
 
-      const { board, clues, id, timer } = data
+      const { board, clues, id, spentTime } = data
       dispatch(getBoard(board))
       dispatch(getClues(clues))
       dispatch(setBoardId(id))
+      dispatch(setAccumulatedTime(spentTime))
     } catch (error) {
       console.error(error)
       dispatch(getBoard([]))
@@ -106,6 +108,7 @@ const mapDispatch = {
     dispatch(removeBoard())
     dispatch(removeClues())
     dispatch(removeSelectedClue())
+    dispatch(setAccumulatedTime(0))
   }
 }
 
