@@ -25,23 +25,27 @@ class Timer extends Component {
         saveBoardData(user._id, board, boardId, timer)
       }
 
-      // Chrome requires returnValue to be set.
+      // Chrome requires returnValue to be set
       e.returnValue = undefined
     })
 
     window.addEventListener('blur', e => {
       e.preventDefault()
 
-      const { gameState, timer } = this.props
-      this.timeout = setTimeout(() => {
-        if (gameState === 'inProgress') this.handlePauseButtonClick()
-      }, 10000)
-    })
-
-    window.addEventListener('focus', e => {
-      e.preventDefault()
-
-      clearTimeout(this.timeout)
+      const {
+        gameState,
+        timer,
+        user,
+        board,
+        boardId,
+        pauseGame,
+        setAccumulatedTime
+      } = this.props
+      if (gameState === 'inProgress') {
+        pauseGame()
+        setAccumulatedTime(getTimeSpent(timer))
+        saveBoardData(user._id, board, boardId, timer)
+      }
     })
 
     this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000)
@@ -55,7 +59,18 @@ class Timer extends Component {
   }
 
   componentWillUnmount() {
+    const { gameState, user, board, boardId, timer, startNewGame } = this.props
+
+    // clear state tick
     clearInterval(this.interval)
+
+    // save data
+    if (gameState === 'inProgress') {
+      saveBoardData(user._id, board, boardId, timer)
+    }
+
+    // set gameState to 'preGame'
+    startNewGame()
   }
 
   handlePauseButtonClick = () => {

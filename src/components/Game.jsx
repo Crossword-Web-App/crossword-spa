@@ -38,13 +38,10 @@ class Game extends Component {
   }
 
   loadUserGameOrNew = () => {
-    const { loadGame, match, user, hasCrossword } = this.props
+    const { loadGame, match, user } = this.props
 
-    if (user && user._id && hasCrossword(match.params.id)) {
-      loadGame(match.params.id, user._id)
-    } else {
-      loadGame(match.params.id)
-    }
+    if (user && user._id) loadGame(match.params.id, user._id)
+    else loadGame(match.params.id)
   }
 
   render() {
@@ -69,14 +66,7 @@ class Game extends Component {
 const mapState = ({ board, clues, user }) => ({
   board,
   clues,
-  user,
-  hasCrossword: id => {
-    return (
-      user &&
-      user.hasOwnProperty('savedCrosswords') &&
-      user.savedCrosswords.some(el => el === +id)
-    )
-  }
+  user
 })
 
 const mapDispatch = {
@@ -90,6 +80,7 @@ const mapDispatch = {
       } else {
         res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
       }
+
       const data = await res.data
       if (!data.spentTime) data.spentTime = 0
 
