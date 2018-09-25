@@ -114,7 +114,7 @@ const initializeBoard = state => {
     return row
   })
 
-  // handle corners
+  //  corners
   state[0][0].className += ' Square-Top-Left'
   state[0][lastCell].className += ' Square-Top-Right'
   state[lastCell][0].className += ' Square-Bottom-Left'

@@ -90,7 +90,9 @@ const mapDispatch = {
         res = await axios.get(`${API_URL}/api/crossword/${boardId || 1}`)
       }
       const data = await res.data
-      const { board, clues, id } = data
+      if (!data.timer) data.timer = 0
+
+      const { board, clues, id, timer } = data
       dispatch(getBoard(board))
       dispatch(getClues(clues))
       dispatch(setBoardId(id))
