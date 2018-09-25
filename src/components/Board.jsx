@@ -17,11 +17,7 @@ import { selectAltClue } from '../store/selectedAltClue'
 import { endGame } from '../store/gameState'
 import './css/Board.css'
 import debounce from '../utilities/debounce'
-import axios from 'axios'
-
-axios.defaults.withCredentials = true
-
-const API_URL = process.env.API_URL || 'http://localhost:8080'
+import { saveBoardData } from '../utilities/apiUtils'
 
 class Board extends Component {
   constructor(props) {
@@ -30,9 +26,10 @@ class Board extends Component {
     // allows focus on change events
     this.squareInputRefs = []
 
-    // debounced version of function to reduce calls to server
-    this.saveBoardData = debounce(3000, this.saveBoardData)
   }
+  
+  // debounced version of function to reduce calls to server
+  saveBoardData = debounce(3000, saveBoardData)
 
   // Input ref helper functions
   inputRef = ref => this.squareInputRefs.push(ref)
@@ -64,7 +61,8 @@ class Board extends Component {
       addSquare,
       removeSquare,
       endGame,
-      user
+      user,
+      timer
     } = this.props
     const { row, column } = selectedSquare
 
@@ -79,9 +77,9 @@ class Board extends Component {
         column,
         entry: String.fromCharCode(event.keyCode)
       })
-
-      if (user && user._id) this.saveBoardData(user._id, board, boardId)
-
+      if (user && user._id) {
+        this.saveBoardData(user._id, board, boardId, timer, 3)
+      }
       // handle all squares filled logic
       if (remainingSquares <= 1) {
         // check if it's correct, end game if so
@@ -149,7 +147,7 @@ class Board extends Component {
             })
           }
 
-          if (user && user._id) this.saveBoardData(user._id, board, boardId)
+          if (user && user._id) this.saveBoardData(user._id, board, boardId, timer, 3)
 
           this.changeSquare(this.getPrevSquare, () => false)
           break
@@ -650,21 +648,6 @@ class Board extends Component {
     return { nextClue, nextAltClue }
   }
 
-  saveBoardData = (userId, boardData, boardId) => {
-    boardData = boardData.map(row =>
-      row.map(({ letter, entry, number }) => ({ letter, entry, number }))
-    )
-
-    try {
-      axios.put(`${API_URL}/api/users/${userId}/crossword`, {
-        id: boardId,
-        board: boardData
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   render = () => {
     const { board, acceptsInput } = this.props
     return (
@@ -712,7 +695,8 @@ const mapState = ({
   clickedClueSquare,
   remainingSquares,
   user,
-  gameState
+  gameState,
+  timer
 }) => ({
   board,
   boardId,
@@ -722,7 +706,8 @@ const mapState = ({
   clickedClueSquare,
   remainingSquares,
   user,
-  acceptsInput: gameState !== 'preGame' && gameState !== 'paused'
+  acceptsInput: gameState !== 'preGame' && gameState !== 'paused',
+  timer
 })
 
 const mapDispatch = {

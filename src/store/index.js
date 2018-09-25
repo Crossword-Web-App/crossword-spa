@@ -14,6 +14,7 @@ import clickedClueSquare from './clickedClueSquare'
 import remainingSquares from './remainingSquares'
 import gameState from './gameState'
 import user from './user'
+import timer from './timer'
 
 const reducer = combineReducers({
   board,
@@ -27,7 +28,8 @@ const reducer = combineReducers({
   clickedClueSquare,
   remainingSquares,
   gameState,
-  user
+  user,
+  timer
 })
 
 let middleware = [thunkMiddleware]

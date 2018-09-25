@@ -2,66 +2,97 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { startGame, pauseGame, startNewGame } from '../store/gameState'
-import secondsToTime from '../utilities/secondsToTime'
+import { setAccumulatedTime, setStartTime } from '../store/timer'
 import './css/Timer.css'
 import pauseButton from './icons/pause.svg'
 import playButton from './icons/play.svg'
+import { saveBoardData } from '../utilities/apiUtils'
+import { secondsToTime, getTimeSpent } from '../utilities/timeUtils'
 
 class Timer extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      timer: null,
-      counter: 0
-    }
-
-    this.tick = this.tick.bind(this)
+    this.state = { time: Date.now() }
   }
 
   componentDidMount() {
-    const timer = setInterval(this.tick, 1000)
-    this.setState({ timer })
+    window.addEventListener('beforeunload', e => {
+      e.preventDefault()
+
+      const { user, board, boardId, timer, gameState } = this.props
+
+      if (gameState === 'inProgress') {
+        saveBoardData(user._id, board, boardId, timer)
+      }
+
+      // Chrome requires returnValue to be set.
+      e.returnValue = undefined
+    })
+
+    window.addEventListener('blur', e => {
+      e.preventDefault()
+
+      const { gameState, timer } = this.props
+      this.timeout = setTimeout(() => {
+        if (gameState === 'inProgress') this.handlePauseButtonClick()
+      }, 10000)
+    })
+
+    window.addEventListener('focus', e => {
+      e.preventDefault()
+
+      clearTimeout(this.timeout)
+    })
+
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000)
   }
 
   componentDidUpdate(prevProps) {
     const { boardId, startNewGame } = this.props
     if (prevProps.boardId !== boardId) {
-      this.setState({ counter: 0 })
       startNewGame()
     }
   }
 
   componentWillUnmount() {
-    const { timer } = this.state
-    clearInterval(timer)
+    clearInterval(this.interval)
   }
 
   handlePauseButtonClick = () => {
-    const { gameState, startGame, pauseGame } = this.props
-    if (gameState === 'paused') startGame()
-    else pauseGame()
-  }
-
-  tick() {
-    const { gameState } = this.props
-    const { counter } = this.state
-    if (gameState === 'inProgress') {
-      this.setState({
-        counter: counter + 1
-      })
+    const {
+      gameState,
+      startGame,
+      pauseGame,
+      setAccumulatedTime,
+      setStartTime,
+      user,
+      board,
+      boardId,
+      timer
+    } = this.props
+    if (gameState === 'paused') {
+      startGame()
+      setStartTime(Date.now())
+    } else {
+      pauseGame()
+      setAccumulatedTime(getTimeSpent(timer))
+      saveBoardData(user._id, board, boardId, timer)
     }
   }
 
   render() {
-    const { gameState } = this.props
-    const { counter } = this.state
+    const { gameState, timer } = this.props
     let timerClassName =
       gameState === 'preGame' ? 'Timer' : 'Timer Timer-Displayed'
-
+    const { time } = this.state
     return (
       <div className={timerClassName}>
-        <div className="Timer-Time">{secondsToTime(counter)}</div>
+        <div className="Timer-Time">
+          {gameState === 'inProgress'
+            ? secondsToTime(getTimeSpent(timer))
+            : secondsToTime(Math.floor(timer.accumulatedTime))}
+        </div>
+
         {gameState === 'inProgress' && (
           <img
             className="Timer-PauseButton"
@@ -91,9 +122,21 @@ Timer.propTypes = {
   boardId: PropTypes.number.isRequired
 }
 
-const mapState = ({ gameState, boardId }) => ({ gameState, boardId })
+const mapState = ({ gameState, boardId, timer, user, board }) => ({
+  gameState,
+  boardId,
+  timer,
+  user,
+  board
+})
 
-const mapDispatch = { startGame, pauseGame, startNewGame }
+const mapDispatch = {
+  startGame,
+  pauseGame,
+  startNewGame,
+  setAccumulatedTime,
+  setStartTime
+}
 
 export default connect(
   mapState,
