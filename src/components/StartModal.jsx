@@ -2,18 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { startGame } from '../store/gameState';
-import { setStartTime } from '../store/timer';
+import { startGame } from '../store/gameState'
+import { setStartTime } from '../store/timer'
 import './css/StartModal.css'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class StartModal extends Component {
-
   handleClick = () => {
     const { gameState, user, boardId, startGame, setStartTime } = this.props
     if (gameState === 'preGame' && user && user._id) {
-      axios.post(`${API_URL}/api/users/${user._id}/crossword`, {crosswordID: boardId})
+      axios.post(`${API_URL}/api/users/${user._id}/crossword`, {
+        crosswordID: boardId
+      })
     }
     startGame()
     setStartTime(Date.now())
@@ -48,7 +49,10 @@ const mapState = ({ user, gameState, boardId }) => ({
 
 const mapDispatch = { startGame, setStartTime }
 
-export default connect(mapState, mapDispatch)(StartModal)
+export default connect(
+  mapState,
+  mapDispatch
+)(StartModal)
 
 /* PROP TYPES */
 StartModal.propTypes = {

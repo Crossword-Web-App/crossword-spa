@@ -41,5 +41,5 @@ export default withRouter(connect(null, mapDispatch)(App))
 
 /* PROP TYPES */
 Routes.propTypes = {
-  fetchUser: PropTypes.func.isRequired
+  fetchUser: PropTypes.func
 }

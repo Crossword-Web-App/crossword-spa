@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import getRandomPuzzleId from '../../utilities/getRandomPuzzleId'
+import { secondsToTime } from '../../utilities/timeUtils'
 
 const getRandomBoardSquares = () => {
   const boardSquares = []
@@ -16,9 +17,9 @@ const getRandomBoardSquares = () => {
   return boardSquares
 }
 
-const getUserSquares = crossword => {
+const getUserSquares = board => {
   const boardSquares = []
-  crossword.board.map((row, row_idx) =>
+  board.crossword.map((row, row_idx) =>
     row.map((square, col_idx) => {
       let className = 'PuzzleBrowser-Square'
       if (square.entry) className += ' PuzzleBrowser-Square-Filled'
@@ -26,7 +27,7 @@ const getUserSquares = crossword => {
       boardSquares.push(
         <div
           className={className}
-          key={crossword.id + row_idx * crossword.board.length + col_idx}
+          key={row_idx * board.crossword.length + col_idx + board.id}
         />
       )
     })
@@ -34,63 +35,80 @@ const getUserSquares = crossword => {
   return boardSquares
 }
 
-const Puzzle = ({ crossword }) => (
-  <div className="PuzzleBrowser-Puzzle">
-    <div className="PuzzleBrowser-Board">
-      <div className="PuzzleBrowser-Board-Squares" style={crossword && crossword.gridStyle ? crossword.gridStyle : {}}>
-        {crossword && crossword.board
-          ? getUserSquares(crossword).map(square => square)
-          : getRandomBoardSquares().map(square => square)}
-      </div>
-      <div className="PuzzleBrowser-Board-Overlay">
-        {crossword &&
-          crossword.id && (
+const getPercentComplete = crossword => {
+  const flattenedCrossword = crossword.reduce((a, b) => a.concat(b))
+  return (
+    (flattenedCrossword.filter(square => square.entry !== '').length /
+      flattenedCrossword.length) *
+    100
+  )
+}
+
+const Puzzle = ({ crossword }) => {
+  return (
+    <div className="PuzzleBrowser-Puzzle">
+      <div className="PuzzleBrowser-Board">
+        <div
+          className="PuzzleBrowser-Board-Squares"
+          style={crossword && crossword.gridStyle ? crossword.gridStyle : {}}
+        >
+          {crossword && crossword.crossword
+            ? getUserSquares(crossword).map(square => square)
+            : getRandomBoardSquares().map(square => square)}
+        </div>
+        <div className="PuzzleBrowser-Board-Overlay">
+          {crossword &&
+            crossword.id && (
+              <div className="PuzzleBrowser-Board-Overlay-Text">
+                <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
+                  Crossword Id:
+                </div>
+                <div className="PuzzleBrowser-Board-Overlay-Text-Value">
+                  {crossword.id}
+                </div>
+              </div>
+            )}
+          {crossword.spentTime && (
             <div className="PuzzleBrowser-Board-Overlay-Text">
               <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
-                Crossword Id:
+                Time Spent:
               </div>
               <div className="PuzzleBrowser-Board-Overlay-Text-Value">
-                {crossword.id}
+                {secondsToTime(crossword.spentTime)}
               </div>
             </div>
           )}
-        <div className="PuzzleBrowser-Board-Overlay-Text">
-          <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
-            Last Played:
+          {crossword &&
+            crossword.crossword && (
+              <div className="PuzzleBrowser-Board-Overlay-Text">
+                <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
+                  Percent Filled:
+                </div>
+                <div className="PuzzleBrowser-Board-Overlay-Text-Value">
+                  {`${Math.floor(getPercentComplete(crossword.crossword))}%`}
+                </div>
+              </div>
+            )}
+          <div className="PuzzleBrowser-Board-Overlay-Banner">
+            <Link
+              to={`/crossword/${
+                crossword && crossword.id ? crossword.id : getRandomPuzzleId()
+              }`}
+            >
+              <span role="img" aria-label="star">
+                🌟
+              </span>
+              <span>Start</span>
+              <span role="img" aria-label="star">
+                {' '}
+                🌟
+              </span>
+            </Link>
           </div>
-          <div className="PuzzleBrowser-Board-Overlay-Text-Value">9/15</div>
-        </div>
-        <div className="PuzzleBrowser-Board-Overlay-Text">
-          <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
-            Time Spent:
-          </div>
-          <div className="PuzzleBrowser-Board-Overlay-Text-Value">1:30</div>
-        </div>
-        <div className="PuzzleBrowser-Board-Overlay-Text">
-          <div className="PuzzleBrowser-Board-Overlay-Text-Metric">
-            Letters to go:
-          </div>
-          <div className="PuzzleBrowser-Board-Overlay-Text-Value">120</div>
-        </div>
-        <div className="PuzzleBrowser-Board-Overlay-Banner">
-          <Link
-            to={`/crossword/${
-              crossword && crossword.id ? crossword.id : getRandomPuzzleId()
-            }`}
-          >
-            <span role="img" aria-label="star">
-              🌟
-            </span>
-            <span>Start</span>
-            <span role="img" aria-label="star">
-              {' '}
-              🌟
-            </span>
-          </Link>
         </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Puzzle

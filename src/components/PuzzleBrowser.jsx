@@ -27,32 +27,38 @@ class PuzzleBrowser extends Component {
     // get the user's recent incomplete crosswords
     try {
       let userCrosswords = []
-
       if (user._id) {
         let res = await axios(`${API_URL}/api/users/${user._id}/all_crosswords`)
-        userCrosswords = await res.data
-        userCrosswords.forEach(crossword => {
-          crossword.gridStyle = {
-            gridTemplateColumns: `repeat(${crossword.board[0].length}, 1fr)`
+        const crosswordData = await res.data
+
+        crosswordData.forEach(dataItem => {
+          const crossword = dataItem.crossword.board
+          const spentTime = dataItem.spentTime
+          const id = dataItem.crossword.id
+          const gridStyle = {
+            gridTemplateColumns: `repeat(${crossword.length}, 1fr)`
           }
-          delete crossword.clues
+          userCrosswords.push({ id, crossword, spentTime, gridStyle })
         })
       }
 
       // grab a random set of crosswords from the database
       const randomCrosswords = [[], []]
       let res = await axios(`${API_URL}/api/crossword/?count=${PUZZLE_COUNT}`)
-      let crosswords = await res.data
+      let randomCrosswordData = await res.data
 
-      crosswords.forEach(crossword => {
-        crossword.gridStyle = {
-          gridTemplateColumns: `repeat(${crossword.board[0].length}, 1fr)`
+
+      randomCrosswordData.forEach((dataItem, idx) => {
+        const crossword = dataItem.board
+        const id = dataItem.id
+        const gridStyle = {
+          gridTemplateColumns: `repeat(${crossword.length}, 1fr)`
         }
-        delete crossword.clues
-      })
 
-      randomCrosswords[0] = crosswords.slice(0, BREAK_POINT)
-      randomCrosswords[1] = crosswords.slice(BREAK_POINT, crosswords.length)
+        idx <= BREAK_POINT
+          ? randomCrosswords[0].push({ id, crossword, gridStyle })
+          : randomCrosswords[1].push({ id, crossword, gridStyle })
+      })
 
       this.setState({ userCrosswords, randomCrosswords })
     } catch (err) {
