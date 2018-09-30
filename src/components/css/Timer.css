@@ -1,29 +1,54 @@
 .Timer {
-    position: fixed;
-    display: flex;
-    bottom: 2em;
-    right: -10em;
-    padding: .5em;
-    width: 5em;
-    background-color: rgba(110, 230, 250, 0.6);
-    color: #7b7b7b;
-    font-size: 1em;
-    text-align: center;
-    border-radius: 2px;
-    transition: all 0.25s ease-in-out;
-}
-
-.Timer-Displayed {
-    right: 2.5em;
+  position: static;
+  display: flex;
+  align-self: center;
+  margin: 0.25em 0 1em 0;
+  padding: 0.25em;
+  width: 4em;
+  background-color: rgba(110, 230, 250, 0.6);
+  color: #7b7b7b;
+  font-size: 0.6em;
+  text-align: center;
+  border-radius: 2px;
 }
 
 .Timer-Time {
-    flex-basis: 4em;
+  flex-basis: 3em;
 }
 
-.Timer-PauseButton, .Timer-PlayButton {
+.Timer-PauseButton,
+.Timer-PlayButton {
+  flex-basis: 1em;
+  align-self: center;
+  height: 0.75em;
+  text-align: center;
+}
+
+@media screen and (min-width: 900px) and (orientation: landscape) {
+  .Timer {
+    position: fixed;
+    margin: 0;
+    bottom: 2em;
+    right: -10em;
+    padding: 0.5em;
+    width: 5em;
+    font-size: 1em;
+    transition: all 0.25s ease-in-out;
+  }
+
+  .Timer-Displayed {
+    right: 2.5em;
+  }
+
+  .Timer-Time {
+    flex-basis: 4em;
+  }
+
+  .Timer-PauseButton,
+  .Timer-PlayButton {
     flex-basis: 1.5em;
     align-self: center;
     height: 0.85em;
     text-align: center;
+  }
 }

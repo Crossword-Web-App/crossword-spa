@@ -1,0 +1,35 @@
+.SingleClueDisplay {
+  margin: 1em;
+  display: flex;
+  height: 5em;
+  background-color: rgba(110, 230, 250, 0.6);
+  border-radius: 1em;
+  filter: blur(20px) grayscale(30%);
+  transition: filter 0.5s ease-in-out;
+}
+
+.SingleClueDisplay-Arrow {
+  display: flex;
+  flex-shrink: 0;
+  align-self: center;
+  margin: 0.5em;
+  flex-basis: 2em;
+  height: 100%;
+}
+
+.SingleClueDisplay-Arrow img {
+  width: 100%;
+}
+
+.SingleClueDisplay-SelectedClue {
+  flex-grow: 1;
+  align-self: center;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 768px) {
+  .SingleClueDisplay {
+    display: none;
+  }
+}

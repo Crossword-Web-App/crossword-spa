@@ -1,15 +1,16 @@
 .Board {
-  flex-basis: 40em;
-  justify-content: center;
   display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
+  justify-content: center;
+  align-self: center;
   filter: blur(20px) grayscale(30%);
   transition: filter 0.5s ease-in-out;
+  width: 22em;
 }
 
-.Board-Header {
-  height: 6em;
+.Board-Grid {
+  display: grid;
+  width: 18em;
+  height: 18em;
 }
 
 .Row {
@@ -17,39 +18,52 @@
   justify-content: center;
 }
 
-@media screen
-  and (max-width: 1160px)
-  and (min-width: 813px)
-  and (orientation: landscape) {
-  .Board {
-    flex-basis: 33em;
-  }
+/* >5" Screen */
 
-  .Row {
-    width: 100%;
-  }
-}
-
+/* iPad/tablet */
 @media screen
-  and (max-width: 812px)
+  and (min-width: 768px)
   and (orientation: portrait) {
-  .Board {
-    width: 50em;
-    flex-basis: 100%;
+    .Board {
+      width: 30em;
+      height: 30em;
+    }
+
+    .Board-Grid {
+      height: 100%;
+      width: 100%;
+    }
   }
 
-  .Board-Header {
-    height: 0em;
+/* iPad Pro */
+
+
+/* Desktop */
+@media screen
+  and (orientation: landscape) {
+    .Board {
+      flex-direction: column;
+      flex-basis: 50%;
+      align-self: flex-start;
+      flex-shrink: 1;
+    }
+
+    .Board-Header {
+      height: 6em;
+    }
+
+    .Board-Grid {
+      align-self: center;
+      width: 35em;
+      height: 35em;
+    }
   }
 
-  .Board-Grid {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+@media screen
+  and (max-width: 1200px)
+  and (orientation: landscape) {
+    .Board-Grid {
+      width: 25em;
+      height: 25em;
+    }
   }
-
-  .Row {
-    width: 95%;
-    align-self: center;
-  }
-}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Board from './Board'
+import SingleClueDisplay from './SingleClueDisplay'
 import CluesPanel from './CluesPanel'
 import Timer from './Timer'
 import StartModal from './StartModal'
@@ -50,9 +51,10 @@ class Game extends Component {
       <div className="Game" >
         {board.length && Object.keys(clues).length ? (
           <div className="App">
-            <Board />
-            <CluesPanel />
             <Timer />
+            <Board />
+            <SingleClueDisplay />
+            <CluesPanel />
             <StartModal />
           </div>
         ) : (

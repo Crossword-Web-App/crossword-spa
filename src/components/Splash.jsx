@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import getRandomPuzzleId from '../utilities/getRandomPuzzleId'
@@ -29,8 +30,6 @@ class Splash extends Component {
       timer: null,
       boardSquares: getRandomBoardSquares()
     }
-
-    // this.tick = this.tick.bind(this)
   }
 
   componentDidMount = () => {
@@ -58,6 +57,7 @@ class Splash extends Component {
   }
 
   render = () => {
+    const { isLoggedIn } = this.props
     const { boardSquares } = this.state
     return (
       <div className="Splash">
@@ -70,23 +70,37 @@ class Splash extends Component {
         </div>
         <div className="Splash-Actions">
           <div className="Splash-Button">
-            <Link to={`/crossword/${1234}`}>
+            <Link to={`/crossword/${getRandomPuzzleId()}`}>
               Start Playing Now
             </Link>
           </div>
-          OR
-          <div className="Splash-Google">
+          {!isLoggedIn ? (
             <a href={`${API_URL}/auth/google`}>
-              <img src={googleIcon} alt="Google" />
+              <div className="Splash-Button-Minitext">OR</div>
+              {/* <img src={googleIcon} alt="Google" /> */}
+              <div className="Splash-Button" id="Splash-Button-Google" />
+              <div className="Splash-Button-Minitext">
+                to save game progress and track your stats
+              </div>
             </a>
-            <div className="Splash-Button-Minitext">
-              to save game progress and track your stats
-            </div>
+          ) : (
+            <div className="Splash-Button">
+            <Link to={`/browse`}>
+              Browse Puzzles
+            </Link>
           </div>
+          )}
         </div>
       </div>
     )
   }
 }
 
-export default connect()(Splash)
+const mapState = ({ user }) => ({ isLoggedIn: !!user._id })
+
+export default connect(mapState)(Splash)
+
+/* PROP TYPES */
+Splash.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired
+}
