@@ -4,11 +4,14 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import getRandomPuzzleId from '../utilities/getRandomPuzzleId'
 import './css/NavBar.css'
+import gearButton from './icons/gear.svg'
+import menuButton from './icons/menu.svg'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 const NavBar = ({ user, isLoggedIn }) => (
   <header>
+    <img className="Header-GearButton" src={gearButton} alt="Options" />
     <div id="title">
       <Link to="/">Crosswords</Link>
     </div>
@@ -34,6 +37,7 @@ const NavBar = ({ user, isLoggedIn }) => (
         </div>
       )}
     </nav>
+    <img className="Header-MenuButton" src={menuButton} alt="Options" />
   </header>
 )
 

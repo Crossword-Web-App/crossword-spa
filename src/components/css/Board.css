@@ -18,15 +18,13 @@
   justify-content: center;
 }
 
-/* >5" Screen */
-
 /* iPad/tablet */
 @media screen
   and (min-width: 768px)
   and (orientation: portrait) {
     .Board {
-      width: 30em;
       height: 30em;
+      width: 30em;
     }
 
     .Board-Grid {
@@ -34,9 +32,6 @@
       width: 100%;
     }
   }
-
-/* iPad Pro */
-
 
 /* Desktop */
 @media screen

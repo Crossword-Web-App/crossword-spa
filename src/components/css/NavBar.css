@@ -1,3 +1,7 @@
+header {
+  display: flex;
+}
+
 header a {
   text-decoration: none;
 }
@@ -6,10 +10,26 @@ header a:visited {
   color: rgba(0, 0, 0, 0.9);
 }
 
+header img {
+  height:4vh;
+  width: 3em;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+header .Header-GearButton:active {
+  transform: rotate(180deg);
+}
+
+header .Header-MenuButton {
+  transform: scale(0.8);
+}
+
 #title {
   align-self: center;
   font-size: 4vh;
   padding: 1vh 0;
+  flex-grow: 1;
   background-color: white;
   font-weight: 700;
   text-align: center;
@@ -25,9 +45,12 @@ header a:visited {
 
 @media screen and (min-width: 900px) {
   header {
-    display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.9);
     margin: 0 2em;
+  }
+
+  header > img {
+    display: none;
   }
 
   #title {
@@ -89,6 +112,7 @@ header a:visited {
 
   .nav-item img {
     height: 40px;
+    width: 40px;
     border-radius: 100%;
     transition: opacity 0.25s ease;
   }

@@ -4,7 +4,7 @@ Play crosswords online. [Check it out here.](https://crossword-spa.herokuapp.com
 
 ## Recent Updates (9.27.2018)
 
-- Partially optimized for mobile. Mobile-first experience coming soon
+- Partially optimized for mobile (most major phone/tablet viewports supported; mobile-first experience coming soon)
 - Sign in with your Google Account to save your progress and record your time
 - Return to unfinished puzzles or find a new puzzle to play in the Browse tab
 
