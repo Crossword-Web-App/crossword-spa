@@ -176,4 +176,16 @@
       width: 6px;
       height: 6px;
     }
+
+    .Square-Entry-Small {
+      font-size: 15px;
+    }
+
+    .Square-Revealed-Text-Small {
+      font-size: 15px;
+    }
+
+    .Square-Number-Small {
+      font-size: 0.25em
+    }
   }
