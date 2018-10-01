@@ -1,9 +1,7 @@
 .App {
-  text-align: center;
-  height: 100%;
   width: 100%;
+  text-align: center;
   display: flex;
-  justify-content: center;
 }
 
 @media screen
@@ -11,5 +9,14 @@
   and (orientation: portrait) {
     .App {
       flex-direction: column;
+    }
+  }
+
+  @media screen
+  and (orientation: landscape) {
+    .App {
+      margin: 0 2em;
+      max-width: 1400px;
+      text-align: center;
     }
   }

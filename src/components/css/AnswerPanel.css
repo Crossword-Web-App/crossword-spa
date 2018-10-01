@@ -55,7 +55,7 @@
   transform: rotate(180deg)
 }
 
-@media screen and (max-width: 812px) {
+@media screen and (orientation: portrait) {
   .AnswerPanel {
     display: none;
   }

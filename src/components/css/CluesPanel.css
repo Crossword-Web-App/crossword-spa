@@ -13,9 +13,12 @@
   flex-direction: column;
 }
 
+.CluesPanel-Column-Container:nth-child(2) {
+  padding-right: 0em;
+}
+
 .CluesPanel-Header {
   height: 6em;
-  position: relative;
   display: flex;
   border-bottom: 1px solid black;
   background-color: white;
@@ -62,23 +65,43 @@
 }
 
 @media screen
-  and (max-width: 1160px)
-  and (min-width: 813px) {
+  and (max-width: 768px) {
     .CluesPanel {
-      flex-basis: 20em;
-    }
-
-    .CluesPanel-Column-Container {
-      flex-basis: 18em;
+      display: none;
     }
   }
 
-  @media screen
+@media screen
   and (max-width: 812px)
   and (orientation: portrait) {
     .CluesPanel {
-      margin-top: 5em;
-      width: 50em;
-      flex-basis: 20em;
+      margin-left: 1em;
+      flex-grow: 1;
+    }
+
+    .Clues-Panel-Header {
+      background-color: transparent;
     }
   }
+
+@media screen
+  and (max-height: 580px)
+  and (orientation: portrait) {
+    .CluesPanel {
+      padding-top: 3em;
+    }
+  }
+
+/* Desktop */
+@media screen
+and (orientation: landscape) {
+  .CluesPanel {
+    flex-basis: 50%;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  .CluesPanel-Column-Container:nth-child(2) {
+    padding-right: 0em;
+  }
+}

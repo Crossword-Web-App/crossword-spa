@@ -1,3 +1,7 @@
 .Game {
-  position: relative;
+  position: absolute;
+  display: flex;
+  height: calc(100% - 6vh);
+  width: 100%;
+  justify-content: center;
 }

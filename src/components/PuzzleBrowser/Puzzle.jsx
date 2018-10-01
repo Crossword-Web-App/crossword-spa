@@ -95,14 +95,7 @@ const Puzzle = ({ crossword }) => {
                 crossword && crossword.id ? crossword.id : getRandomPuzzleId()
               }`}
             >
-              <span role="img" aria-label="star">
-                🌟
-              </span>
-              <span>Start</span>
-              <span role="img" aria-label="star">
-                {' '}
-                🌟
-              </span>
+              Start
             </Link>
           </div>
         </div>

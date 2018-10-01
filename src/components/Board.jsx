@@ -25,9 +25,8 @@ class Board extends Component {
 
     // allows focus on change events
     this.squareInputRefs = []
-
   }
-  
+
   // debounced version of function to reduce calls to server
   saveBoardData = debounce(3000, saveBoardData)
 
@@ -147,7 +146,9 @@ class Board extends Component {
             })
           }
 
-          if (user && user._id) this.saveBoardData(user._id, board, boardId, timer, 3)
+          if (user && user._id) {
+            this.saveBoardData(user._id, board, boardId, timer, 3)
+          }
 
           this.changeSquare(this.getPrevSquare, () => false)
           break
@@ -653,13 +654,15 @@ class Board extends Component {
     return (
       <div className="Board" style={acceptsInput ? noBlurStyle : {}}>
         <div className="Board-Header" />
-        <div className="Board-Grid" onKeyDown={this.handleKeyDown}>
+        <div
+          className="Board-Grid"
+          onKeyDown={this.handleKeyDown}
+          style={{
+            gridTemplateColumns: `repeat(${board.length}, minmax(1em,1fr))`
+          }}
+        >
           {board.map((row, rowIdx) => (
-            <div
-              className="Row"
-              key={this.getSequentialPosition({ row: rowIdx, column: 0 })}
-            >
-              {row.map((square, columnIdx) => (
+              row.map((square, columnIdx) => (
                 <Square
                   key={this.getSequentialPosition({
                     row: rowIdx,
@@ -672,8 +675,7 @@ class Board extends Component {
                   inputRef={this.inputRef}
                   acceptsInput={acceptsInput}
                 />
-              ))}
-            </div>
+              ))
           ))}
         </div>
         <AnswerPanel rowWidth={board.length} />
