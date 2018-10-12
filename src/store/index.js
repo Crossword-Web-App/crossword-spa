@@ -15,10 +15,12 @@ import remainingSquares from './remainingSquares'
 import gameState from './gameState'
 import user from './user'
 import timer from './timer'
+import boardSize from './create/boardSize'
 
 const reducer = combineReducers({
   board,
   boardId,
+  boardSize,
   direction,
   clues,
   selectedSquare,
