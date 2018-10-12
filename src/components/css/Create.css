@@ -55,3 +55,18 @@
   .Button-Container {
     display: flex
   }
+
+  .PickBlackSquareModal {
+    display: flex;
+    padding: 1em;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1em;
+    background-color: white;
+    box-shadow: 0 0 30px 6px rgba(31, 51, 73, 0.1);
+    cursor: pointer;
+    position: fixed;
+    bottom: 0;
+
+  }

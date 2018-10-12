@@ -27,7 +27,7 @@ class Create extends Component {
   }
 
   render = () => {
-    return (<div>
+    return (<div style={{height: '100%', width: '100%', marginTop: '5em', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
       <BoardGrid /> 
 
       </div>
