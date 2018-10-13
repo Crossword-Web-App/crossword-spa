@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import CreateBoard from './CreateBoard'
 import PickSizeModal from './PickSizeModal'
 import PickBlackSquareModal from './PickBlackSquareModal'
 import PickSymmetryModal from './PickSymmetryModal'
-import Create from './Create'
+import { getBoard } from '../../store/board'
+import '../css/Create.css'
 
 class CreateOptions extends Component {
   constructor(props) {
@@ -13,6 +16,22 @@ class CreateOptions extends Component {
       blackSquareModal: false,
       symmetryModal: false
     }
+
+    // default size of board
+    this.DEFAULT_SIZE = 15
+  }
+
+  componentDidMount() {
+    const { getBoard } = this.props
+    getBoard(this.createEmptyBoard())
+  }
+
+  createEmptyBoard(num) {
+    const length = num || this.DEFAULT_SIZE
+    const board = Array.from({ length }, () =>
+      Array.from({ length}, () => ({ letter: '', number: 0 }))
+    )
+    return board
   }
 
   displayModal(modalName) {
@@ -21,20 +40,19 @@ class CreateOptions extends Component {
       blackSquareModal: false,
       symmetryModal: false
     }
-    if (modalName != 'closeModal') nextState[modalName] = true
+    if (modalName !== 'closeModal') nextState[modalName] = true
     this.setState(nextState)
   }
-
-  componentDidMount() {}
 
   render = () => {
     const { sizeModal, blackSquareModal, symmetryModal } = this.state
 
     return (
-      <div>
-        <Create />
+      <div className="Create">
+        <CreateBoard />
         {sizeModal && (
           <PickSizeModal
+            createEmptyBoard={this.createEmptyBoard}
             displayModal={() => this.displayModal('blackSquareModal')}
           />
         )}
@@ -53,11 +71,13 @@ class CreateOptions extends Component {
   }
 }
 
-const mapState = ({}) => ({})
-
-const mapDispatch = {}
+const mapDispatch = { getBoard }
 
 export default connect(
-  mapState,
+  null,
   mapDispatch
 )(CreateOptions)
+
+CreateOptions.propTypes = {
+  getBoard: PropTypes.func.isRequired
+}

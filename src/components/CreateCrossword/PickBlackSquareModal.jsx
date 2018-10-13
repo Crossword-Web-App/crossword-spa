@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { getBoard } from '../../store/board'
 import '../css/Create.css'
-import axios from 'axios'
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
@@ -14,14 +14,6 @@ class PickBlackSquareModal extends Component {
     this.state = { blackSquareBoards: [] }
   }
 
-  handleClick = () => {
-    this.props.displayModal()
-  }
-
-  setBlackSquareBoard = (board) => {
-      this.props.getBoard(board)
-  }
-
   async componentDidMount() {
     const { boardSize } = this.props
     const COUNT = 5
@@ -29,20 +21,42 @@ class PickBlackSquareModal extends Component {
       `${API_URL}/api/blackSquareTemplates?boardSize=${boardSize}&count=${COUNT}`
     )
     const blackSquareBoards = await res.data
-    console.log(blackSquareBoards)
     this.setState({ blackSquareBoards })
   }
 
+  handleClick = () => {
+    const { displayModal } = this.props
+    displayModal()
+  }
+
+  setBlackSquaresOnBoard = board => {
+    const { getBoard } = this.props
+    getBoard(board)
+  }
+
   render = () => {
-      const { blackSquareBoards } = this.state
+    const { blackSquareBoards } = this.state
 
     return (
       <div className="PickBlackSquareModal">
         <div>Pick a black square:</div>
-        <div> 
-            {blackSquareBoards.map((board, idx) => <div><button onClick={()=> this.setBlackSquareBoard(board.crossword.board)}>{idx}</button></div>)}
+        <div>
+          {blackSquareBoards.map((board, idx) => (
+            <div>
+              <button
+                type="button"
+                onClick={() =>
+                  this.setBlackSquareOnBoard(board.crossword.board)
+                }
+              >
+                {idx}
+              </button>
+            </div>
+          ))}
         </div>
-        <button onClick={() => this.handleClick()}>Enter</button>
+        <button type="submit" onClick={() => this.handleClick()}>
+          Enter
+        </button>
       </div>
     )
   }
@@ -60,4 +74,7 @@ export default connect(
 )(PickBlackSquareModal)
 
 /* PROP TYPES */
-PickBlackSquareModal.propTypes = {}
+PickBlackSquareModal.propTypes = {
+  getBoard: PropTypes.func.isRequired,
+  displayModal: PropTypes.func.isRequired
+}

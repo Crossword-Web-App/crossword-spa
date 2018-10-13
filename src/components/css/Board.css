@@ -24,7 +24,6 @@
   and (orientation: portrait) {
     .Board {
       height: 30em;
-      width: 30em;
     }
 
     .Board-Grid {
