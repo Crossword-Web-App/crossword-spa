@@ -12,17 +12,15 @@ class PickSymmetryModal extends Component {
   }
 
   render = () => (
-    <div className="Start-Modal-Container">
-      <div className="Start-Modal">
-        <div>Pick a symmetry:</div>
-        <div className="Button-Container">
-          <button type="submit" onClick={() => this.handleClick()}>
-              Enter
-          </button>
-        </div>
+    <div className="Create-Modal">
+      <div>Pick a symmetry:</div>
+      <div className="Button-Container">
+        <button type="submit" onClick={() => this.handleClick()}>
+          Enter
+        </button>
       </div>
     </div>
-    )
+  )
 }
 
 const mapState = ({ user, boardId }) => ({

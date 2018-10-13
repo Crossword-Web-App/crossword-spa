@@ -18,24 +18,22 @@ class PickSizeModal extends Component {
   }
 
   render = () => (
-    <div className="Start-Modal-Container">
-      <div className="Start-Modal">
-        <div>Pick a crossword size:</div>
-        <div className="Button-Container">
-          <button type="button" onClick={() => this.handleClick(15)}>
-            15x15
-          </button>
-          <button type="button" onClick={() => this.handleClick(21)}>
-            21x21
-          </button>
-          <button type="button" onClick={() => this.handleClick(25)}>
-            25x25
-          </button>
-        </div>
-        <button type="submit" onClick={() => this.confirmSize()}>
-          Enter
+    <div className="Create-Modal">
+      <div>Pick a crossword size:</div>
+      <div className="Button-Container">
+        <button type="button" onClick={() => this.handleClick(15)}>
+          15x15
+        </button>
+        <button type="button" onClick={() => this.handleClick(21)}>
+          21x21
+        </button>
+        <button type="button" onClick={() => this.handleClick(25)}>
+          25x25
         </button>
       </div>
+      <button type="submit" onClick={() => this.confirmSize()}>
+        Enter
+      </button>
     </div>
   )
 }

@@ -38,7 +38,7 @@ class PickBlackSquareModal extends Component {
     const { blackSquareBoards } = this.state
 
     return (
-      <div className="PickBlackSquareModal">
+      <div className="Create-Modal">
         <div>Pick a black square:</div>
         <div>
           {blackSquareBoards.map((board, idx) => (
@@ -46,7 +46,7 @@ class PickBlackSquareModal extends Component {
               <button
                 type="button"
                 onClick={() =>
-                  this.setBlackSquareOnBoard(board.crossword.board)
+                  this.setBlackSquaresOnBoard(board.crossword.board)
                 }
               >
                 {idx}
