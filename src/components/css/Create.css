@@ -1,72 +1,89 @@
-.Start-Modal-Container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .Start-Modal {
-    align-self: center;
-    display: flex;
-    padding: 1em;
-    width: 25em;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 1em;
-    background-color: white;
-    box-shadow: 0 0 30px 6px rgba(31, 51, 73, 0.1);
-    cursor: pointer;
-  }
-  
-  .Start-Modal * {
-    align-self: center;
-  }
-  
-  .Start-Modal div {
-    font-size: 1.5em;
-    font-weight: 700;
-    color: rgba(0,0,0,0.9);
-    margin-bottom: 0.5em;
-  }
-  
-  .Start-Modal button {
-    border: 0;
-    border-radius: 0.5em;
-    background-color: #1e88e5;
-    color: white;
-    /* font-family: inherit; */
-    font-size: .75em;
-    font-weight: 700;
-    letter-spacing: 0.025em;
-    white-space: nowrap;
-    text-decoration: none;
-    padding: .5em 1em;
-    cursor: pointer;
-    margin: 0 0.25em;
-  }
-  
-  .Start-Modal button:hover {
-    background-color: #3494e9;
-  }
-  
-  .Button-Container {
-    display: flex
-  }
+.Create {
+  position: absolute;
+  height: calc(100% - 6vh);
+  width: 100%;
+}
 
-  .PickBlackSquareModal {
-    display: flex;
-    padding: 1em;
-    width: 100%;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 1em;
-    background-color: white;
-    box-shadow: 0 0 30px 6px rgba(31, 51, 73, 0.1);
-    cursor: pointer;
-    position: fixed;
-    bottom: 0;
+.Create-Board-Container {
+  margin-top: 6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  }
+.Create-Modal {
+  display: flex;
+  padding: 1em 0;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  border-top-left-radius: 3em;
+  border-top-right-radius: 2em;
+  background-color: white;
+  box-shadow: 0 0 30px 6px rgba(31, 51, 73, 0.1);
+  cursor: pointer;
+  position: fixed;
+  bottom: 0;
+}
+
+.Start-Modal {
+  align-self: center;
+  display: flex;
+  padding: 1em;
+  width: 25em;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 1em;
+  background-color: white;
+  box-shadow: 0 0 30px 6px rgba(31, 51, 73, 0.1);
+  cursor: pointer;
+}
+
+.Create-Modal * {
+  align-self: center;
+}
+
+.Create-Modal div {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.9);
+  margin-bottom: 0.5em;
+}
+
+.Create-Modal button {
+  border: 0;
+  border-radius: 0.5em;
+  background-color: #1e88e5;
+  color: white;
+  font-family: inherit;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  margin: 0 0.25em;
+}
+
+.Create-Modal button:hover {
+  background-color: #3494e9;
+}
+
+.Button-Container {
+  display: flex;
+}
+
+.PickBlackSquareModal {
+  display: flex;
+  padding: 1em;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 1em;
+  background-color: white;
+  box-shadow: 0 0 30px 6px rgba(31, 51, 73, 0.1);
+  cursor: pointer;
+  position: fixed;
+  bottom: 0;
+}
