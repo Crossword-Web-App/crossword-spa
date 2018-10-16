@@ -14,7 +14,8 @@ class CreateOptions extends Component {
     this.state = {
       sizeModal: true,
       blackSquareModal: false,
-      symmetryModal: false
+      symmetryModal: false,
+      showCreatePanel: false
     }
 
     // default size of board
@@ -29,7 +30,7 @@ class CreateOptions extends Component {
   createEmptyBoard(num) {
     const length = num || this.DEFAULT_SIZE
     const board = Array.from({ length }, () =>
-      Array.from({ length}, () => ({ letter: '', number: 0 }))
+      Array.from({ length }, () => ({ letter: '', number: 0 }))
     )
     return board
   }
@@ -38,9 +39,10 @@ class CreateOptions extends Component {
     const nextState = {
       sizeModal: false,
       blackSquareModal: false,
-      symmetryModal: false
+      symmetryModal: false,
+      showCreatePanel: false
     }
-    if (modalName !== 'closeModal') nextState[modalName] = true
+    nextState[modalName] = true
     this.setState(nextState)
   }
 
@@ -49,7 +51,7 @@ class CreateOptions extends Component {
 
     return (
       <div className="Create">
-        <CreateBoard />
+        <CreateBoard showCreatePanel={this.state.showCreatePanel} />
         {sizeModal && (
           <PickSizeModal
             createEmptyBoard={this.createEmptyBoard}
@@ -63,7 +65,7 @@ class CreateOptions extends Component {
         )}
         {symmetryModal && (
           <PickSymmetryModal
-            displayModal={() => this.displayModal('closeModal')}
+            displayModal={() => this.displayModal('showCreatePanel')}
           />
         )}
       </div>

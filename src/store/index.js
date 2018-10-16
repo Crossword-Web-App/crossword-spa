@@ -16,6 +16,7 @@ import gameState from './gameState'
 import user from './user'
 import timer from './timer'
 import boardSize from './create/boardSize'
+import symmetry from './create/symmetry'
 
 const reducer = combineReducers({
   board,
@@ -31,7 +32,8 @@ const reducer = combineReducers({
   remainingSquares,
   gameState,
   user,
-  timer
+  timer,
+  symmetry
 })
 
 let middleware = [thunkMiddleware]

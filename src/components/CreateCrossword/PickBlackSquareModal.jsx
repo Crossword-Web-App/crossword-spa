@@ -6,7 +6,6 @@ import { getBoard } from '../../store/board'
 import '../css/Create.css'
 import addNumbersToBoard from '../../utilities/addNumbersToBoard'
 
-
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
 class PickBlackSquareModal extends Component {
@@ -23,13 +22,11 @@ class PickBlackSquareModal extends Component {
       `${API_URL}/api/blackSquareTemplates?boardSize=${boardSize}&count=${COUNT}`
     )
     const blackSquareBoards = await res.data
-    const boardsWithNumbers = await blackSquareBoards.map((crossword) => {
+    const boardsWithNumbers = await blackSquareBoards.map(crossword => {
       crossword.crossword.board = addNumbersToBoard(crossword.crossword.board)
-      console.log(crossword)
-      return crossword;
+      return crossword
     })
 
-    
     this.setState({ boardsWithNumbers })
   }
 
@@ -45,16 +42,16 @@ class PickBlackSquareModal extends Component {
 
   render = () => {
     const { boardsWithNumbers } = this.state
-    if (!boardsWithNumbers) return null;
+    if (!boardsWithNumbers) return null
     return (
       <div className="Create-Modal">
-        <div>Pick a black square:</div>
-        <div>
+        <div>Pick a black square pattern:</div>
+        <div className="Create-Modal-Button-Container">
           {boardsWithNumbers.map((board, idx) => (
             <div>
               <button
                 type="button"
-                onClick={() =>
+                onMouseEnter={() =>
                   this.setBlackSquaresOnBoard(board.crossword.board)
                 }
               >

@@ -4,6 +4,12 @@
   width: 100%;
 }
 
+.Create-Panel {
+  border-style: solid;
+  border-color: black;
+  border-width: 0.1em;
+}
+
 .Create-Board-Container {
   margin-top: 6em;
   display: flex;
@@ -86,4 +92,8 @@
   cursor: pointer;
   position: fixed;
   bottom: 0;
+}
+
+.Create-Modal-Button-Container {
+  display: flex;
 }
