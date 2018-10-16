@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { getBoard } from '../../store/board'
 import '../css/Create.css'
+import addNumbersToBoard from '../../utilities/addNumbersToBoard'
+
 
 const API_URL = process.env.API_URL || 'http://localhost:8080'
 
@@ -21,7 +23,14 @@ class PickBlackSquareModal extends Component {
       `${API_URL}/api/blackSquareTemplates?boardSize=${boardSize}&count=${COUNT}`
     )
     const blackSquareBoards = await res.data
-    this.setState({ blackSquareBoards })
+    const boardsWithNumbers = await blackSquareBoards.map((crossword) => {
+      crossword.crossword.board = addNumbersToBoard(crossword.crossword.board)
+      console.log(crossword)
+      return crossword;
+    })
+
+    
+    this.setState({ boardsWithNumbers })
   }
 
   handleClick = () => {
@@ -35,13 +44,13 @@ class PickBlackSquareModal extends Component {
   }
 
   render = () => {
-    const { blackSquareBoards } = this.state
-
+    const { boardsWithNumbers } = this.state
+    if (!boardsWithNumbers) return null;
     return (
       <div className="Create-Modal">
         <div>Pick a black square:</div>
         <div>
-          {blackSquareBoards.map((board, idx) => (
+          {boardsWithNumbers.map((board, idx) => (
             <div>
               <button
                 type="button"
